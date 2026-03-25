@@ -6,7 +6,6 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.17-blue)](https://tailwindcss.com/)
 
 <div align=\"center\">
-  <img src=\"https://via.placeholder.com/390x812/0B1C2D/FFFFFF?text=LulaFi+Prototype\" alt=\"LulaFi Phone Preview\" width=\"195\">
   <p><em>Interactive prototype preview (run <code>bun dev</code>)</em></p>
 </div>
 
@@ -118,13 +117,3 @@ Lula-Proto/
 - [ ] PWA install
 - [ ] i18n
 - [ ] Accessibility audit
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) (add if missing).
-
-Made with ❤️ using [Lovable.dev](https://lovable.dev) template.
-
-<div align=\"center\">
-  <img src=\"https://assets.lovable.dev/badges/lovable-beta.svg\" alt=\"Lovable\" width=\"150\">
-</div>
