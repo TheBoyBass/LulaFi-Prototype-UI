@@ -16,7 +16,7 @@ const SplashScreen = () => {
       <div className="absolute inset-0 hidden dark:block" style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsla(175,70%,40%,0.25) 0%, hsl(210,61%,11%) 50%, hsl(210,61%,11%) 100%)' }} />
       <div className="relative flex flex-col flex-1">
         <StatusBar />
-        <div className="flex-1 flex items-center justify-center pt-12">
+        <div className="flex-1 flex items-center justify-center pt-32">
           <motion.div
             className="flex flex-col items-center gap-4"
             initial={{ opacity: 0, y: 24 }}
@@ -29,7 +29,7 @@ const SplashScreen = () => {
             </div>
           </motion.div>
         </div>
-        <div className="pb-12 flex justify-center">
+        <div className="pb-1 flex justify-center">
           <motion.img
             src={loadingRing}
             alt="Loading"
