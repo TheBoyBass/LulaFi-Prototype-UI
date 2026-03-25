@@ -6,7 +6,7 @@
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-3.4.17-blue)](https://tailwindcss.com/)
 
 <div align=\"center\">
-  <p><em>Interactive prototype preview (run <code>bun dev</code>)</em></p>
+  <p><em>Interactive prototype preview (run <code>npm run dev</code>)</em></p>
 </div>
 
 LulaFi is a **privacy-first mobile app prototype** for secure data sharing and intelligent form filling. Users control their data vault locally (bank-grade encryption, no external servers), consent to share only what's needed, and auto-fill forms via QR scanning or service discovery.
@@ -47,29 +47,29 @@ LulaFi is a **privacy-first mobile app prototype** for secure data sharing and i
    ```bash
    git clone <repo> Lula-Proto
    cd Lula-Proto
-   bun install  # or npm install
+   npm install
    ```
 
 2. **Development**
    ```bash
-   bun dev  # http://localhost:5173
+   npm run dev  # http://localhost:5173
    ```
 
 3. **Build & Preview**
    ```bash
-   bun build
-   bun preview
+   npm run build
+   npm run preview
    ```
 
 4. **Test**
    ```bash
-   bun test     # Vitest
-   bun test:e2e # Playwright
+   npm run test     # Vitest
+   npx playwright test # Playwright
    ```
 
 5. **Lint**
    ```bash
-   bun lint
+   npm run lint
    ```
 
 **Switch Views**:
@@ -106,7 +106,7 @@ Lula-Proto/
 │   └── pages/                 # Index (prototype), DesignSystem
 ├── public/                    # Assets (logo, icons)
 ├── tests/                     # Vitest/Playwright
-└── package.json               # Bun-compatible
+└── package.json
 ```
 
 ## 🔮 Next Steps
