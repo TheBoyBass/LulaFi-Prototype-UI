@@ -1,0 +1,322 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* LulaFi Design System — Light Mode */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+
+    --card: 210 40% 98%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 172 66% 50%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 172 66% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+    --info: 239 84% 67%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --input-background: 210 40% 98%;
+    --ring: 172 66% 50%;
+
+    --radius: 10px;
+
+    /* Brand */
+    --brand: 172 66% 50%;
+    --brand-hover: 173 80% 40%;
+    --brand-active: 175 84% 32%;
+
+    /* Backgrounds */
+    --bg-primary: 0 0% 100%;
+    --bg-secondary: 210 40% 98%;
+    --bg-tertiary: 210 40% 96%;
+    --bg-page: 210 40% 96%;
+
+    /* Text */
+    --text-primary: 222 47% 11%;
+    --text-secondary: 215 19% 35%;
+    --text-muted: 215 16% 47%;
+
+    /* Border */
+    --border-primary: 214 32% 91%;
+
+    /* Gradient */
+    --gradient-brand: linear-gradient(135deg, hsl(172 66% 50%) 0%, hsl(239 84% 67%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.06);
+    --shadow-md: 0 8px 24px hsla(0, 0%, 0%, 0.08);
+    --shadow-glow: 0 20px 48px hsla(172, 66%, 50%, 0.15);
+
+    /* Spacing (8pt Grid) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 24px;
+    --space-6: 32px;
+    --space-7: 48px;
+    --space-8: 64px;
+
+    /* Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+
+    /* Charts */
+    --chart-1: 172 66% 50%;
+    --chart-2: 239 84% 67%;
+    --chart-3: 142 71% 45%;
+    --chart-4: 38 92% 50%;
+    --chart-5: 0 84% 60%;
+  }
+
+  .dark {
+    /* LulaFi Design System — Dark Mode */
+    --background: 210 61% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 221 39% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 172 66% 50%;
+    --primary-foreground: 210 61% 11%;
+
+    --secondary: 222 47% 11%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 215 25% 27%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 172 66% 50%;
+    --accent-foreground: 210 61% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --success: 142 71% 45%;
+    --warning: 38 92% 50%;
+    --info: 239 84% 67%;
+
+    --border: 215 25% 27%;
+    --input: 215 25% 27%;
+    --input-background: 222 47% 11%;
+    --ring: 172 66% 50%;
+
+    /* Brand */
+    --brand: 172 66% 50%;
+    --brand-hover: 173 80% 40%;
+    --brand-active: 175 84% 32%;
+
+    /* Backgrounds */
+    --bg-primary: 210 61% 11%;
+    --bg-secondary: 222 47% 11%;
+    --bg-tertiary: 221 39% 11%;
+    --bg-page: 214 55% 6%;
+
+    /* Text */
+    --text-primary: 210 40% 98%;
+    --text-secondary: 213 27% 84%;
+    --text-muted: 215 20% 65%;
+
+    /* Border */
+    --border-primary: 215 25% 27%;
+
+    /* Gradient */
+    --gradient-brand: linear-gradient(135deg, hsl(172 66% 50%) 0%, hsl(239 84% 67%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.2);
+    --shadow-md: 0 8px 24px hsla(0, 0%, 0%, 0.25);
+    --shadow-glow: 0 20px 48px hsla(172, 66%, 50%, 0.3);
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro', system-ui, sans-serif;
+  }
+
+  /* LulaFi Typography System */
+  html {
+    font-size: 16px;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+
+  h1 {
+    font-size: 32px;
+    line-height: 40px;
+    font-weight: 600;
+  }
+
+  h2 {
+    font-size: 24px;
+    line-height: 32px;
+    font-weight: 500;
+  }
+
+  h3 {
+    font-size: 18px;
+    line-height: 28px;
+    font-weight: 500;
+  }
+
+  h4 {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+
+  label {
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+  }
+
+  button {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+
+  input, textarea {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+  }
+}
+
+/* Phone frame */
+.phone-frame {
+  width: 390px;
+  height: 812px;
+  background: hsl(var(--bg-primary));
+  border-radius: 50px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 48px 96px hsla(0, 0%, 0%, 0.7), inset 0 0 0 1px hsla(0, 0%, 100%, 0.06);
+  border: 8px solid #1a1a1a;
+}
+
+.phone-notch {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 30px;
+  background: #1a1a1a;
+  border-radius: 0 0 18px 18px;
+  z-index: 1000;
+}
+
+/* Screen transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateX(10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scanPulse {
+  0%, 100% { top: 15%; }
+  50% { top: 75%; }
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.screen-enter {
+  animation: fadeIn 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide-up {
+  animation: slideUp 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Scrollbar hide */
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Gradient background */
+.gradient-brand {
+  background: var(--gradient-brand);
+}
+
+.gradient-brand-animated {
+  background: var(--gradient-brand);
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* Scanner line */
+.scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  background: linear-gradient(90deg, transparent, hsl(var(--brand)), transparent);
+  animation: scanPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  box-shadow: 0 0 8px hsl(var(--brand));
+}
+
+/* OTP input */
+.otp-box {
+  width: 44px;
+  height: 52px;
+  background: hsl(var(--bg-secondary));
+  border: 1px solid hsl(var(--border));
+  border-radius: var(--radius-md);
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  color: hsl(var(--text-primary));
+  outline: none;
+  transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+.otp-box:focus {
+  border-color: hsl(var(--brand));
+}
