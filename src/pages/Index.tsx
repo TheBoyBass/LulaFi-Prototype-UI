@@ -22,7 +22,7 @@ const SCREEN_LABELS: Record<ScreenId, string> = {
   splash: "SPLASH", ob1: "ONBOARDING 1", ob2: "ONBOARDING 2", ob3: "ONBOARDING 3",
   signup: "SIGN UP", otp: "OTP VERIFY", name: "DISPLAY NAME",
   home: "HOME (EMPTY)", home2: "HOME + ACTIVITY",
-  svc: "SERVICES", org: "ORG DETAIL", consent: "DATA CONSENT",
+  svc: "LULASEM", org: "ORG DETAIL", consent: "DATA CONSENT",
   form: "FORM FILL", mf: "MY FORMS", qr: "QR SCANNER",
   chat: "MESSAGES", convo: "CHAT CONVO", settings: "SETTINGS",
 };
@@ -43,7 +43,7 @@ const SIDEBAR_ITEMS: { section: string; items: { label: string; screen: ScreenId
     items: [
       { label: "Home", screen: "home" },
       { label: "Home + Activity", screen: "home2" },
-      { label: "Services", screen: "svc" },
+      { label: "lulaSEM", screen: "svc" },
       { label: "Org Detail", screen: "org" },
       { label: "Consent", screen: "consent" },
       { label: "Form Fill", screen: "form" },

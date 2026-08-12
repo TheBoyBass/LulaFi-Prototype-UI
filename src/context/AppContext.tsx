@@ -1,5 +1,11 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
 import { ScreenId } from "@/types/screens";
+import { providerGroups } from "@/data/lulasem";
+
+const initialUnread = providerGroups.reduce<Record<string, number>>((acc, g) => {
+  g.rows.forEach(r => { acc[r.id] = r.unread; });
+  return acc;
+}, {});
 
 interface AppContextType {
   currentScreen: ScreenId;
@@ -8,6 +14,8 @@ interface AppContextType {
   setDisplayName: (name: string) => void;
   isDark: boolean;
   toggleTheme: () => void;
+  unreadCounts: Record<string, number>;
+  markConversationRead: (id: string) => void;
 }
 
 const AppContext = createContext<AppContextType | null>(null);
@@ -22,6 +30,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [currentScreen, setCurrentScreen] = useState<ScreenId>("splash");
   const [displayName, setDisplayName] = useState("TheBoyBass");
   const [isDark, setIsDark] = useState(false);
+  const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>(initialUnread);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -29,12 +38,27 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const toggleTheme = useCallback(() => setIsDark(prev => !prev), []);
 
+  const markConversationRead = useCallback((id: string) => {
+    setUnreadCounts(prev => (prev[id] ? { ...prev, [id]: 0 } : prev));
+  }, []);
+
   const navigate = useCallback((screen: ScreenId) => {
     setCurrentScreen(screen);
   }, []);
 
   return (
-    <AppContext.Provider value={{ currentScreen, navigate, displayName, setDisplayName, isDark, toggleTheme }}>
+    <AppContext.Provider
+      value={{
+        currentScreen,
+        navigate,
+        displayName,
+        setDisplayName,
+        isDark,
+        toggleTheme,
+        unreadCounts,
+        markConversationRead,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );
