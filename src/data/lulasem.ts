@@ -184,3 +184,19 @@ export const statusStyles: Record<string, string> = {
   APPROVED: "text-success",
   "UNDER REVIEW": "text-info",
 };
+
+/** Encrypted-messaging contacts on the user's account */
+export type SemContact = {
+  id: string;
+  name: string;
+  initials: string;
+  role: string;
+  online?: boolean;
+};
+
+export const semContacts: SemContact[] = [
+  { id: "c-thabo", name: "Thabo Mokoena", initials: "TM", role: "Business partner", online: true },
+  { id: "c-lerato", name: "Lerato Dlamini", initials: "LD", role: "Accountant" },
+  { id: "c-sipho", name: "Sipho Ndlovu", initials: "SN", role: "Broker", online: true },
+  { id: "c-naledi", name: "Naledi Khumalo", initials: "NK", role: "Family" },
+];

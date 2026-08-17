@@ -1,20 +1,15 @@
 import { useMemo, useState, useRef, useEffect } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
-import Logo from "@/components/lulafi/Logo";
+import AppHeader from "@/components/lulafi/AppHeader";
+import TshwaneSponsored from "@/components/lulafi/TshwaneSponsored";
 import { useApp } from "@/context/AppContext";
-import { ScreenId } from "@/types/screens";
-import { providerGroups, statusStyles, Conversation } from "@/data/lulasem";
-import { Search, Plus, MessageCircle, FileText, SearchX, QrCode, X, Loader2 } from "lucide-react";
+import { providerGroups, statusStyles, Conversation, semContacts } from "@/data/lulasem";
+import { serviceProviders } from "@/data/providers";
+import { Search, Plus, MessageCircle, FileText, SearchX, X, Loader2, Lock, ShieldCheck } from "lucide-react";
 
 const PAGE_SIZE = 2;
 
 type FilterKey = "All" | "Providers" | "Forms";
-
-const newActions: { label: string; description: string; icon: typeof FileText; screen: ScreenId }[] = [
-  { label: "New form", description: "Browse provider forms and start one", icon: FileText, screen: "org" },
-  { label: "New conversation", description: "Message a provider directly", icon: MessageCircle, screen: "chat" },
-  { label: "Scan a QR code", description: "Open a form shared by a provider", icon: QrCode, screen: "qr" },
-];
 
 const matches = (row: Conversation, groupName: string, groupType: string, q: string) => {
   if (!q) return true;
@@ -25,14 +20,14 @@ const matches = (row: Conversation, groupName: string, groupType: string, q: str
 };
 
 const ServicesScreen = () => {
-  const { navigate, displayName, unreadCounts, markConversationRead } = useApp();
+  const { navigate, unreadCounts, markConversationRead } = useApp();
   const [activeFilter, setActiveFilter] = useState<FilterKey>("All");
   const [query, setQuery] = useState("");
   const [newOpen, setNewOpen] = useState(false);
+  const [newQuery, setNewQuery] = useState("");
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const sentinelRef = useRef<HTMLDivElement>(null);
 
-  const initials = displayName.slice(0, 2).toUpperCase();
   const q = query.trim().toLowerCase();
 
   const filteredGroups = useMemo(
@@ -88,41 +83,29 @@ const ServicesScreen = () => {
     navigate(row.screen);
   };
 
+  const nq = newQuery.trim().toLowerCase();
+  const matchedContacts = semContacts.filter(
+    c => !nq || `${c.name} ${c.role}`.toLowerCase().includes(nq)
+  );
+  const matchedProviders = serviceProviders.filter(
+    p => p.verified && (!nq || `${p.name} ${p.category} ${p.city}`.toLowerCase().includes(nq))
+  );
+
+  const startConversation = () => {
+    setNewOpen(false);
+    setNewQuery("");
+    navigate("convo");
+  };
+
   return (
-    <ScreenLayout activeTab="services">
-      <div className="flex flex-col gap-4 pb-6">
-        {/* Header */}
-        <div className="flex items-center justify-between px-6">
-          <div className="flex items-center gap-3">
-            <Logo />
-            <span className="text-xl font-semibold text-text-primary tracking-tight">lulaSEM</span>
-          </div>
-          <button
-            onClick={() => navigate("settings")}
-            className="w-9 h-9 rounded-full bg-brand/10 border border-brand/30 text-brand text-xs font-semibold flex items-center justify-center shrink-0"
-          >
-            {initials}
-          </button>
-        </div>
+    <ScreenLayout activeTab="services" header={<AppHeader title="lulaSEM" />}>
+      <div className="flex flex-col gap-4 pb-6 pt-2">
+
+
 
         {/* Sponsored banner */}
         <div className="px-6">
-          <button
-            onClick={() => navigate("mf")}
-            className="w-full flex items-center gap-3 p-3 rounded-lg bg-brand/10 border border-brand/25 text-left"
-          >
-            <div className="w-9 h-9 rounded-md bg-brand/15 flex items-center justify-center shrink-0">
-              <FileText size={17} className="text-brand" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <span className="text-[9px] font-semibold tracking-widest text-brand">SPONSORED</span>
-                <span className="text-[10px] text-text-muted">City of Tshwane</span>
-              </div>
-              <div className="text-sm font-medium text-text-primary truncate">Renew your municipal account</div>
-            </div>
-            <span className="px-3 py-1 rounded-full bg-brand text-bg-primary text-xs font-medium shrink-0">Open</span>
-          </button>
+          <TshwaneSponsored onOpen={() => navigate("mf")} />
         </div>
 
         {/* Search + New */}
@@ -289,33 +272,86 @@ const ServicesScreen = () => {
         <div className="absolute inset-0 z-[300] flex items-end" onClick={() => setNewOpen(false)}>
           <div className="absolute inset-0 bg-bg-primary/70 backdrop-blur-sm" />
           <div
-            className="relative w-full rounded-t-2xl bg-bg-secondary border-t border-border-primary p-6 pb-8 flex flex-col gap-3"
+            className="relative w-full max-h-[78%] rounded-t-2xl bg-bg-secondary border-t border-border-primary p-6 pb-8 flex flex-col gap-4"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-semibold text-text-primary">Start something new</span>
+            <div className="flex items-center justify-between shrink-0">
+              <div>
+                <div className="text-sm font-semibold text-text-primary">New encrypted conversation</div>
+                <div className="text-[11px] text-text-muted">End-to-end encrypted on lulaSEM</div>
+              </div>
               <button onClick={() => setNewOpen(false)} className="text-text-muted" aria-label="Close">
                 <X size={16} />
               </button>
             </div>
-            {newActions.map(({ label, description, icon: Icon, screen }) => (
-              <button
-                key={label}
-                onClick={() => {
-                  setNewOpen(false);
-                  navigate(screen);
-                }}
-                className="flex items-center gap-3 p-3 rounded-lg border border-border-primary bg-bg-tertiary text-left"
-              >
-                <div className="w-9 h-9 rounded-md bg-brand/10 flex items-center justify-center shrink-0">
-                  <Icon size={17} className="text-brand" />
+
+            <div className="flex items-center gap-3 bg-bg-tertiary border border-border-primary rounded-full py-2.5 px-4 shrink-0">
+              <Search size={14} className="text-text-muted shrink-0" />
+              <input
+                value={newQuery}
+                onChange={e => setNewQuery(e.target.value)}
+                placeholder="Search contacts or providers"
+                className="flex-1 min-w-0 bg-transparent border-none outline-none text-xs text-text-primary placeholder:text-text-muted"
+              />
+            </div>
+
+            <div className="flex-1 overflow-y-auto hide-scrollbar flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <div className="text-[9px] font-semibold tracking-widest text-text-muted uppercase">
+                  Your contacts
                 </div>
-                <div className="min-w-0">
-                  <div className="text-sm font-medium text-text-primary">{label}</div>
-                  <div className="text-[11px] text-text-secondary truncate">{description}</div>
+                {matchedContacts.length === 0 && (
+                  <div className="text-[11px] text-text-muted">No contacts match your search.</div>
+                )}
+                {matchedContacts.map(c => (
+                  <button
+                    key={c.id}
+                    onClick={() => startConversation()}
+                    className="flex items-center gap-3 p-3 rounded-lg border border-border-primary bg-bg-tertiary text-left"
+                  >
+                    <div className="relative w-9 h-9 rounded-full bg-brand/10 flex items-center justify-center shrink-0">
+                      <span className="text-[10px] font-semibold text-brand">{c.initials}</span>
+                      {c.online && (
+                        <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success border border-bg-tertiary" />
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-sm font-medium text-text-primary truncate">{c.name}</div>
+                      <div className="text-[11px] text-text-secondary truncate">{c.role}</div>
+                    </div>
+                    <Lock size={13} className="text-text-muted shrink-0" />
+                  </button>
+                ))}
+              </div>
+
+              <div className="flex flex-col gap-2">
+                <div className="text-[9px] font-semibold tracking-widest text-text-muted uppercase">
+                  Verified service providers
                 </div>
-              </button>
-            ))}
+                {matchedProviders.length === 0 && (
+                  <div className="text-[11px] text-text-muted">No providers match your search.</div>
+                )}
+                {matchedProviders.map(p => (
+                  <button
+                    key={p.id}
+                    onClick={() => startConversation()}
+                    className="flex items-center gap-3 p-3 rounded-lg border border-border-primary bg-bg-tertiary text-left"
+                  >
+                    <div className="w-9 h-9 rounded-md bg-bg-secondary border border-border-primary flex items-center justify-center shrink-0">
+                      <span className="text-[9px] font-semibold text-text-secondary">{p.initials}</span>
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-sm font-medium text-text-primary truncate">{p.name}</span>
+                        <ShieldCheck size={12} className="text-brand shrink-0" />
+                      </div>
+                      <div className="text-[11px] text-text-secondary truncate">{p.category} · {p.city}</div>
+                    </div>
+                    <Lock size={13} className="text-text-muted shrink-0" />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       )}

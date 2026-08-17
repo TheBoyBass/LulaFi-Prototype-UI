@@ -1,132 +1,204 @@
+import { useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
-import Logo from "@/components/lulafi/Logo";
+import AppHeader from "@/components/lulafi/AppHeader";
+import SponsoredBanner from "@/components/lulafi/SponsoredBanner";
 import { useApp } from "@/context/AppContext";
-import { LulaButton } from "@/components/lulafi/LulaButton";
-import { LulaInput } from "@/components/lulafi/LulaInput";
 import { LulaBadge } from "@/components/lulafi/LulaBadge";
-import { ChevronRight, Link, Globe, Database, Trash2, HelpCircle, ClipboardList, Lock, Info, Shield, Key, User, Phone } from "lucide-react";
-import { ReactNode } from "react";
+import {
+  ChevronDown,
+  UserRound,
+  ShieldCheck,
+  SlidersHorizontal,
+  Briefcase,
+  Database,
+  LogOut,
+  ChevronRight,
+  Pencil,
+} from "lucide-react";
 
-interface IconConfig {
-  icon: ReactNode;
-  bg: string;
-}
+type Item = { name: string; sub?: string; value?: string; danger?: boolean };
+type SectionDef = { id: string; label: string; icon: typeof UserRound; items: Item[] };
 
-const ICONS: Record<string, IconConfig> = {
-  link: { icon: <Link size={18} className="text-blue-600 dark:text-blue-400" />, bg: "bg-blue-50 dark:bg-blue-900/20" },
-  globe: { icon: <Globe size={18} className="text-emerald-600 dark:text-emerald-400" />, bg: "bg-emerald-50 dark:bg-emerald-900/20" },
-  database: { icon: <Database size={18} className="text-indigo-600 dark:text-indigo-400" />, bg: "bg-indigo-50 dark:bg-indigo-900/20" },
-  trash: { icon: <Trash2 size={18} className="text-red-600 dark:text-red-400" />, bg: "bg-red-50 dark:bg-red-900/20" },
-  help: { icon: <HelpCircle size={18} className="text-amber-600 dark:text-amber-400" />, bg: "bg-amber-50 dark:bg-amber-900/20" },
-  clipboard: { icon: <ClipboardList size={18} className="text-sky-600 dark:text-sky-400" />, bg: "bg-sky-50 dark:bg-sky-900/20" },
-  lock: { icon: <Lock size={18} className="text-violet-600 dark:text-violet-400" />, bg: "bg-violet-50 dark:bg-violet-900/20" },
-  info: { icon: <Info size={18} className="text-blue-600 dark:text-blue-400" />, bg: "bg-blue-50 dark:bg-blue-900/20" },
-  shield: { icon: <Shield size={18} className="text-teal-600 dark:text-teal-400" />, bg: "bg-teal-50 dark:bg-teal-900/20" },
-  key: { icon: <Key size={18} className="text-orange-600 dark:text-orange-400" />, bg: "bg-orange-50 dark:bg-orange-900/20" },
-};
+const sections: SectionDef[] = [
+  {
+    id: "account",
+    label: "Account & profile",
+    icon: UserRound,
+    items: [
+      { name: "Personal details", sub: "Name, ID number, date of birth" },
+      { name: "Contact information", sub: "Phone number and email" },
+      { name: "Address", sub: "Residential and postal address" },
+    ],
+  },
+  {
+    id: "security",
+    label: "Security & devices",
+    icon: ShieldCheck,
+    items: [
+      { name: "Vault PIN", sub: "Update the PIN used to unlock lulaFi" },
+      { name: "Biometrics", sub: "Face ID / Touch ID", value: "On" },
+      { name: "Linked devices", sub: "Scan a QR code to link a device" },
+    ],
+  },
+  {
+    id: "preferences",
+    label: "Preferences",
+    icon: SlidersHorizontal,
+    items: [
+      { name: "Language", value: "English" },
+      { name: "Notifications", sub: "Forms, messages and emergency alerts" },
+      { name: "Appearance", sub: "Light or dark theme" },
+    ],
+  },
+  {
+    id: "provider",
+    label: "Provider tools",
+    icon: Briefcase,
+    items: [
+      { name: "Register as a provider", sub: "Receive forms from lulaFi users" },
+      { name: "Provider forms", sub: "Manage forms you publish" },
+    ],
+  },
+  {
+    id: "data",
+    label: "Data & privacy",
+    icon: Database,
+    items: [
+      { name: "Data Safe", sub: "Review details saved on this device" },
+      { name: "Export my data", sub: "Download a copy of your information" },
+      { name: "Terms & privacy", sub: "Read our terms and privacy policy" },
+      { name: "Clear local data", sub: "Remove your Data Safe contents", danger: true },
+    ],
+  },
+];
 
 const SettingsScreen = () => {
-  const { navigate, displayName, setDisplayName } = useApp();
+  const { navigate, displayName } = useApp();
+  const [open, setOpen] = useState<string | null>("account");
 
-  const Section = ({ label, children }: { label: string; children: React.ReactNode }) => (
-    <div className="mb-8">
-      <div className="text-sm font-semibold text-text-primary mb-3">{label}</div>
-      <div className="bg-bg-secondary border border-border-primary rounded-lg overflow-hidden shadow-sm">{children}</div>
-    </div>
-  );
+  const initials = displayName.slice(0, 2).toUpperCase();
 
-  const Row = ({ iconKey, name, sub, onClick, danger, toggle }: { iconKey: string; name: string; sub: string; onClick?: () => void; danger?: boolean; toggle?: boolean }) => {
-    const cfg = ICONS[iconKey] || ICONS.info;
-    return (
-      <div
-        onClick={onClick}
-        className={`flex items-center gap-4 px-5 py-4 cursor-pointer hover:bg-muted/10 transition-colors border-t border-border-primary first:border-t-0 ${!onClick ? "cursor-default" : ""}`}
-      >
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${cfg.bg}`}>{cfg.icon}</div>
-        <div className="flex-1 min-w-0">
-          <div className={`text-sm font-medium ${danger ? "text-destructive" : "text-text-primary"}`}>{name}</div>
-          <div className="text-xs text-text-muted mt-0.5">{sub}</div>
-        </div>
-        {toggle ? (
-          <div className="w-10 h-[22px] bg-brand rounded-full relative cursor-pointer shrink-0">
-            <div className="absolute top-0.5 right-0.5 w-[18px] h-[18px] bg-bg-primary rounded-full shadow-sm" />
-          </div>
-        ) : onClick ? (
-          <ChevronRight size={16} className="text-brand shrink-0" />
-        ) : null}
-      </div>
-    );
-  };
+  const toggle = (id: string) => setOpen(prev => (prev === id ? null : id));
 
   return (
-    <ScreenLayout activeTab="home">
-      <div className="px-6 pb-6">
-        <div className="flex flex-col items-center mb-4">
-          <Logo />
-          <div className="text-xl font-semibold text-text-primary mt-2">Settings</div>
+    <ScreenLayout activeTab="home" header={<AppHeader title="Settings" />}>
+      <div className="pb-8 pt-2">
+
+
+        <div className="px-6">
+          <SponsoredBanner onClick={() => navigate("org")} />
         </div>
 
-        <div className="h-px bg-border-primary mb-6" />
-
-        <Section label="Account">
-          <div className="px-5 py-5">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-14 h-14 rounded-full bg-brand flex items-center justify-center shrink-0">
-                <User size={28} className="text-primary-foreground" />
-              </div>
-              <div>
-                <div className="text-base font-semibold text-text-primary">Active Session</div>
-                <LulaBadge variant="success" className="mt-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-success" /> Active Session
-                </LulaBadge>
-              </div>
+        {/* Profile card */}
+        <div className="px-6 mt-6">
+          <div className="bg-bg-secondary border border-border-primary rounded-xl p-4 flex items-center gap-4">
+            <div className="w-14 h-14 rounded-full bg-brand flex items-center justify-center shrink-0">
+              <span className="text-base font-semibold text-primary-foreground">{initials}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm text-text-secondary mb-4">
-              <Phone size={14} className="text-brand" />
-              Phone Number: +27784588458
+            <div className="flex-1 min-w-0">
+              <div className="text-base font-semibold text-text-primary truncate">{displayName}</div>
+              <div className="text-xs text-text-muted mt-0.5">+27 78 458 8458</div>
+              <LulaBadge variant="success" className="mt-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-success" /> Active session
+              </LulaBadge>
             </div>
-            <div className="h-px bg-border-primary mb-4" />
-            <div className="mb-4">
-              <LulaInput
-                label="Display name"
-                value={displayName}
-                onChange={e => setDisplayName(e.target.value)}
-              />
-            </div>
-            <LulaButton onClick={() => {}} className="w-full rounded-lg gradient-brand text-white shadow-sm mb-3">
-              Save display name
-            </LulaButton>
-            <LulaButton variant="secondary" onClick={() => navigate("splash")} className="w-full rounded-lg border-brand text-brand">
-              Sign Out
-            </LulaButton>
+            <button
+              aria-label="Edit profile"
+              className="w-9 h-9 rounded-full bg-bg-tertiary border border-border-primary flex items-center justify-center text-text-secondary shrink-0 cursor-pointer"
+            >
+              <Pencil size={15} />
+            </button>
           </div>
-        </Section>
+        </div>
 
-        <Section label="Device">
-          <Row iconKey="link" name="Link device" sub="Scan a QR code to link this device" onClick={() => {}} />
-        </Section>
+        {/* Accordions */}
+        <div className="px-6 mt-6 flex flex-col gap-3">
+          {sections.map(({ id, label, icon: Icon, items }) => {
+            const expanded = open === id;
+            return (
+              <div
+                key={id}
+                className="bg-bg-secondary border border-border-primary rounded-xl overflow-hidden"
+              >
+                <button
+                  onClick={() => toggle(id)}
+                  aria-expanded={expanded}
+                  className="w-full flex items-center gap-3 px-4 py-4 text-left cursor-pointer"
+                >
+                  <div className="w-9 h-9 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
+                    <Icon size={17} className="text-brand" />
+                  </div>
+                  <span className="flex-1 text-sm font-medium text-text-primary">{label}</span>
+                  <ChevronDown
+                    size={16}
+                    className={`text-text-muted transition-transform duration-200 ${
+                      expanded ? "rotate-180" : ""
+                    }`}
+                  />
+                </button>
 
-        <Section label="Preferences">
-          <Row iconKey="globe" name="Language & Preferences" sub="Current selection: English" onClick={() => {}} />
-        </Section>
+                {expanded && (
+                  <div className="border-t border-border-primary">
+                    {items.map(item => (
+                      <button
+                        key={item.name}
+                        className="w-full flex items-center gap-3 px-4 py-3.5 text-left border-b border-border-primary last:border-b-0 hover:bg-brand/[0.04] transition-colors cursor-pointer"
+                      >
+                        <div className="flex-1 min-w-0">
+                          <div
+                            className={`text-sm font-medium ${
+                              item.danger ? "text-destructive" : "text-text-primary"
+                            }`}
+                          >
+                            {item.name}
+                          </div>
+                          {item.sub && (
+                            <div className="text-[11px] text-text-muted mt-0.5">{item.sub}</div>
+                          )}
+                        </div>
+                        {item.value && (
+                          <span className="text-xs text-text-secondary shrink-0">{item.value}</span>
+                        )}
+                        <ChevronRight size={15} className="text-text-muted shrink-0" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
 
-        <Section label="Data & Storage">
-          <Row iconKey="database" name="Data Safe" sub="Review and update details saved on device" onClick={() => {}} />
-          <Row iconKey="trash" name="Clear Data Safe" sub="Remove your local Data Safe contents" onClick={() => {}} danger />
-        </Section>
-
-        <Section label="About">
-          <Row iconKey="help" name="Help & Support" sub="Get help or contact support" onClick={() => {}} />
-          <Row iconKey="clipboard" name="Terms & Privacy" sub="Read our terms and privacy policy" onClick={() => {}} />
-          <Row iconKey="lock" name="Privacy & Security" sub="Control your data and security settings" onClick={() => {}} />
-          <Row iconKey="info" name="App Version" sub="1.0.40 (40)" />
-        </Section>
-
-        <div className="mb-8">
-          <div className="text-sm font-semibold text-text-primary mb-3">Vault Security</div>
-          <div className="bg-bg-secondary border border-border-primary rounded-lg overflow-hidden shadow-sm">
-            <Row iconKey="shield" name="Use biometrics" sub="Face ID / Touch ID currently enabled" toggle />
-            <Row iconKey="key" name="Change vault PIN" sub="Update PIN used when biometrics unavailable" onClick={() => {}} />
+          {/* Sign out */}
+          <div className="bg-bg-secondary border border-border-primary rounded-xl overflow-hidden">
+            <button
+              onClick={() => toggle("signout")}
+              aria-expanded={open === "signout"}
+              className="w-full flex items-center gap-3 px-4 py-4 text-left cursor-pointer"
+            >
+              <div className="w-9 h-9 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
+                <LogOut size={17} className="text-destructive" />
+              </div>
+              <span className="flex-1 text-sm font-medium text-text-primary">Sign out</span>
+              <ChevronDown
+                size={16}
+                className={`text-text-muted transition-transform duration-200 ${
+                  open === "signout" ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            {open === "signout" && (
+              <div className="border-t border-border-primary p-4">
+                <button
+                  onClick={() => navigate("splash")}
+                  className="w-full rounded-lg bg-destructive text-destructive-foreground text-sm font-semibold py-3 cursor-pointer"
+                >
+                  Sign out of lulaFi
+                </button>
+                <div className="text-[11px] text-text-muted text-center mt-3">
+                  App version 1.0.40 (40)
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

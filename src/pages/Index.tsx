@@ -12,19 +12,25 @@ import OrgDetailScreen from "@/screens/OrgDetailScreen";
 import ConsentScreen from "@/screens/ConsentScreen";
 import FormFillScreen from "@/screens/FormFillScreen";
 import MyFormsScreen from "@/screens/MyFormsScreen";
+import FormDetailScreen from "@/screens/FormDetailScreen";
 import QRScannerScreen from "@/screens/QRScannerScreen";
 import MessagesScreen from "@/screens/MessagesScreen";
 import ChatConvoScreen from "@/screens/ChatConvoScreen";
 import SettingsScreen from "@/screens/SettingsScreen";
+import ProviderSearchScreen from "@/screens/ProviderSearchScreen";
+import CalendarScreen from "@/screens/CalendarScreen";
+import MarketplaceScreen from "@/screens/MarketplaceScreen";
+import ActivityScreen from "@/screens/ActivityScreen";
 import { ScreenId } from "@/types/screens";
 
 const SCREEN_LABELS: Record<ScreenId, string> = {
   splash: "SPLASH", ob1: "ONBOARDING 1", ob2: "ONBOARDING 2", ob3: "ONBOARDING 3",
   signup: "SIGN UP", otp: "OTP VERIFY", name: "DISPLAY NAME",
-  home: "HOME (EMPTY)", home2: "HOME + ACTIVITY",
+  home: "HOME (EMPTY)", activity: "RECENT ACTIVITY",
   svc: "LULASEM", org: "ORG DETAIL", consent: "DATA CONSENT",
-  form: "FORM FILL", mf: "MY FORMS", qr: "QR SCANNER",
+  form: "FORM FILL", mf: "MY FORMS", fdetail: "FORM DETAILS", qr: "QR SCANNER",
   chat: "MESSAGES", convo: "CHAT CONVO", settings: "SETTINGS",
+  psearch: "SERVICE SEARCH", cal: "CALENDAR", market: "MARKETPLACE",
 };
 
 const SIDEBAR_ITEMS: { section: string; items: { label: string; screen: ScreenId }[] }[] = [
@@ -42,15 +48,19 @@ const SIDEBAR_ITEMS: { section: string; items: { label: string; screen: ScreenId
     section: "Main App",
     items: [
       { label: "Home", screen: "home" },
-      { label: "Home + Activity", screen: "home2" },
+      { label: "Recent Activity", screen: "activity" },
       { label: "lulaSEM", screen: "svc" },
       { label: "Org Detail", screen: "org" },
       { label: "Consent", screen: "consent" },
       { label: "Form Fill", screen: "form" },
       { label: "My Forms", screen: "mf" },
+      { label: "Form Details", screen: "fdetail" },
       { label: "QR Scanner", screen: "qr" },
       { label: "Messages", screen: "chat" },
       { label: "Chat Convo", screen: "convo" },
+      { label: "Service Search", screen: "psearch" },
+      { label: "Calendar", screen: "cal" },
+      { label: "Marketplace", screen: "market" },
       { label: "Settings", screen: "settings" },
     ],
   },
@@ -72,16 +82,20 @@ const getScreen = (id: ScreenId): JSX.Element => {
     otp: <OTPScreen />,
     name: <DisplayNameScreen />,
     home: <HomeScreen />,
-    home2: <HomeScreen withActivity />,
+    activity: <ActivityScreen />,
     svc: <ServicesScreen />,
     org: <OrgDetailScreen />,
     consent: <ConsentScreen />,
     form: <FormFillScreen />,
     mf: <MyFormsScreen />,
+    fdetail: <FormDetailScreen />,
     qr: <QRScannerScreen />,
     chat: <MessagesScreen />,
     convo: <ChatConvoScreen />,
     settings: <SettingsScreen />,
+    psearch: <ProviderSearchScreen />,
+    cal: <CalendarScreen />,
+    market: <MarketplaceScreen />,
   };
   return screens[id] || <SplashScreen />;
 };

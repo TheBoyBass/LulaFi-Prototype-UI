@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertTriangle, MapPin, Phone, Radio, UserRound } from "lucide-react";
 import { toast } from "sonner";
@@ -8,12 +10,21 @@ interface EmergencySheetProps {
 }
 
 const EmergencySheet = ({ open, onClose }: EmergencySheetProps) => {
+  const [host, setHost] = useState<Element | null>(null);
+
+  useEffect(() => {
+    setHost(document.querySelector(".phone-frame") ?? document.body);
+  }, []);
+
   const act = (message: string) => {
     onClose();
     toast(message);
   };
 
-  return (
+  if (!host) return null;
+
+  return createPortal(
+
     <AnimatePresence>
       {open && (
         <div className="absolute inset-0 z-[300] flex flex-col justify-end">
@@ -109,8 +120,10 @@ const EmergencySheet = ({ open, onClose }: EmergencySheetProps) => {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    host
   );
+
 };
 
 export default EmergencySheet;

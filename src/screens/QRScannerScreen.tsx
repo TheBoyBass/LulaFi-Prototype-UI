@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
 import BackButton from "@/components/lulafi/BackButton";
 import { useApp } from "@/context/AppContext";
@@ -9,6 +9,16 @@ import qrIcon from "@/assets/qr-icon.png";
 const QRScannerScreen = () => {
   const { navigate } = useApp();
   const [scanning, setScanning] = useState(false);
+  const [detected, setDetected] = useState(false);
+
+  useEffect(() => {
+    if (!scanning) {
+      setDetected(false);
+      return;
+    }
+    const t = window.setTimeout(() => setDetected(true), 2200);
+    return () => window.clearTimeout(t);
+  }, [scanning]);
 
   if (scanning) {
     return (
@@ -20,16 +30,22 @@ const QRScannerScreen = () => {
             <div className="absolute top-[15%] right-[18%] w-10 h-10 border-r-[3px] border-t-[3px] border-white rounded-tr-sm" />
             <div className="absolute bottom-[25%] left-[18%] w-10 h-10 border-l-[3px] border-b-[3px] border-white rounded-bl-sm" />
             <div className="absolute bottom-[25%] right-[18%] w-10 h-10 border-r-[3px] border-b-[3px] border-white rounded-br-sm" />
-            <div className="scan-line" />
-            <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2">
-              <div className="bg-black/60 text-white text-sm px-4 py-2 rounded-md whitespace-nowrap">
-                Position QR code within the frame
+            {!detected && <div className="scan-line" />}
+            <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2 w-[80%]">
+              <div className="bg-black/60 text-white text-sm px-4 py-2 rounded-md text-center">
+                {detected
+                  ? "QR code detected — Municipal Account Renewal form"
+                  : "Position QR code within the frame"}
               </div>
             </div>
           </div>
           <div className="px-6 pb-4 flex flex-col gap-3">
-            <LulaButton onClick={() => navigate("org")} className="w-full rounded-full gradient-brand text-white shadow-md">
-              Use System Scanner
+            <LulaButton
+              onClick={() => navigate("form")}
+              disabled={!detected}
+              className="w-full rounded-full gradient-brand text-white shadow-md"
+            >
+              {detected ? "Fill in this form" : "Scanning…"}
             </LulaButton>
             <LulaButton variant="secondary" onClick={() => setScanning(false)} className="w-full rounded-full border-brand text-brand">
               Close Scanner
@@ -39,6 +55,7 @@ const QRScannerScreen = () => {
       </ScreenLayout>
     );
   }
+
 
   return (
     <ScreenLayout activeTab="home">

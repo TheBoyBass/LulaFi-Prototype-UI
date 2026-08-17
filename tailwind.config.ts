@@ -56,6 +56,12 @@ export default {
           hover: "hsl(var(--brand-hover))",
           active: "hsl(var(--brand-active))",
         },
+        tshwane: {
+          green: "hsl(var(--tshwane-green))",
+          "green-dark": "hsl(var(--tshwane-green-dark))",
+          yellow: "hsl(var(--tshwane-yellow))",
+          orange: "hsl(var(--tshwane-orange))",
+        },
         success: "hsl(var(--success))",
         warning: "hsl(var(--warning))",
         info: "hsl(var(--info))",

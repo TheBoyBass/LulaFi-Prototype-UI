@@ -47,6 +47,13 @@
     --brand-hover: 173 80% 40%;
     --brand-active: 175 84% 32%;
 
+    /* Partner brand: City of Tshwane */
+    --tshwane-green: 104 61% 40%;
+    --tshwane-green-dark: 116 63% 25%;
+    --tshwane-yellow: 51 100% 55%;
+    --tshwane-orange: 30 92% 55%;
+    --gradient-tshwane: linear-gradient(135deg, hsl(104 61% 40%) 0%, hsl(116 63% 25%) 100%);
+
     /* Backgrounds */
     --bg-primary: 0 0% 100%;
     --bg-secondary: 210 40% 98%;
@@ -132,6 +139,13 @@
     --brand: 172 66% 50%;
     --brand-hover: 173 80% 40%;
     --brand-active: 175 84% 32%;
+
+    /* Partner brand: City of Tshwane */
+    --tshwane-green: 104 55% 46%;
+    --tshwane-green-dark: 116 50% 30%;
+    --tshwane-yellow: 51 100% 60%;
+    --tshwane-orange: 30 92% 60%;
+    --gradient-tshwane: linear-gradient(135deg, hsl(104 55% 40%) 0%, hsl(116 50% 22%) 100%);
 
     /* Backgrounds */
     --bg-primary: 210 61% 11%;
