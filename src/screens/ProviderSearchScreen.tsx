@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
 import BackButton from "@/components/lulafi/BackButton";
 import ProviderMap from "@/components/lulafi/ProviderMap";
 import { useApp } from "@/context/AppContext";
@@ -44,10 +45,10 @@ interface ProviderSearchScreenProps {
 }
 
 const ProviderSearchScreen = ({
-  tab = "home",
-  title = "Service search",
-  subtitle = "Find banks, municipalities and government services",
-  showBack = true,
+  tab = "discover",
+  title = "Discover",
+  subtitle = "Search banks, municipalities and government services",
+  showBack = false,
 }: ProviderSearchScreenProps) => {
   const { navigate, openProviderForm, openProviderDetail } = useApp();
   const [query, setQuery] = useState("");
@@ -135,13 +136,13 @@ const ProviderSearchScreen = ({
     <ScreenLayout
       activeTab={tab}
       header={
-        <div className="px-6 pt-2 pb-3 flex items-center gap-3">
-          {showBack && <BackButton to="home" />}
-          <div>
-            <h1 className="text-base font-semibold text-text-primary leading-tight">{title}</h1>
+        <>
+          <AppHeader title={title} />
+          <div className="px-6 pb-3 flex items-center gap-3">
+            {showBack && <BackButton to="home" />}
             <p className="text-[11px] text-text-muted">{subtitle}</p>
           </div>
-        </div>
+        </>
       }
     >
       <div className="pb-6">

@@ -46,7 +46,7 @@ const ActivityScreen = () => {
   };
 
   return (
-    <ScreenLayout activeTab="activity" header={<AppHeader />}>
+    <ScreenLayout activeTab="activity" header={<AppHeader title="Recent Activity" />}>
       <div className="pb-8 pt-2">
         <div className="px-6">
           <h1 className="text-2xl font-semibold text-text-primary leading-tight">Recent activity</h1>

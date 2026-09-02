@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
 import BackButton from "@/components/lulafi/BackButton";
 import { useApp } from "@/context/AppContext";
 import { toast } from "@/hooks/use-toast";
@@ -46,7 +47,7 @@ const FormFillScreen = () => {
   const fieldCount = form?.fields ?? 13;
 
   return (
-    <ScreenLayout activeTab="services">
+    <ScreenLayout activeTab="services" header={<AppHeader title={title} />}>
       <div className="flex items-center px-6 pb-4">
         <BackButton to={provider ? "org" : "org"} />
         <div className="flex-1 pl-3">
@@ -118,11 +119,12 @@ const FormFillScreen = () => {
         </div>
 
         <LulaButton
-          onClick={() => navigate("activity")}
+          onClick={() => navigate("consent")}
           className="w-full rounded-full gradient-brand text-white shadow-md"
         >
           {provider ? `Send to ${provider.name}` : "Send to organization"}
         </LulaButton>
+
       </div>
     </ScreenLayout>
   );

@@ -9,9 +9,11 @@ interface ScreenLayoutProps {
   activeTab?: NavTab;
   hideNav?: boolean;
   header?: React.ReactNode;
+  /** Pinned area rendered directly above the bottom navigation */
+  footer?: React.ReactNode;
 }
 
-const ScreenLayout = ({ children, activeTab, hideNav, header }: ScreenLayoutProps) => {
+const ScreenLayout = ({ children, activeTab, hideNav, header, footer }: ScreenLayoutProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(false);
 
@@ -38,6 +40,8 @@ const ScreenLayout = ({ children, activeTab, hideNav, header }: ScreenLayoutProp
             {children}
           </div>
         </div>
+
+        {footer && <div className="shrink-0 relative z-20 bg-bg-primary">{footer}</div>}
 
         {!hideNav && activeTab && (
           <div className="pointer-events-none absolute bottom-12 left-0 right-0 z-0">

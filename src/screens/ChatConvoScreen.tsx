@@ -1,86 +1,200 @@
-import { useState } from "react";
-import StatusBar from "@/components/lulafi/StatusBar";
-import BackButton from "@/components/lulafi/BackButton";
-import { Send, Paperclip, Lock, MessageCircle, CheckCheck } from "lucide-react";
-
-interface Message {
-  text: string;
-  outgoing: boolean;
-  time: string;
-}
+import { useEffect, useMemo, useRef, useState } from "react";
+import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
+import { useApp } from "@/context/AppContext";
+import { getProvider } from "@/data/providers";
+import { statusStyles } from "@/data/lulasem";
+import { findClientThread, ClientMessage } from "@/data/clientConversations";
+import {
+  ChevronLeft,
+  Paperclip,
+  Mic,
+  Send,
+  CheckCheck,
+  MessageCircle,
+  FileText,
+  Lock,
+} from "lucide-react";
 
 const ChatConvoScreen = () => {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [input, setInput] = useState("");
+  const { activeClientConvoId, activeProviderId, navigate } = useApp();
+  const provider = getProvider(activeProviderId);
 
-  const sendMessage = () => {
-    const text = input.trim();
+  const thread = useMemo(() => findClientThread(activeClientConvoId), [activeClientConvoId]);
+  const { row, group } = thread;
+
+  // A conversation started from a provider detail page has no seeded thread
+  const adHoc = !activeClientConvoId;
+  const partnerName = adHoc ? provider?.name ?? "New conversation" : group.name;
+  const isForm = !adHoc && row.kind === "form";
+  const Icon = isForm ? FileText : MessageCircle;
+
+  const [messages, setMessages] = useState<ClientMessage[]>(adHoc ? [] : thread.messages);
+  const [draft, setDraft] = useState("");
+  const endRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMessages(adHoc ? [] : thread.messages);
+    setDraft("");
+  }, [thread, adHoc]);
+
+  useEffect(() => {
+    endRef.current?.scrollIntoView({ block: "nearest" });
+  }, [messages]);
+
+  const send = () => {
+    const text = draft.trim();
     if (!text) return;
-    const time = new Date().toLocaleTimeString("en-ZA", { hour: "2-digit", minute: "2-digit" });
-    setMessages(prev => [...prev, { text, outgoing: true, time }]);
-    setInput("");
+    const time = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    setMessages(prev => [
+      ...prev,
+      { id: `s${prev.length + 1}`, author: "You", side: "out", text, time, delivered: true },
+    ]);
+    setDraft("");
     setTimeout(() => {
-      const replyTime = new Date().toLocaleTimeString("en-ZA", { hour: "2-digit", minute: "2-digit" });
-      setMessages(prev => [...prev, { text: "Thanks for reaching out! A representative will assist you shortly.", outgoing: false, time: replyTime }]);
+      const replyTime = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      setMessages(prev => [
+        ...prev,
+        {
+          id: `s${prev.length + 1}`,
+          author: partnerName,
+          side: "in",
+          text: isForm
+            ? "Thanks, we have added this to the form record and will update the status."
+            : "Thanks for reaching out! A representative will assist you shortly.",
+          time: replyTime,
+        },
+      ]);
     }, 1000);
   };
 
+  const composer = (
+    <div className="px-6 pt-2 pb-3">
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          send();
+        }}
+        className="flex items-center gap-2 rounded-full border border-border-primary bg-bg-secondary px-4 py-2.5"
+      >
+        <Paperclip size={16} className="shrink-0 text-text-muted" />
+        <input
+          value={draft}
+          onChange={e => setDraft(e.target.value)}
+          placeholder="Type a message"
+          className="min-w-0 flex-1 bg-transparent border-none outline-none text-sm text-text-primary placeholder:text-text-muted"
+        />
+        <Mic size={16} className="shrink-0 text-text-muted" />
+        <button
+          type="submit"
+          aria-label="Send message"
+          className="w-9 h-9 shrink-0 rounded-full bg-brand flex items-center justify-center text-bg-primary cursor-pointer"
+        >
+          <Send size={15} />
+        </button>
+      </form>
+    </div>
+  );
+
   return (
-    <div className="absolute inset-0 flex flex-col bg-bg-primary">
-      <StatusBar />
-      <div className="flex items-center px-6 pb-4 border-b border-border shrink-0">
-        <BackButton to="chat" />
-        <div className="w-[38px] h-[38px] rounded-full bg-destructive flex items-center justify-center text-foreground text-[13px] font-semibold ml-3">TS</div>
-        <div className="flex-1 pl-2">
-          <div className="text-sm font-medium text-text-primary">TechNova Solutions</div>
-          <div className="text-[11px] text-success flex items-center gap-1"><Lock size={10} /> End-to-end encrypted</div>
-        </div>
-      </div>
-      <div className="flex-1 px-6 py-4 flex flex-col overflow-y-auto hide-scrollbar">
-        {messages.length === 0 ? (
-          <div className="flex-1 flex flex-col items-center justify-center gap-4 text-center">
-            <div className="w-16 h-16 rounded-full bg-bg-tertiary border border-border flex items-center justify-center">
-              <MessageCircle size={26} className="text-text-muted" />
-            </div>
-            <div>
-              <div className="text-lg font-medium text-text-primary mb-2">No messages yet</div>
-              <div className="text-sm text-text-secondary max-w-[200px] mx-auto">Send your first message to TechNova Solutions</div>
+    <ScreenLayout
+      activeTab={adHoc ? "discover" : "services"}
+      header={<AppHeader title="Conversation" />}
+      footer={composer}
+    >
+      <div className="flex min-h-full flex-col px-6 pb-6">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => navigate(adHoc && provider ? "org" : "svc")}
+            aria-label="Back"
+            className="w-[34px] h-[34px] shrink-0 rounded-lg bg-bg-tertiary border border-border-primary flex items-center justify-center cursor-pointer text-text-primary"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <div
+            className={`w-9 h-9 shrink-0 rounded-md flex items-center justify-center ${
+              isForm ? "bg-info/10" : "bg-brand/10"
+            }`}
+          >
+            <Icon size={16} className={isForm ? "text-info" : "text-brand"} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <h1 className="truncate text-base font-semibold text-text-primary">
+              {adHoc ? partnerName : `${group.name} · ${row.title}`}
+            </h1>
+            <div className="truncate text-[11px] text-text-secondary">
+              {adHoc ? "General conversation" : isForm ? row.ref : group.type}
             </div>
           </div>
-        ) : (
-          <div className="flex flex-col gap-3">
-            {messages.map((m, i) => (
-              <div key={i} className="flex flex-col">
-                <div className={`max-w-[76%] px-4 py-3 rounded-xl text-sm leading-relaxed ${
-                  m.outgoing
-                    ? "bg-brand text-primary-foreground self-end rounded-br-md"
-                    : "bg-bg-tertiary text-text-primary self-start border border-border rounded-bl-md"
-                }`}>
-                  {m.text}
-                </div>
-                <div className={`text-[11px] text-text-muted mt-0.5 ${m.outgoing ? "text-right" : ""}`}>
-                  {m.time}{m.outgoing ? <span className="inline-flex ml-1"><CheckCheck size={12} /></span> : ""}
-                </div>
+          <span className="shrink-0 rounded-sm border border-brand/30 bg-brand/10 px-2 py-0.5 text-[9px] font-semibold text-brand">
+            {isForm ? "FORM" : "GENERAL"}
+          </span>
+        </div>
+
+        <div className="mt-2 flex items-center gap-1 text-[10px] text-success">
+          <Lock size={10} /> End-to-end encrypted
+        </div>
+
+        {isForm && (
+          <div className="mt-3 flex items-center gap-3 rounded-lg border border-border-primary bg-bg-secondary p-3">
+            <div className="min-w-0 flex-1">
+              <div className="truncate text-sm text-text-primary">
+                {row.title} · {row.ref}
               </div>
-            ))}
+              {row.status && (
+                <div className={`text-[10px] font-semibold ${statusStyles[row.status] ?? "text-text-muted"}`}>
+                  {row.status}
+                </div>
+              )}
+            </div>
+            <button
+              onClick={() => navigate("mf")}
+              className="shrink-0 rounded-md border border-border-primary px-3 py-1.5 text-xs font-medium text-text-primary cursor-pointer hover:border-brand transition-colors"
+            >
+              View form
+            </button>
           </div>
         )}
+
+        <div className="mt-5 flex flex-1 flex-col gap-4">
+          {messages.length === 0 && (
+            <div className="mt-8 text-center text-sm text-text-muted">
+              No messages yet. Send your first message to {partnerName}.
+            </div>
+          )}
+          {messages.map(m =>
+            m.system ? (
+              <div key={m.id} className="self-center text-center text-[10px] text-text-muted">
+                {m.text}
+              </div>
+            ) : (
+              <div key={m.id} className={m.side === "out" ? "self-end" : "self-start"}>
+                {m.side === "in" && (
+                  <div className="mb-1 text-[10px] font-medium text-text-secondary">{m.author}</div>
+                )}
+                <div
+                  className={`max-w-[260px] rounded-xl px-3.5 py-2.5 text-sm ${
+                    m.side === "out" ? "bg-brand/10 text-text-primary" : "bg-bg-tertiary text-text-primary"
+                  }`}
+                >
+                  {m.text}
+                </div>
+                <div
+                  className={`mt-1 flex items-center gap-1 text-[10px] text-text-muted ${
+                    m.side === "out" ? "justify-end" : ""
+                  }`}
+                >
+                  {m.delivered && <span>Delivered ·</span>}
+                  {m.time}
+                  {m.delivered && <CheckCheck size={12} className="text-brand" />}
+                </div>
+              </div>
+            )
+          )}
+          <div ref={endRef} />
+        </div>
       </div>
-      <div className="bg-bg-secondary border-t border-border px-4 py-3 pb-4 flex items-center gap-3 shrink-0">
-        <Paperclip size={18} className="text-text-muted cursor-pointer" />
-        <input
-          type="text"
-          value={input}
-          onChange={e => setInput(e.target.value)}
-          onKeyDown={e => e.key === "Enter" && sendMessage()}
-          placeholder="Type a message..."
-          className="flex-1 bg-bg-tertiary border border-border rounded-full px-4 py-2.5 text-sm text-text-primary outline-none placeholder:text-text-muted focus:border-brand transition-colors"
-        />
-        <button onClick={sendMessage} className="w-[38px] h-[38px] rounded-full bg-brand flex items-center justify-center cursor-pointer shrink-0 border-none hover:bg-brand-hover transition-colors">
-          <Send size={16} className="text-primary-foreground" />
-        </button>
-      </div>
-    </div>
+    </ScreenLayout>
   );
 };
 

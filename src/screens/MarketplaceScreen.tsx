@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
 import BackButton from "@/components/lulafi/BackButton";
 import { LulaButton } from "@/components/lulafi/LulaButton";
 import { LulaBadge } from "@/components/lulafi/LulaBadge";
@@ -94,13 +95,13 @@ const MarketplaceScreen = () => {
     <ScreenLayout
       activeTab="home"
       header={
-        <div className="px-6 pt-2 pb-3 flex items-center gap-3">
-          <BackButton to="home" />
-          <div>
-            <h1 className="text-base font-semibold text-text-primary leading-tight">Marketplace</h1>
+        <>
+          <AppHeader title="Marketplace" />
+          <div className="px-6 pb-3 flex items-center gap-3">
+            <BackButton to="home" />
             <p className="text-[11px] text-text-muted">Connector apps</p>
           </div>
-        </div>
+        </>
       }
     >
       <div className="px-6 pb-10 flex flex-col gap-6">

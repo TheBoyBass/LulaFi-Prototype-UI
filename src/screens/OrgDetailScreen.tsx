@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
 import BackButton from "@/components/lulafi/BackButton";
 import { useApp } from "@/context/AppContext";
 import { LulaCard } from "@/components/lulafi/LulaCard";
@@ -20,10 +21,11 @@ import {
   Sparkles,
   ChevronRight,
   SearchX,
+  MessageSquareLock,
 } from "lucide-react";
 
 const OrgDetailScreen = () => {
-  const { navigate, activeProviderId, openProviderForm } = useApp();
+  const { navigate, activeProviderId, openProviderForm, openClientConvo } = useApp();
   const provider = getProvider(activeProviderId);
   const [query, setQuery] = useState("");
 
@@ -41,7 +43,7 @@ const OrgDetailScreen = () => {
 
   if (!provider) {
     return (
-      <ScreenLayout activeTab="discover">
+      <ScreenLayout activeTab="discover" header={<AppHeader title="Provider" />}>
         <div className="flex items-center px-6 pb-4">
           <BackButton to="psearch" />
         </div>
@@ -60,20 +62,24 @@ const OrgDetailScreen = () => {
     <ScreenLayout
       activeTab="discover"
       header={
-        <div className="px-6 pt-2 pb-3 flex items-center gap-3">
-          <BackButton to="psearch" />
-          <div className="min-w-0">
-            <div className="flex items-center gap-1.5">
-              <h1 className="text-base font-semibold text-text-primary truncate">{provider.name}</h1>
-              {provider.verified && <BadgeCheck size={15} className="text-brand shrink-0" />}
-            </div>
+        <>
+          <AppHeader title={provider.name} />
+          <div className="px-6 pb-3 flex items-center gap-3 min-w-0">
+            <BackButton to="psearch" />
             <p className="text-[11px] text-text-muted truncate">{provider.category}</p>
+            {provider.verified && <BadgeCheck size={14} className="text-brand shrink-0" />}
           </div>
-        </div>
+        </>
       }
     >
       <div className="px-6 flex flex-col gap-6 pb-6">
         <LulaCard className="flex flex-col gap-3 p-5">
+          <div className="flex items-start gap-2">
+            <h1 className="text-xl font-bold text-text-primary leading-tight min-w-0">
+              {provider.name}
+            </h1>
+            {provider.verified && <BadgeCheck size={18} className="text-brand shrink-0 mt-1" />}
+          </div>
           <div className="flex flex-wrap items-center gap-2">
             <LulaBadge variant="success">Active</LulaBadge>
             <LulaBadge variant="neutral">
@@ -112,6 +118,13 @@ const OrgDetailScreen = () => {
             ))}
           </div>
         </LulaCard>
+
+        <button
+          onClick={() => openClientConvo(null)}
+          className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand text-primary-foreground py-3.5 text-sm font-medium cursor-pointer hover:bg-brand-hover transition-colors"
+        >
+          <MessageSquareLock size={16} /> Contact now
+        </button>
 
         <div className="flex items-center gap-3 bg-bg-secondary border border-border-primary rounded-full py-3 px-4">
           <Search size={15} className="text-text-muted shrink-0" />

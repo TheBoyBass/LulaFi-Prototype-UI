@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
 import BackButton from "@/components/lulafi/BackButton";
 import { useApp } from "@/context/AppContext";
 import { appointments } from "@/data/providers";
@@ -59,13 +60,13 @@ const CalendarScreen = () => {
     <ScreenLayout
       activeTab="home"
       header={
-        <div className="px-6 pt-2 pb-3 flex items-center gap-3">
-          <BackButton to="home" />
-          <div>
-            <h1 className="text-base font-semibold text-text-primary leading-tight">Calendar</h1>
+        <>
+          <AppHeader title="Calendar" />
+          <div className="px-6 pb-3 flex items-center gap-3">
+            <BackButton to="home" />
             <p className="text-[11px] text-text-muted">Appointments booked through your forms</p>
           </div>
-        </div>
+        </>
       }
     >
       <div className="pb-6">

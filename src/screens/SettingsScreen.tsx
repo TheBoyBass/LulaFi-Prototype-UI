@@ -1,90 +1,119 @@
-import { useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
 import AppHeader from "@/components/lulafi/AppHeader";
 import SponsoredBanner from "@/components/lulafi/SponsoredBanner";
 import { useApp } from "@/context/AppContext";
 import { LulaBadge } from "@/components/lulafi/LulaBadge";
 import {
-  ChevronDown,
+  SettingsSections,
+  useSettingsState,
+  type SettingsSectionDef,
+} from "@/components/lulafi/SettingsSections";
+import { useAppearanceSettings } from "@/components/lulafi/appearanceSettings";
+import {
   UserRound,
   ShieldCheck,
   SlidersHorizontal,
   Briefcase,
   Database,
-  LogOut,
-  ChevronRight,
   Pencil,
 } from "lucide-react";
 
-type Item = { name: string; sub?: string; value?: string; danger?: boolean };
-type SectionDef = { id: string; label: string; icon: typeof UserRound; items: Item[] };
-
-const sections: SectionDef[] = [
-  {
-    id: "account",
-    label: "Account & profile",
-    icon: UserRound,
-    items: [
-      { name: "Personal details", sub: "Name, ID number, date of birth" },
-      { name: "Contact information", sub: "Phone number and email" },
-      { name: "Address", sub: "Residential and postal address" },
-    ],
-  },
-  {
-    id: "security",
-    label: "Security & devices",
-    icon: ShieldCheck,
-    items: [
-      { name: "Vault PIN", sub: "Update the PIN used to unlock lulaFi" },
-      { name: "Biometrics", sub: "Face ID / Touch ID", value: "On" },
-      { name: "Linked devices", sub: "Scan a QR code to link a device" },
-    ],
-  },
-  {
-    id: "preferences",
-    label: "Preferences",
-    icon: SlidersHorizontal,
-    items: [
-      { name: "Language", value: "English" },
-      { name: "Notifications", sub: "Forms, messages and emergency alerts" },
-      { name: "Appearance", sub: "Light or dark theme" },
-    ],
-  },
-  {
-    id: "provider",
-    label: "Provider tools",
-    icon: Briefcase,
-    items: [
-      { name: "Register as a provider", sub: "Receive forms from lulaFi users" },
-      { name: "Provider forms", sub: "Manage forms you publish" },
-    ],
-  },
-  {
-    id: "data",
-    label: "Data & privacy",
-    icon: Database,
-    items: [
-      { name: "Data Safe", sub: "Review details saved on this device" },
-      { name: "Export my data", sub: "Download a copy of your information" },
-      { name: "Terms & privacy", sub: "Read our terms and privacy policy" },
-      { name: "Clear local data", sub: "Remove your Data Safe contents", danger: true },
-    ],
-  },
-];
-
 const SettingsScreen = () => {
-  const { navigate, displayName } = useApp();
-  const [open, setOpen] = useState<string | null>("account");
+  const { navigate, displayName, isDark } = useApp();
 
-  const initials = displayName.slice(0, 2).toUpperCase();
+  const state = useSettingsState({
+    openSection: "account",
+    texts: {
+      fullName: displayName,
+      idNumber: "9•••••••••••3",
+      phone: "+27 78 458 8458",
+      email: "theboybass@example.co.za",
+      address: "12 Church St, Pretoria, 0002",
+    },
+    selects: {
+      language: "English",
+      appearance: isDark ? "Dark" : "Light",
+      pinTimeout: "5 minutes",
+      alerts: "In-app + push",
+    },
+    toggles: {
+      biometrics: true,
+      darkMode: isDark,
+      notifyForms: true,
+      notifyMessages: true,
+      notifyEmergency: true,
+      providerMode: false,
+    },
+  });
 
-  const toggle = (id: string) => setOpen(prev => (prev === id ? null : id));
+  const appearanceItems = useAppearanceSettings(state);
+
+
+  const sections: SettingsSectionDef[] = [
+    {
+      id: "account",
+      label: "Account & profile",
+      icon: UserRound,
+      items: [
+        { kind: "text", id: "fullName", name: "Full name", sub: "Shown on forms you submit" },
+        { kind: "text", id: "idNumber", name: "ID number", sub: "Used to verify your identity" },
+        { kind: "text", id: "phone", name: "Phone number", sub: "Used for OTP sign-in" },
+        { kind: "text", id: "email", name: "Email address", sub: "Form updates and receipts" },
+        { kind: "text", id: "address", name: "Address", sub: "Residential and postal address" },
+      ],
+    },
+    {
+      id: "security",
+      label: "Security & devices",
+      icon: ShieldCheck,
+      items: [
+        { kind: "action", id: "vaultPin", name: "Vault PIN", sub: "Update the PIN used to unlock lulaFi", done: "Vault PIN updated" },
+        { kind: "toggle", id: "biometrics", name: "Biometrics", sub: "Face ID / Touch ID" },
+        { kind: "select", id: "pinTimeout", name: "Auto-lock", sub: "Lock lulaFi when idle", options: ["1 minute", "5 minutes", "15 minutes", "Never"] },
+        { kind: "action", id: "devices", name: "Linked devices", sub: "Scan a QR code to link a device", done: "Device linking started" },
+      ],
+    },
+    {
+      id: "preferences",
+      label: "Preferences",
+      icon: SlidersHorizontal,
+      items: [
+        { kind: "select", id: "language", name: "Language", sub: "App display language", options: ["English", "isiZulu", "Sesotho", "Afrikaans"] },
+        ...appearanceItems,
+
+        { kind: "toggle", id: "notifyForms", name: "Form updates", sub: "Alert when a form status changes" },
+        { kind: "toggle", id: "notifyMessages", name: "lulaSEM messages", sub: "Alert on new secure messages" },
+        { kind: "toggle", id: "notifyEmergency", name: "Emergency alerts", sub: "Critical alerts from providers" },
+        { kind: "select", id: "alerts", name: "Delivery channel", sub: "Where alerts are sent", options: ["In-app only", "In-app + push", "In-app + SMS", "All channels"] },
+      ],
+    },
+    {
+      id: "provider",
+      label: "Provider tools",
+      icon: Briefcase,
+      items: [
+        { kind: "toggle", id: "providerMode", name: "Register as a provider", sub: "Receive forms from lulaFi users" },
+        { kind: "action", id: "providerForms", name: "Provider forms", sub: "Manage forms you publish", done: "Provider forms opened" },
+      ],
+    },
+    {
+      id: "data",
+      label: "Data & privacy",
+      icon: Database,
+      items: [
+        { kind: "action", id: "dataSafe", name: "Data Safe", sub: "Review details saved on this device", done: "Data Safe opened" },
+        { kind: "action", id: "export", name: "Export my data", sub: "Download a copy of your information", done: "Export queued" },
+        { kind: "action", id: "terms", name: "Terms & privacy", sub: "Read our terms and privacy policy", done: "Terms & privacy opened" },
+        { kind: "action", id: "clear", name: "Clear local data", sub: "Remove your Data Safe contents", danger: true, done: "Local data cleared" },
+      ],
+    },
+  ];
+
+  const initials = state.texts.fullName.slice(0, 2).toUpperCase();
 
   return (
     <ScreenLayout activeTab="home" header={<AppHeader title="Settings" />}>
       <div className="pb-8 pt-2">
-
-
         <div className="px-6">
           <SponsoredBanner onClick={() => navigate("org")} />
         </div>
@@ -96,14 +125,20 @@ const SettingsScreen = () => {
               <span className="text-base font-semibold text-primary-foreground">{initials}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <div className="text-base font-semibold text-text-primary truncate">{displayName}</div>
-              <div className="text-xs text-text-muted mt-0.5">+27 78 458 8458</div>
+              <div className="text-base font-semibold text-text-primary truncate">
+                {state.texts.fullName}
+              </div>
+              <div className="text-xs text-text-muted mt-0.5">{state.texts.phone}</div>
               <LulaBadge variant="success" className="mt-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-success" /> Active session
               </LulaBadge>
             </div>
             <button
               aria-label="Edit profile"
+              onClick={() => {
+                state.setOpen("account");
+                state.setEditing("fullName");
+              }}
               className="w-9 h-9 rounded-full bg-bg-tertiary border border-border-primary flex items-center justify-center text-text-secondary shrink-0 cursor-pointer"
             >
               <Pencil size={15} />
@@ -111,96 +146,11 @@ const SettingsScreen = () => {
           </div>
         </div>
 
-        {/* Accordions */}
-        <div className="px-6 mt-6 flex flex-col gap-3">
-          {sections.map(({ id, label, icon: Icon, items }) => {
-            const expanded = open === id;
-            return (
-              <div
-                key={id}
-                className="bg-bg-secondary border border-border-primary rounded-xl overflow-hidden"
-              >
-                <button
-                  onClick={() => toggle(id)}
-                  aria-expanded={expanded}
-                  className="w-full flex items-center gap-3 px-4 py-4 text-left cursor-pointer"
-                >
-                  <div className="w-9 h-9 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
-                    <Icon size={17} className="text-brand" />
-                  </div>
-                  <span className="flex-1 text-sm font-medium text-text-primary">{label}</span>
-                  <ChevronDown
-                    size={16}
-                    className={`text-text-muted transition-transform duration-200 ${
-                      expanded ? "rotate-180" : ""
-                    }`}
-                  />
-                </button>
-
-                {expanded && (
-                  <div className="border-t border-border-primary">
-                    {items.map(item => (
-                      <button
-                        key={item.name}
-                        className="w-full flex items-center gap-3 px-4 py-3.5 text-left border-b border-border-primary last:border-b-0 hover:bg-brand/[0.04] transition-colors cursor-pointer"
-                      >
-                        <div className="flex-1 min-w-0">
-                          <div
-                            className={`text-sm font-medium ${
-                              item.danger ? "text-destructive" : "text-text-primary"
-                            }`}
-                          >
-                            {item.name}
-                          </div>
-                          {item.sub && (
-                            <div className="text-[11px] text-text-muted mt-0.5">{item.sub}</div>
-                          )}
-                        </div>
-                        {item.value && (
-                          <span className="text-xs text-text-secondary shrink-0">{item.value}</span>
-                        )}
-                        <ChevronRight size={15} className="text-text-muted shrink-0" />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-
-          {/* Sign out */}
-          <div className="bg-bg-secondary border border-border-primary rounded-xl overflow-hidden">
-            <button
-              onClick={() => toggle("signout")}
-              aria-expanded={open === "signout"}
-              className="w-full flex items-center gap-3 px-4 py-4 text-left cursor-pointer"
-            >
-              <div className="w-9 h-9 rounded-lg bg-destructive/10 flex items-center justify-center shrink-0">
-                <LogOut size={17} className="text-destructive" />
-              </div>
-              <span className="flex-1 text-sm font-medium text-text-primary">Sign out</span>
-              <ChevronDown
-                size={16}
-                className={`text-text-muted transition-transform duration-200 ${
-                  open === "signout" ? "rotate-180" : ""
-                }`}
-              />
-            </button>
-            {open === "signout" && (
-              <div className="border-t border-border-primary p-4">
-                <button
-                  onClick={() => navigate("splash")}
-                  className="w-full rounded-lg bg-destructive text-destructive-foreground text-sm font-semibold py-3 cursor-pointer"
-                >
-                  Sign out of lulaFi
-                </button>
-                <div className="text-[11px] text-text-muted text-center mt-3">
-                  App version 1.0.40 (40)
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        <SettingsSections
+          sections={sections}
+          {...state}
+          onSignOut={() => navigate("splash")}
+        />
       </div>
     </ScreenLayout>
   );

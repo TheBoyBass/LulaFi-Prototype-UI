@@ -2,7 +2,7 @@ import { Home, MessageSquareLock, FileText, Compass, Activity } from "lucide-rea
 import { useApp } from "@/context/AppContext";
 import { ScreenId } from "@/types/screens";
 
-export type NavTab = "home" | "services" | "forms" | "discover" | "activity" | "chat";
+export type NavTab = "home" | "services" | "forms" | "discover" | "activity";
 
 interface BottomNavProps {
   active: NavTab;
@@ -15,7 +15,7 @@ const tabs: Tab[] = [
   { key: "home", label: "Home", icon: Home, screen: "home" },
   { key: "services", label: "lulaSEM", icon: MessageSquareLock, screen: "svc" },
   { key: "forms", label: "My Forms", icon: FileText, screen: "mf" },
-  { key: "discover", label: "Discover", icon: Compass, screen: "chat" },
+  { key: "discover", label: "Discover", icon: Compass, screen: "psearch" },
   { key: "activity", label: "Activity", icon: Activity, screen: "activity" },
 ];
 

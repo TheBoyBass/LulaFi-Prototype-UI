@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
 import BackButton from "@/components/lulafi/BackButton";
 import { useApp } from "@/context/AppContext";
 import { LulaButton } from "@/components/lulafi/LulaButton";
@@ -22,7 +23,7 @@ const QRScannerScreen = () => {
 
   if (scanning) {
     return (
-      <ScreenLayout activeTab="home">
+      <ScreenLayout activeTab="home" header={<AppHeader title="Scan & Submit" />}>
         <div className="flex flex-col flex-1 min-h-0">
           <div className="flex-1 relative bg-neutral-800 rounded-lg mx-4 mt-2 mb-4 overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-neutral-700 via-neutral-800 to-neutral-900" />
@@ -58,7 +59,7 @@ const QRScannerScreen = () => {
 
 
   return (
-    <ScreenLayout activeTab="home">
+    <ScreenLayout activeTab="home" header={<AppHeader title="Scan & Submit" />}>
       <div className="flex justify-between items-center px-6 pb-4">
         <BackButton to="home" />
       </div>

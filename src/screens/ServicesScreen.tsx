@@ -20,7 +20,7 @@ const matches = (row: Conversation, groupName: string, groupType: string, q: str
 };
 
 const ServicesScreen = () => {
-  const { navigate, unreadCounts, markConversationRead } = useApp();
+  const { navigate, unreadCounts, markConversationRead, openClientConvo } = useApp();
   const [activeFilter, setActiveFilter] = useState<FilterKey>("All");
   const [query, setQuery] = useState("");
   const [newOpen, setNewOpen] = useState(false);
@@ -80,7 +80,7 @@ const ServicesScreen = () => {
 
   const openConversation = (row: Conversation) => {
     markConversationRead(row.id);
-    navigate(row.screen);
+    openClientConvo(row.id);
   };
 
   const nq = newQuery.trim().toLowerCase();
@@ -94,7 +94,7 @@ const ServicesScreen = () => {
   const startConversation = () => {
     setNewOpen(false);
     setNewQuery("");
-    navigate("convo");
+    openClientConvo(null);
   };
 
   return (
