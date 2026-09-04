@@ -316,26 +316,8 @@
   box-shadow: 0 0 8px hsl(var(--brand));
 }
 
-/* OTP input */
-.otp-box {
-  width: 44px;
-  height: 52px;
-  background: hsl(var(--bg-secondary));
-  border: 1px solid hsl(var(--border));
-  border-radius: var(--radius-md);
-  text-align: center;
-  font-size: 20px;
-  font-weight: 600;
-  font-family: 'Inter', sans-serif;
-  color: hsl(var(--text-primary));
-  outline: none;
-  transition: border-color 150ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-.otp-box:focus {
-  border-color: hsl(var(--brand));
-}
-
 /* On-device notifications: keep sonner banners inside the phone frame */
+
 .phone-frame [data-sonner-toaster] {
   position: absolute !important;
   width: 100% !important;

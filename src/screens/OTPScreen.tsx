@@ -1,67 +1,92 @@
-import { useRef } from "react";
-import StatusBar from "@/components/lulafi/StatusBar";
-import BackButton from "@/components/lulafi/BackButton";
+import { useEffect, useState } from "react";
+import ScreenLayout from "@/components/lulafi/ScreenLayout";
+import AppHeader from "@/components/lulafi/AppHeader";
 import { useApp } from "@/context/AppContext";
-import { LulaButton } from "@/components/lulafi/LulaButton";
-import { LulaCard } from "@/components/lulafi/LulaCard";
-import otpCheckmark from "@/assets/otp-checkmark.png";
+import { Delete, ShieldCheck } from "lucide-react";
+
+const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "del"] as const;
 
 const OTPScreen = () => {
   const { navigate } = useApp();
-  const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+  const [code, setCode] = useState("");
 
-  const handleInput = (index: number, value: string) => {
-    if (value.length === 1 && index < 5) {
-      inputsRef.current[index + 1]?.focus();
-    }
+  useEffect(() => {
+    if (code.length < 6) return;
+    const timer = setTimeout(() => navigate("name"), 450);
+    return () => clearTimeout(timer);
+  }, [code, navigate]);
+
+  const press = (key: string) => {
+    if (key === "del") return setCode(c => c.slice(0, -1));
+    if (key === "") return;
+    setCode(c => (c.length >= 6 ? c : c + key));
   };
 
   return (
-    <div className="absolute inset-0 flex flex-col px-6 pb-12 screen-enter overflow-y-auto hide-scrollbar">
-      <StatusBar />
-      <div className="flex justify-between items-center pb-4">
-        <BackButton to="signup" />
-      </div>
-      <div className="flex flex-col items-center gap-4 mt-4 mb-8 text-center">
-        <img src={otpCheckmark} alt="Verify" className="w-20 h-20 object-contain" />
-        <div className="text-2xl font-semibold text-text-primary">Verify Your Number</div>
-        <div className="text-sm text-text-secondary">
-          We've sent a 6-digit code to<br />
-          <span className="text-brand font-semibold">+27784588458</span>{" "}
-          <span className="cursor-pointer text-text-muted text-xs">✏</span>
+    <ScreenLayout hideNav header={<AppHeader title="Verify" />}>
+      <div className="pb-4">
+        <div className="px-6 mt-2 flex flex-col items-center text-center">
+          <ShieldCheck size={30} className="text-brand" />
+          <h1 className="text-2xl font-bold text-text-primary mt-2">Verify Your Number</h1>
+          <p className="text-sm text-text-secondary mt-1">
+            Enter the 6-digit code sent to<br />
+            <span className="text-brand font-semibold">+27784588458</span>
+          </p>
         </div>
-      </div>
-      <LulaCard className="flex flex-col gap-6">
-        <div className="text-sm text-center font-medium text-text-primary">Enter Code</div>
-        <div className="flex gap-3 justify-center">
+
+        <div className="px-6 mt-2">
+          <div className="bg-bg-secondary border border-border-primary rounded-xl px-4 py-3 flex items-center gap-3">
+            <span className="w-10 h-10 rounded-full bg-brand/15 flex items-center justify-center shrink-0">
+              <ShieldCheck size={18} className="text-brand" />
+            </span>
+            <span className="text-sm text-text-primary font-semibold truncate">
+              +27784588458 <span className="text-text-muted font-normal">· SMS code</span>
+            </span>
+          </div>
+        </div>
+
+        {/* Code dots */}
+        <div className="mt-3 flex items-center justify-center gap-3">
           {[0, 1, 2, 3, 4, 5].map(i => (
-            <input
+            <span
               key={i}
-              ref={el => { inputsRef.current[i] = el; }}
-              className="otp-box"
-              maxLength={1}
-              type="text"
-              onInput={(e) => handleInput(i, (e.target as HTMLInputElement).value)}
+              className={`w-3.5 h-3.5 rounded-full transition-colors ${
+                code.length > i ? "bg-brand" : "bg-bg-tertiary border border-border-primary"
+              }`}
             />
           ))}
         </div>
-        <LulaButton onClick={() => navigate("name")} className="w-full rounded-full gradient-brand text-white shadow-md">
-          Verify
-        </LulaButton>
-      </LulaCard>
-      <div className="text-xs text-text-muted text-center mt-6">
-        Resend code in <span className="text-brand">60s</span>
-      </div>
-      <div className="flex flex-col gap-3 mt-6 text-sm text-text-muted">
-        <div className="flex items-start gap-2">
-          <span>ℹ️</span> We will automatically redirect you once the code is verified.
+
+        {/* Keypad */}
+        <div className="px-10 mt-2 grid grid-cols-3 gap-y-1">
+          {KEYS.map(key => (
+            <button
+              key={key || "blank"}
+              onClick={() => press(key)}
+              aria-label={key === "del" ? "Delete" : key === "" ? "Empty" : key}
+              disabled={key === ""}
+              className="h-12 flex items-center justify-center text-2xl font-semibold text-text-primary cursor-pointer rounded-xl hover:bg-brand/[0.06] transition-colors disabled:opacity-0 disabled:cursor-default"
+            >
+              {key === "del" ? <Delete size={24} className="text-text-primary" /> : key}
+            </button>
+          ))}
         </div>
-        <div className="flex items-start gap-2">
-          <span>✉️</span> Need help? Contact support@lulafi.com
+
+        <div className="px-6 mt-2 flex flex-col items-center gap-2 text-center">
+          <p className="text-sm text-text-secondary">
+            Resend code in <span className="text-brand font-semibold">60s</span>
+          </p>
+          <button
+            onClick={() => navigate("signup")}
+            className="mt-1 py-2 text-base font-semibold text-text-primary cursor-pointer"
+          >
+            Back to Sign Up
+          </button>
         </div>
       </div>
-    </div>
+    </ScreenLayout>
   );
 };
 
 export default OTPScreen;
+

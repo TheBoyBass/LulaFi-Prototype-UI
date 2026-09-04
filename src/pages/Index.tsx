@@ -17,6 +17,7 @@ import FormDetailScreen from "@/screens/FormDetailScreen";
 import QRScannerScreen from "@/screens/QRScannerScreen";
 import ChatConvoScreen from "@/screens/ChatConvoScreen";
 import SettingsScreen from "@/screens/SettingsScreen";
+import ProfileScreen from "@/screens/ProfileScreen";
 import ProviderSearchScreen from "@/screens/ProviderSearchScreen";
 import CalendarScreen from "@/screens/CalendarScreen";
 import MarketplaceScreen from "@/screens/MarketplaceScreen";
@@ -89,7 +90,7 @@ const SCREEN_LABELS: Record<ScreenId, string> = {
   home: "HOME (EMPTY)", activity: "RECENT ACTIVITY",
   svc: "LULASEM", org: "ORG DETAIL", consent: "DATA CONSENT", pinauth: "PIN AUTHORISATION",
   form: "FORM FILL", mf: "MY FORMS", fdetail: "FORM DETAILS", qr: "QR SCANNER",
-  convo: "CHAT CONVO", settings: "SETTINGS",
+  convo: "CHAT CONVO", settings: "SETTINGS", profile: "MY PROFILE",
   psearch: "DISCOVER", cal: "CALENDAR", market: "MARKETPLACE",
 };
 
@@ -122,6 +123,7 @@ const SIDEBAR_ITEMS: { section: string; items: { label: string; screen: ScreenId
       { label: "Calendar", screen: "cal" },
       { label: "Marketplace", screen: "market" },
       { label: "Settings", screen: "settings" },
+      { label: "My Profile", screen: "profile" },
     ],
   },
 ];
@@ -153,6 +155,7 @@ const getScreen = (id: ScreenId): JSX.Element => {
     qr: <QRScannerScreen />,
     convo: <ChatConvoScreen />,
     settings: <SettingsScreen />,
+    profile: <ProfileScreen />,
     psearch: <ProviderSearchScreen />,
     cal: <CalendarScreen />,
     market: <MarketplaceScreen />,

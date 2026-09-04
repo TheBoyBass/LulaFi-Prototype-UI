@@ -32,6 +32,11 @@ interface AppContextType {
   markProviderAlertsSeen: (tab: "inbox" | "sem") => void;
   displayName: string;
   setDisplayName: (name: string) => void;
+  /** Client profile shown on Settings, Profile and prefilled forms */
+  phone: string;
+  setPhone: (phone: string) => void;
+  email: string;
+  setEmail: (email: string) => void;
   isDark: boolean;
   toggleTheme: () => void;
   unreadCounts: Record<string, number>;
@@ -55,7 +60,9 @@ interface AppContextType {
 
 
 
-const AppContext = createContext<AppContextType | null>(null);
+export type { AppContextType };
+
+export const AppContext = createContext<AppContextType | null>(null);
 
 export const useApp = () => {
   const ctx = useContext(AppContext);
@@ -116,6 +123,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const deepLink = readDeepLink();
   const [currentScreen, setCurrentScreen] = useState<ScreenId>(deepLink.screen ?? "splash");
   const [displayName, setDisplayName] = useState("TheBoyBass");
+  const [phone, setPhone] = useState("+27 82 445 9012");
+  const [email, setEmail] = useState("theboybass@lulafi.co.za");
   const [isDark, setIsDark] = useState(false);
   const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>(initialUnread);
   const [activeProviderId, setActiveProviderId] = useState<string | null>(deepLink.provider);
@@ -306,9 +315,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     (providerId: string, formId?: string) => {
       setActiveProviderId(providerId);
       setActiveProviderFormId(formId ?? null);
-      setCurrentScreen("form");
+      // Consent + vault PIN come first, then the prefilled form
+      setCurrentScreen("consent");
       setArrivedViaDeepLink(false);
-      syncUrl("form", providerId);
+      syncUrl("consent", providerId);
     },
     [syncUrl]
   );
@@ -349,6 +359,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         displayName,
         setDisplayName,
+        phone,
+        setPhone,
+        email,
+        setEmail,
         isDark,
         toggleTheme,
         unreadCounts,

@@ -12,10 +12,11 @@ interface AppHeaderProps {
 }
 
 const AppHeader = ({ title }: AppHeaderProps) => {
-  const { navigate } = useApp();
+  const { navigate, displayName } = useApp();
   const [emergencyOpen, setEmergencyOpen] = useState(false);
   const { scrollToTop, scrolled } = useScreenScroll();
 
+  const label = title ?? displayName;
 
   return (
     <>
@@ -23,12 +24,13 @@ const AppHeader = ({ title }: AppHeaderProps) => {
       <div className="flex items-center justify-between px-6 pb-3">
         <div className="flex items-center gap-2 min-w-0">
           <Logo size="sm" />
-          {title && (
+          {label && (
             <span className="text-sm font-medium text-text-muted truncate border-l border-border-primary pl-2 ml-1">
-              {title}
+              {label}
             </span>
           )}
         </div>
+
         <div className="flex items-center gap-3">
           {scrolled && (
             <button

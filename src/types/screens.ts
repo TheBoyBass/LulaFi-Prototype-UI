@@ -4,7 +4,7 @@ export type ScreenId =
   | "home" | "activity"
   | "svc" | "org" | "consent" | "pinauth"
   | "form" | "mf" | "fdetail" | "qr"
-  | "convo" | "settings"
+  | "convo" | "settings" | "profile"
   | "psearch" | "cal" | "market";
 
 export type ProviderScreenId =

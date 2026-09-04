@@ -7,8 +7,9 @@ import { toast } from "@/hooks/use-toast";
 import { LulaButton } from "@/components/lulafi/LulaButton";
 import { LulaInput } from "@/components/lulafi/LulaInput";
 import { LulaBadge } from "@/components/lulafi/LulaBadge";
-import { getProvider, getProviderForm, userProfile, buildProviderLink } from "@/data/providers";
-import { FileText, Sparkles, Share2, Link as LinkIcon } from "lucide-react";
+import { getProvider, getProviderForm, buildProviderLink, getFormFieldPlan } from "@/data/providers";
+import { FileText, Sparkles, Share2, Link as LinkIcon, ShieldCheck, Pencil } from "lucide-react";
+import { toast as sonner } from "sonner";
 
 const fallbackFields = ["First Name", "Last Name", "ID Number"];
 
@@ -17,13 +18,19 @@ const FormFillScreen = () => {
   const provider = getProvider(activeProviderId);
   const form = getProviderForm(activeProviderId, activeProviderFormId);
 
-  const prefilledLabels = form?.prefill ?? fallbackFields;
+  const plan = getFormFieldPlan(form);
+  const prefilledLabels = plan.autofilled.length
+    ? plan.autofilled.map(f => f.label)
+    : fallbackFields;
   const [values, setValues] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const next: Record<string, string> = {};
-    prefilledLabels.forEach(label => {
-      next[label] = provider ? userProfile[label] ?? "" : "";
+    plan.autofilled.forEach(f => {
+      next[f.label] = provider ? f.value : "";
+    });
+    plan.manual.forEach(label => {
+      next[label] = "";
     });
     setValues(next);
   }, [activeProviderId, activeProviderFormId]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -47,9 +54,9 @@ const FormFillScreen = () => {
   const fieldCount = form?.fields ?? 13;
 
   return (
-    <ScreenLayout activeTab="services" header={<AppHeader title={title} />}>
+    <ScreenLayout activeTab="services" header={<AppHeader title="FormFill" />}>
       <div className="flex items-center px-6 pb-4">
-        <BackButton to={provider ? "org" : "org"} />
+        <BackButton to="org" />
         <div className="flex-1 pl-3">
           <div className="text-sm font-semibold text-text-primary">
             {provider?.name ?? "18012715663"}
@@ -70,7 +77,7 @@ const FormFillScreen = () => {
             </LulaBadge>
             {provider && (
               <LulaBadge variant="success">
-                <Sparkles size={12} className="inline" /> {prefilledLabels.length} prefilled
+                <Sparkles size={12} className="inline" /> {plan.autofilled.length} autofilled
               </LulaBadge>
             )}
           </div>
@@ -87,9 +94,10 @@ const FormFillScreen = () => {
               </div>
             )}
             <div className="flex items-start gap-3 p-3.5 bg-brand/10 border border-brand/30 rounded-xl">
-              <Sparkles size={16} className="text-brand shrink-0 mt-0.5" />
+              <ShieldCheck size={16} className="text-brand shrink-0 mt-0.5" />
               <div className="text-xs text-text-secondary">
-                Prefilled from your lulaFi profile. Edit any field before submitting.
+                Autofilled from your Data Vault after your PIN authorisation. Edit any field, then
+                complete the remaining {plan.manual.length} below before sending.
               </div>
             </div>
             <button
@@ -104,7 +112,7 @@ const FormFillScreen = () => {
 
         <div className="flex flex-col gap-3">
           <div className="text-base font-semibold text-text-primary pb-2">
-            Section A — Your details
+            Section A — Autofilled from your vault
           </div>
           {prefilledLabels.map(label => (
             <div key={label} className="bg-bg-secondary border border-border-primary rounded-lg p-4">
@@ -118,8 +126,32 @@ const FormFillScreen = () => {
           ))}
         </div>
 
+        {provider && (
+          <div className="flex flex-col gap-3">
+            <div className="text-base font-semibold text-text-primary pb-2 flex items-center gap-2">
+              <Pencil size={14} className="text-text-muted" />
+              Section B — Complete these yourself
+            </div>
+            {plan.manual.map(label => (
+              <div key={label} className="bg-bg-secondary border border-border-primary rounded-lg p-4">
+                <LulaInput
+                  label={label}
+                  value={values[label] ?? ""}
+                  placeholder="Not in your vault — add it here"
+                  onChange={e => setValues(v => ({ ...v, [label]: e.target.value }))}
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
         <LulaButton
-          onClick={() => navigate("consent")}
+          onClick={() => {
+            sonner.success(`Submitted to ${provider?.name ?? "the organisation"}`, {
+              description: form?.name ?? title,
+            });
+            navigate("activity");
+          }}
           className="w-full rounded-full gradient-brand text-white shadow-md"
         >
           {provider ? `Send to ${provider.name}` : "Send to organization"}

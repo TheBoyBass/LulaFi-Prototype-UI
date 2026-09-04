@@ -138,6 +138,15 @@ const ProviderFormsInboxScreen = () => {
                     </LulaBadge>
                   </div>
                   <div className="text-xs text-text-secondary mt-1 truncate">{s.submittedBy}</div>
+                  <div className="mt-2 rounded-lg bg-bg-tertiary border border-border-primary px-3 py-2 flex flex-col gap-1">
+                    {s.answers.slice(0, 2).map(a => (
+                      <div key={a.label} className="flex items-baseline gap-2">
+                        <span className="text-[10px] text-text-muted shrink-0">{a.label}</span>
+                        <span className="text-[11px] text-text-primary truncate">{a.value}</span>
+                      </div>
+                    ))}
+                  </div>
+
                   <div className="flex flex-wrap items-center gap-3 mt-2 text-[10px] text-text-muted">
                     <span className="flex items-center gap-1">
                       <CalendarDays size={11} />

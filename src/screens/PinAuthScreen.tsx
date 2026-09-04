@@ -20,9 +20,9 @@ const PinAuthScreen = () => {
   useEffect(() => {
     if (pin.length < 4) return;
     const timer = setTimeout(() => {
-      toast.success(`Submitted to ${orgName}`, { description: formName });
+      toast.success("Vault unlocked — fields autofilled", { description: `${orgName} · ${formName}` });
       setPin("");
-      navigate("activity");
+      navigate("form");
     }, 450);
     return () => clearTimeout(timer);
   }, [pin, orgName, formName, navigate]);
@@ -30,8 +30,8 @@ const PinAuthScreen = () => {
   const press = (key: string) => {
     if (key === "del") return setPin(p => p.slice(0, -1));
     if (key === "face") {
-      toast.success(`Verified with Face ID — submitted to ${orgName}`);
-      return navigate("activity");
+      toast.success("Verified with Face ID — fields autofilled");
+      return navigate("form");
     }
     setPin(p => (p.length >= 4 ? p : p + key));
   };
@@ -39,18 +39,18 @@ const PinAuthScreen = () => {
 
   return (
     <ScreenLayout hideNav header={<AppHeader title="PIN authorisation" />}>
-      <div className="pb-8">
-        <div className="px-6 mt-6 flex flex-col items-center text-center">
+      <div className="pb-4">
+        <div className="px-6 mt-2 flex flex-col items-center text-center">
           <Lock size={30} className="text-brand" />
-          <h1 className="text-2xl font-bold text-text-primary mt-3">Authorise data sharing</h1>
+          <h1 className="text-2xl font-bold text-text-primary mt-2">Authorise data sharing</h1>
           <p className="text-sm text-text-muted mt-1">Step 2 of 2</p>
-          <p className="text-sm text-text-secondary mt-4">
-            Enter your PIN to share <span className="font-semibold text-text-primary">{formName}</span>{" "}
-            with <span className="font-semibold text-text-primary">{orgName}</span>.
+          <p className="text-sm text-text-secondary mt-3">
+            Enter your vault PIN to autofill <span className="font-semibold text-text-primary">{formName}</span>{" "}
+            for <span className="font-semibold text-text-primary">{orgName}</span>.
           </p>
         </div>
 
-        <div className="px-6 mt-4">
+        <div className="px-6 mt-3">
           <div className="bg-bg-secondary border border-border-primary rounded-xl px-4 py-3 flex items-center gap-3">
             <span className="w-10 h-10 rounded-full bg-success/15 flex items-center justify-center shrink-0">
               <Globe size={18} className="text-success" />
@@ -62,7 +62,7 @@ const PinAuthScreen = () => {
         </div>
 
         {/* PIN dots */}
-        <div className="mt-6 flex items-center justify-center gap-6">
+        <div className="mt-4 flex items-center justify-center gap-6">
           {[0, 1, 2, 3].map(i => (
             <span
               key={i}
@@ -74,13 +74,13 @@ const PinAuthScreen = () => {
         </div>
 
         {/* Keypad */}
-        <div className="px-10 mt-6 grid grid-cols-3 gap-y-4">
+        <div className="px-10 mt-3 grid grid-cols-3 gap-y-1">
           {KEYS.map(key => (
             <button
               key={key}
               onClick={() => press(key)}
               aria-label={key === "del" ? "Delete" : key === "face" ? "Use Face ID" : key}
-              className="h-14 flex items-center justify-center text-2xl font-semibold text-text-primary cursor-pointer rounded-xl hover:bg-brand/[0.06] transition-colors"
+              className="h-12 flex items-center justify-center text-2xl font-semibold text-text-primary cursor-pointer rounded-xl hover:bg-brand/[0.06] transition-colors"
             >
               {key === "face" ? (
                 <ScanFace size={26} className="text-text-primary" />
@@ -93,9 +93,9 @@ const PinAuthScreen = () => {
           ))}
         </div>
 
-        <div className="px-6 mt-6 flex flex-col items-center gap-3 text-center">
+        <div className="px-6 mt-3 flex flex-col items-center gap-2 text-center">
           <p className="text-sm text-text-secondary leading-relaxed">
-            By entering your PIN, you authorise lulaFi to share this information with{" "}
+            By entering your PIN, you authorise lulaFi to autofill your vault details for{" "}
             <span className="font-semibold text-text-primary">{orgName}</span>.
           </p>
           <p className="text-sm text-text-secondary">

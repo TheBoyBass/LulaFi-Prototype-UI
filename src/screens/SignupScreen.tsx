@@ -10,19 +10,19 @@ const SignupScreen = () => {
   const { navigate } = useApp();
 
   return (
-    <div className="absolute inset-0 flex flex-col px-6 pb-12 screen-enter overflow-y-auto hide-scrollbar">
+    <div className="absolute inset-0 flex flex-col px-6 pb-6 screen-enter overflow-hidden">
       <StatusBar />
-      <div className="flex justify-center pb-2">
+      <div className="flex justify-center">
         <Logo />
       </div>
-      <div className="flex flex-col items-center gap-1 mb-4">
+      <div className="flex flex-col items-center gap-1 mb-1">
         <div className="text-2xl font-semibold text-text-primary">Welcome</div>
       </div>
-      <div className="flex justify-center mb-4">
-        <img src={signupShield} alt="Security" className="w-[200px] h-[200px] object-contain" />
+      <div className="flex justify-center">
+        <img src={signupShield} alt="Security" className="w-[140px] h-[140px] object-contain" />
       </div>
-      <div className="text-lg font-semibold text-text-primary text-center mb-4">Create Account</div>
-      <div className="flex flex-col gap-6">
+      <div className="text-lg font-semibold text-text-primary text-center mb-3">Create Account</div>
+      <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-2">
           <div className="flex gap-2">
             <div className="flex items-center gap-1.5 px-4 py-3 bg-bg-secondary border border-border-primary rounded-md text-sm font-medium text-text-primary whitespace-nowrap cursor-pointer">
@@ -34,7 +34,7 @@ const SignupScreen = () => {
         <LulaButton onClick={() => navigate("otp")} className="w-full rounded-full gradient-brand text-white shadow-md">
           Send OTP
         </LulaButton>
-        <LulaCard className="flex flex-col gap-4">
+        <LulaCard className="flex flex-col gap-3">
           {[
             { icon: <Lock size={16} className="text-brand" />, text: "Your phone number is used for verification only" },
             { icon: <Shield size={16} className="text-brand" />, text: "All your data is encrypted and stored locally" },

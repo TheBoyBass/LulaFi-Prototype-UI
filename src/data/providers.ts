@@ -283,3 +283,28 @@ export const getProviderForm = (providerId?: string | null, formId?: string | nu
   const forms = getProviderForms(providerId);
   return forms.find(f => f.id === formId) ?? forms[0];
 };
+
+/** Fields the client still has to complete themselves, per form */
+const manualFieldPool = [
+  "Reason for request",
+  "Preferred branch or office",
+  "Supporting document reference",
+  "Alternative contact number",
+  "Preferred contact time",
+  "Additional notes",
+];
+
+export type FormFieldPlan = {
+  autofilled: { label: string; value: string }[];
+  manual: string[];
+};
+
+/** Splits a form into vault-autofilled fields and fields the client completes */
+export const getFormFieldPlan = (form?: { fields: number; prefill: string[] } | null): FormFieldPlan => {
+  if (!form) return { autofilled: [], manual: manualFieldPool.slice(0, 2) };
+  const autofilled = form.prefill
+    .filter(label => userProfile[label])
+    .map(label => ({ label, value: userProfile[label] }));
+  const remaining = Math.max(1, Math.min(form.fields - autofilled.length, manualFieldPool.length));
+  return { autofilled, manual: manualFieldPool.slice(0, remaining) };
+};

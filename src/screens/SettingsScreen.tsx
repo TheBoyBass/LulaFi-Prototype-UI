@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import ScreenLayout from "@/components/lulafi/ScreenLayout";
 import AppHeader from "@/components/lulafi/AppHeader";
 import SponsoredBanner from "@/components/lulafi/SponsoredBanner";
@@ -19,15 +20,15 @@ import {
 } from "lucide-react";
 
 const SettingsScreen = () => {
-  const { navigate, displayName, isDark } = useApp();
+  const { navigate, displayName, phone, email, isDark } = useApp();
 
   const state = useSettingsState({
     openSection: "account",
     texts: {
       fullName: displayName,
       idNumber: "9•••••••••••3",
-      phone: "+27 78 458 8458",
-      email: "theboybass@example.co.za",
+      phone,
+      email,
       address: "12 Church St, Pretoria, 0002",
     },
     selects: {
@@ -45,6 +46,14 @@ const SettingsScreen = () => {
       providerMode: false,
     },
   });
+
+  // Keep the account rows in sync with edits saved on the profile screen
+  useEffect(() => {
+    state.onTextChange("fullName", displayName);
+    state.onTextChange("phone", phone);
+    state.onTextChange("email", email);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [displayName, phone, email]);
 
   const appearanceItems = useAppearanceSettings(state);
 
@@ -135,10 +144,7 @@ const SettingsScreen = () => {
             </div>
             <button
               aria-label="Edit profile"
-              onClick={() => {
-                state.setOpen("account");
-                state.setEditing("fullName");
-              }}
+              onClick={() => navigate("profile")}
               className="w-9 h-9 rounded-full bg-bg-tertiary border border-border-primary flex items-center justify-center text-text-secondary shrink-0 cursor-pointer"
             >
               <Pencil size={15} />
