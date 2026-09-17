@@ -1,12 +1,39 @@
 import ProviderLayout from "@/components/lulafi/ProviderLayout";
 import { LulaBadge } from "@/components/lulafi/LulaBadge";
 import { useApp } from "@/context/AppContext";
-import { getSubmission } from "@/data/provider";
-import { UserPlus, RefreshCw, MessageCircle, MoreVertical, ChevronLeft } from "lucide-react";
+import { FORWARD_DESTINATION, SubmissionStatus } from "@/data/provider";
+import {
+  UserPlus,
+  RefreshCw,
+  MessageCircle,
+  MoreVertical,
+  ChevronLeft,
+  CheckCircle2,
+  Send,
+  Building2,
+} from "lucide-react";
+
+const statusVariant: Record<SubmissionStatus, "success" | "warning" | "error" | "info" | "neutral"> = {
+  New: "success",
+  "In Progress": "info",
+  Overdue: "warning",
+  Approved: "success",
+  Forwarded: "info",
+  Closed: "neutral",
+};
 
 const ProviderSubmissionScreen = () => {
-  const { activeSubmissionId, navigateProvider } = useApp();
-  const submission = getSubmission(activeSubmissionId);
+  const {
+    activeSubmissionId,
+    navigateProvider,
+    getSubmissionById,
+    approveSubmission,
+    forwardSubmission,
+  } = useApp();
+  const submission = getSubmissionById(activeSubmissionId);
+
+  const isApproved = submission.status === "Approved";
+  const isForwarded = submission.status === "Forwarded";
 
   const actions = [
     { label: "Assign", icon: UserPlus, screen: "pupdate" as const },
@@ -28,13 +55,12 @@ const ProviderSubmissionScreen = () => {
           Submission {submission.ref}
         </h1>
 
-
         <div className="mt-4 rounded-xl border border-border-primary border-l-4 border-l-brand bg-bg-secondary p-4">
           <div className="flex items-start gap-2">
             <span className="flex-1 text-base font-semibold text-text-primary">
               {submission.formName}
             </span>
-            <LulaBadge variant="success" className="uppercase text-[10px]">
+            <LulaBadge variant={statusVariant[submission.status]} className="uppercase text-[10px]">
               {submission.status}
             </LulaBadge>
             <MoreVertical size={18} className="text-text-muted" />
@@ -56,8 +82,74 @@ const ProviderSubmissionScreen = () => {
               Assigned:{" "}
               <span className="text-text-primary">{submission.assignedTo ?? "Unassigned"}</span>
             </div>
+            {submission.forwardedTo && (
+              <div className="text-text-secondary">
+                Forwarded to <span className="text-text-primary">{submission.forwardedTo}</span>
+              </div>
+            )}
           </div>
         </div>
+
+        <h2 className="mt-7 text-lg font-semibold text-text-primary">Approve and forward</h2>
+        <div className="mt-3 rounded-xl border border-border-primary bg-bg-secondary p-4">
+          <div className="flex items-start gap-3">
+            <div className="w-10 h-10 shrink-0 rounded-lg bg-brand/10 flex items-center justify-center">
+              <Building2 size={18} className="text-brand" />
+            </div>
+            <div className="min-w-0">
+              <div className="text-sm font-medium text-text-primary">{FORWARD_DESTINATION}</div>
+              <div className="text-xs text-text-secondary mt-0.5">
+                Approve the client's answers, then send them on for processing.
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-4 flex flex-col gap-2.5">
+            <button
+              onClick={() => approveSubmission(submission.id)}
+              disabled={isApproved || isForwarded}
+              className="flex items-center justify-center gap-2 py-3 rounded-full bg-bg-tertiary border border-border-primary text-sm font-medium text-text-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <CheckCircle2 size={16} className="text-success" />
+              {isApproved || isForwarded ? "Approved" : "Approve submission"}
+            </button>
+            <button
+              onClick={() => forwardSubmission(submission.id)}
+              disabled={!isApproved}
+              className="flex items-center justify-center gap-2 py-3 rounded-full bg-brand text-sm font-semibold text-bg-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Send size={16} />
+              {isForwarded ? `Sent to ${FORWARD_DESTINATION}` : `Forward to ${FORWARD_DESTINATION}`}
+            </button>
+          </div>
+          {!isApproved && !isForwarded && (
+            <p className="mt-3 text-[11px] text-text-muted">
+              Approve first — forwarding stays locked until the submission is approved.
+            </p>
+          )}
+        </div>
+
+        {submission.timeline && submission.timeline.length > 0 && (
+          <>
+            <h2 className="mt-7 text-lg font-semibold text-text-primary">Processing history</h2>
+            <div className="mt-3 rounded-xl border border-border-primary bg-bg-secondary px-4">
+              {submission.timeline.map((event, i) => (
+                <div
+                  key={event.id}
+                  className={`flex items-start justify-between gap-4 py-3.5 ${
+                    i > 0 ? "border-t border-border-primary" : ""
+                  }`}
+                >
+                  <div className="min-w-0">
+                    <div className="text-sm font-medium text-text-primary">{event.label}</div>
+                    <div className="text-xs text-text-secondary mt-0.5">{event.detail}</div>
+                  </div>
+                  <span className="shrink-0 text-[11px] text-text-muted">{event.time}</span>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
 
         <h2 className="mt-7 text-lg font-semibold text-text-primary">Submitted Data</h2>
         <div className="mt-3 rounded-xl border border-border-primary bg-bg-secondary px-4">

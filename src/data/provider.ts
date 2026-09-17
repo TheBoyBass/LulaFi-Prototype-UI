@@ -1,4 +1,18 @@
-export type SubmissionStatus = "New" | "In Progress" | "Overdue" | "Closed";
+export type SubmissionStatus =
+  | "New"
+  | "In Progress"
+  | "Overdue"
+  | "Approved"
+  | "Forwarded"
+  | "Closed";
+
+/** One step in a submission's processing history */
+export interface SubmissionEvent {
+  id: string;
+  label: string;
+  detail: string;
+  time: string;
+}
 
 export interface ProviderSubmission {
   id: string;
@@ -12,7 +26,63 @@ export interface ProviderSubmission {
   assignedTo: string | null;
   slaHours?: number;
   answers: { label: string; value: string }[];
+  /** Approval and forwarding history, newest last */
+  timeline?: SubmissionEvent[];
+  /** Organisation the approved submission was forwarded to */
+  forwardedTo?: string;
 }
+
+/** Destination an approved submission is forwarded to for processing */
+export const FORWARD_DESTINATION = "City of Tshwane";
+
+export const computeProviderStats = (submissions: ProviderSubmission[], unreadSems: number) => [
+  { label: "New submissions", value: submissions.filter(s => s.status === "New").length },
+  { label: "Awaiting approval", value: submissions.filter(s => s.status === "New" || s.status === "In Progress" || s.status === "Overdue").length },
+  { label: "Forwarded", value: submissions.filter(s => s.status === "Forwarded").length },
+  { label: "Unread LulaSEMs", value: unreadSems },
+];
+
+const timeStamp = () =>
+  new Date().toLocaleTimeString("en-ZA", { hour: "2-digit", minute: "2-digit", hour12: false });
+
+/** Mark a submission as approved by the provider, recording it on the timeline */
+export const approveSubmissionRecord = (
+  submission: ProviderSubmission,
+  approver: string,
+): ProviderSubmission => ({
+  ...submission,
+  status: "Approved",
+  assignedTo: submission.assignedTo ?? approver,
+  timeline: [
+    ...(submission.timeline ?? []),
+    {
+      id: `${submission.id}-approved-${Date.now()}`,
+      label: "Approved",
+      detail: `${approver} approved this submission`,
+      time: timeStamp(),
+    },
+  ],
+});
+
+/** Forward an approved submission on to the processing organisation */
+export const forwardSubmissionRecord = (
+  submission: ProviderSubmission,
+  destination: string,
+  approver: string,
+): ProviderSubmission => ({
+  ...submission,
+  status: "Forwarded",
+  forwardedTo: destination,
+  timeline: [
+    ...(submission.timeline ?? []),
+    {
+      id: `${submission.id}-forwarded-${Date.now()}`,
+      label: "Forwarded",
+      detail: `${approver} sent ${submission.ref} to ${destination}`,
+      time: timeStamp(),
+    },
+  ],
+});
 
 export const providerAccount = {
   name: "123 Examples",

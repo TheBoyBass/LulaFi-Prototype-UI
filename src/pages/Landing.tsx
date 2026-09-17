@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
   Building2,
   CalendarDays,
-  CheckCircle2,
+  Check,
+  CircleUserRound,
   FileText,
   Fingerprint,
   Inbox,
@@ -16,11 +18,21 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import lulafiIcon from "@/assets/lulafi-icon.png";
 import HeroPhones from "@/components/landing/HeroPhones";
+import LandingFooter from "@/components/landing/LandingFooter";
+import LandingHeader from "@/components/landing/LandingHeader";
+import SectionHeading from "@/components/landing/SectionHeading";
+import { Button } from "@/components/ui/button";
+
 
 
 type Audience = "personal" | "business";
+
+const BENEFITS = [
+  { icon: ShieldCheck, label: "Secure & Private" },
+  { icon: CircleUserRound, label: "You are in control" },
+  { icon: Users, label: "Built for Everyone" },
+];
 
 const CONTENT: Record<
   Audience,
@@ -102,64 +114,7 @@ const Landing = () => {
 
   return (
     <div className="min-h-screen bg-bg-primary text-text-primary">
-      {/* Nav */}
-      <header className="sticky top-0 z-50 border-b border-border-primary bg-bg-primary/90 backdrop-blur">
-        {/* Audience switch bar */}
-        <div className="border-b border-border-primary bg-bg-secondary">
-          <div className="mx-auto flex max-w-6xl items-center justify-between px-6">
-            <div className="flex items-center">
-              {(["personal", "business"] as Audience[]).map((key) => (
-                <button
-                  key={key}
-                  onClick={() => setAudience(key)}
-                  className={`relative px-3 py-2.5 text-sm font-semibold capitalize transition-colors ${
-                    audience === key
-                      ? "text-text-primary after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:bg-brand"
-                      : "text-text-muted hover:text-text-primary"
-                  }`}
-                >
-                  {key}
-                </button>
-              ))}
-            </div>
-            <div className="hidden items-center gap-4 text-sm text-text-muted sm:flex">
-              <a href="#help" className="hover:text-text-primary">Help</a>
-              <a href="#search" className="hover:text-text-primary">Search</a>
-            </div>
-          </div>
-        </div>
-
-        {/* Main nav */}
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-6 px-6 py-4">
-          <a href="/landing" className="flex items-center gap-2">
-            <img src={lulafiIcon} alt="lulaFi logo" className="h-8 w-10 object-contain" />
-            <span className="text-2xl font-semibold tracking-tight">
-              lula<span className="text-brand">Fi</span>
-            </span>
-          </a>
-
-          <nav className="hidden items-center gap-6 lg:flex">
-            {["Home", "About", "How it Works", "Guides", "Resources", "Contact"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase().replace(/\s+/g, "-")}`}
-                className="text-sm font-medium text-text-secondary transition-colors hover:text-brand"
-              >
-                {item}
-              </a>
-            ))}
-          </nav>
-
-          <div className="hidden items-center gap-3 sm:flex">
-            <button className="rounded-lg border border-border-primary px-4 py-2 text-sm font-medium hover:bg-bg-secondary">
-              Log in
-            </button>
-            <button className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90">
-              {isPersonal ? "Get the app" : "Become a provider"}
-            </button>
-          </div>
-        </div>
-      </header>
+      <LandingHeader audience={audience} onAudienceChange={setAudience} activePage="home" />
 
 
       <main>
@@ -178,24 +133,30 @@ const Landing = () => {
               <span className="inline-flex items-center gap-2 rounded-full border border-brand/30 bg-brand/10 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-brand">
                 {c.eyebrow}
               </span>
-              <h1 className="mt-5 text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+              <h1 className="mt-5 text-5xl font-bold leading-[1.05] tracking-tight sm:text-6xl">
                 {c.title}
                 <br />
                 <span className="text-brand">{c.highlight}</span>
               </h1>
-              <p className="mt-5 max-w-lg text-lg text-text-secondary">{c.blurb}</p>
-              <div className="mt-7 flex flex-wrap gap-3">
-                <button className="inline-flex items-center gap-2 rounded-xl bg-brand px-6 py-3 text-base font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:-translate-y-0.5">
-                  {c.primaryCta} <ArrowRight size={18} />
-                </button>
-                <button className="rounded-xl border border-border-primary px-6 py-3 text-base font-semibold hover:bg-bg-secondary">
-                  {c.secondaryCta}
-                </button>
+              <p className="mt-5 max-w-lg text-lg leading-relaxed text-text-secondary">{c.blurb}</p>
+
+               <div className="mt-7 flex flex-wrap gap-3">
+                 <Button asChild size="lg" className="shadow-[var(--shadow-glow)] transition-transform hover:-translate-y-0.5">
+                  <Link to="/get-app">
+                    {c.primaryCta} <ArrowRight size={18} />
+                  </Link>
+                 </Button>
+                 <Button asChild variant="outline" size="lg">
+                  <a href={isPersonal ? "#how-it-works" : "#contact"}>{c.secondaryCta}</a>
+                 </Button>
               </div>
-              <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-2">
-                {c.proof.map((p) => (
-                  <li key={p} className="flex items-center gap-2 text-sm text-text-muted">
-                    <CheckCircle2 size={16} className="text-brand" /> {p}
+               <ul className="mt-8 grid gap-3 sm:grid-cols-3" aria-label="LulaFi benefits">
+                 {BENEFITS.map(({ icon: Icon, label }) => (
+                   <li key={label} className="flex items-center gap-2.5 text-sm font-medium text-text-secondary">
+                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
+                       <Icon size={16} aria-hidden="true" />
+                     </span>
+                     {label}
                   </li>
                 ))}
               </ul>
@@ -209,79 +170,127 @@ const Landing = () => {
 
         {/* Stats */}
         <section className="border-y border-border-primary bg-bg-secondary">
-          <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 sm:grid-cols-3">
+          <div className="mx-auto grid max-w-6xl gap-6 px-6 py-14 sm:grid-cols-3">
             {c.stats.map((s) => (
-              <div key={s.label}>
-                <div className="text-4xl font-semibold text-brand">{s.value}</div>
-                <div className="mt-1 text-sm text-text-muted">{s.label}</div>
+              <div
+                key={s.label}
+                className="rounded-2xl border border-border-primary bg-bg-primary p-6 shadow-[var(--shadow-sm)]"
+              >
+                <div className="text-4xl font-bold tracking-tight text-brand">{s.value}</div>
+                <div className="mt-2 text-sm text-text-muted">{s.label}</div>
               </div>
             ))}
           </div>
         </section>
 
         {/* Features */}
-        <section className="mx-auto max-w-6xl px-6 py-20">
-          <h2 className="max-w-2xl text-3xl font-semibold tracking-tight sm:text-4xl">
-            {isPersonal ? "Everything you need to deal with paperwork" : "Everything your organisation needs to process it"}
-          </h2>
-          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {c.features.map(({ icon: Icon, title, body }) => (
-              <div
+        <section id="guides" className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+          <SectionHeading
+            eyebrow={isPersonal ? "What you get" : "What your team gets"}
+            title={
+              isPersonal
+                ? "Everything you need to deal with paperwork"
+                : "Everything your organisation needs to process it"
+            }
+            body={
+              isPersonal
+                ? "One secure place for your details, your forms and every provider you deal with."
+                : "Complete submissions, secure conversations and a clear trail for every record."
+            }
+          />
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {c.features.map(({ icon: Icon, title, body }, index) => (
+              <motion.article
                 key={title}
-                className="rounded-2xl border border-border-primary bg-bg-secondary p-6 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-md)]"
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="rounded-2xl border border-border-primary bg-bg-primary p-8 shadow-[var(--shadow-sm)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-md)]"
               >
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-brand/12 text-brand">
-                  <Icon size={20} />
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                  <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
-                <h3 className="mt-4 text-lg font-semibold">{title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-text-muted">{body}</p>
-              </div>
+                <h3 className="mb-2 mt-6 text-lg font-bold">{title}</h3>
+                <p className="text-sm leading-relaxed text-text-muted">{body}</p>
+              </motion.article>
             ))}
           </div>
         </section>
 
         {/* Steps */}
-        <section className="border-y border-border-primary bg-bg-secondary">
-          <div className="mx-auto max-w-6xl px-6 py-20">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Three steps, start to finish</h2>
-            <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <section id="how-it-works" className="border-y border-border-primary bg-bg-secondary">
+          <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+            <SectionHeading
+              eyebrow="How it works"
+              title="Three steps, start to finish"
+              body={
+                isPersonal
+                  ? "From setting up your vault to sending a completed form, it takes minutes."
+                  : "From publishing your forms to replying to a client, everything stays in one flow."
+              }
+            />
+            <div className="mt-12 grid gap-5 md:grid-cols-3">
               {c.steps.map((s, i) => (
-                <div key={s.title} className="rounded-2xl bg-bg-primary p-6">
-                  <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand text-sm font-semibold text-primary-foreground">
+                <motion.div
+                  key={s.title}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-80px" }}
+                  transition={{ duration: 0.4, delay: i * 0.06 }}
+                  className="rounded-2xl border border-border-primary bg-bg-primary p-8 shadow-[var(--shadow-sm)]"
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-sm font-bold text-primary-foreground">
                     {i + 1}
                   </div>
-                  <h3 className="mt-4 text-lg font-semibold">{s.title}</h3>
-                  <p className="mt-2 text-sm text-text-muted">{s.body}</p>
-                </div>
+                  <h3 className="mb-2 mt-6 text-lg font-bold">{s.title}</h3>
+                  <p className="text-sm leading-relaxed text-text-muted">{s.body}</p>
+                </motion.div>
               ))}
             </div>
+            <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3" aria-label="Included with lulaFi">
+              {c.proof.map((item) => (
+                <li key={item} className="flex items-center gap-2 text-sm text-text-secondary">
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand/15 text-brand">
+                    <Check className="h-3 w-3" aria-hidden="true" />
+                  </span>
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
         {/* CTA */}
-        <section className="mx-auto max-w-6xl px-6 py-20">
-          <div className="gradient-brand rounded-3xl px-8 py-14 text-center text-primary-foreground">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-              {isPersonal ? "Take the paperwork off your plate" : "Serve more clients with less admin"}
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl opacity-90">
-              {isPersonal
-                ? "Join lulaFi and keep your details private, portable and always ready."
-                : "Join the providers receiving verified, consent-backed submissions every day."}
-            </p>
-            <button className="mt-7 inline-flex items-center gap-2 rounded-xl bg-foreground px-7 py-3 font-semibold text-background">
-              {c.primaryCta} <ArrowRight size={18} />
-            </button>
+        <section id="contact" className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
+          <div className="relative overflow-hidden rounded-[2.5rem] border border-border-primary bg-bg-primary p-10 text-center shadow-[var(--shadow-md)] lg:p-20">
+            <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-brand/10 blur-3xl" aria-hidden="true" />
+            <div className="relative z-10">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+                {isPersonal ? "Take the paperwork off your plate" : "Serve more clients with less admin"}
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-lg leading-relaxed text-text-secondary">
+                {isPersonal
+                  ? "Join lulaFi and keep your details private, portable and always ready."
+                  : "Join the providers receiving verified, consent-backed submissions every day."}
+              </p>
+              <div className="mt-8 flex flex-wrap justify-center gap-3">
+                <Button asChild size="lg" className="shadow-[var(--shadow-glow)] transition-transform hover:-translate-y-0.5">
+                  <Link to="/get-app">
+                    {c.primaryCta} <ArrowRight size={18} />
+                  </Link>
+                </Button>
+                <Button asChild variant="outline" size="lg">
+                  <Link to="/about">Read about your data</Link>
+                </Button>
+              </div>
+            </div>
           </div>
         </section>
+
       </main>
 
-      <footer className="border-t border-border-primary">
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-text-muted sm:flex-row sm:items-center sm:justify-between">
-          <span>© {new Date().getFullYear()} lulaFi (Pty) Ltd. All rights reserved.</span>
-          <span>Smart and secure forms · South Africa</span>
-        </div>
-      </footer>
+      <LandingFooter />
     </div>
   );
 };

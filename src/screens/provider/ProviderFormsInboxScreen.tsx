@@ -4,21 +4,30 @@ import ProviderLayout from "@/components/lulafi/ProviderLayout";
 import { LulaBadge } from "@/components/lulafi/LulaBadge";
 import { useScreenScroll } from "@/components/lulafi/ScrollContext";
 import { useApp } from "@/context/AppContext";
-import { providerSubmissions, SubmissionStatus } from "@/data/provider";
+import { SubmissionStatus } from "@/data/provider";
 import { shareProviderDeepLink } from "@/lib/providerLinks";
 import { toast } from "sonner";
 
-const filters: ("All" | SubmissionStatus)[] = ["All", "New", "In Progress", "Overdue"];
+const filters: ("All" | SubmissionStatus)[] = [
+  "All",
+  "New",
+  "In Progress",
+  "Overdue",
+  "Approved",
+  "Forwarded",
+];
 
 const statusVariant: Record<SubmissionStatus, "success" | "warning" | "error" | "info" | "neutral"> = {
   New: "success",
   "In Progress": "info",
   Overdue: "warning",
+  Approved: "success",
+  Forwarded: "info",
   Closed: "neutral",
 };
 
 const ProviderFormsInboxScreen = () => {
-  const { openSubmission, providerFocusToken, providerHighlightId, clearProviderHighlight } = useApp();
+  const { openSubmission, providerFocusToken, providerHighlightId, clearProviderHighlight, submissions } = useApp();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<(typeof filters)[number]>("All");
   const [highlightNewest, setHighlightNewest] = useState(false);
@@ -55,7 +64,7 @@ const ProviderFormsInboxScreen = () => {
 
   const rows = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return providerSubmissions.filter(s => {
+    return submissions.filter(s => {
       const matchesFilter = filter === "All" || s.status === filter;
       const matchesQuery =
         !q ||
@@ -64,7 +73,7 @@ const ProviderFormsInboxScreen = () => {
         s.ref.toLowerCase().includes(q);
       return matchesFilter && matchesQuery;
     });
-  }, [query, filter]);
+  }, [query, filter, submissions]);
 
 
   return (

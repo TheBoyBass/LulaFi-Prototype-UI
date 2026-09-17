@@ -1,7 +1,7 @@
 import ProviderLayout from "@/components/lulafi/ProviderLayout";
 import { useApp } from "@/context/AppContext";
-import { providerStats, providerActivity } from "@/data/provider";
-import { Inbox, UserPlus, UserRoundPlus, Users, FileText, UserRound, MessageSquareLock, Activity as ActivityIcon } from "lucide-react";
+import { computeProviderStats, providerActivity, FORWARD_DESTINATION } from "@/data/provider";
+import { Inbox, UserPlus, UserRoundPlus, Users, FileText, UserRound, MessageSquareLock, Send, Activity as ActivityIcon } from "lucide-react";
 
 const quickActions = [
   { label: "Review Inbox", icon: Inbox, screen: "pinbox" as const },
@@ -19,7 +19,13 @@ const activityIcon = {
 };
 
 const ProviderDashboardScreen = () => {
-  const { navigateProvider } = useApp();
+  const { navigateProvider, submissions, providerAlerts, openSubmission } = useApp();
+  const stats = computeProviderStats(submissions, providerAlerts.sem);
+  const awaiting = submissions.filter(
+    s => s.status === "New" || s.status === "In Progress" || s.status === "Overdue"
+  );
+  const approved = submissions.filter(s => s.status === "Approved");
+
 
   return (
     <ProviderLayout title="Dashboard" activeTab="home">
@@ -27,7 +33,7 @@ const ProviderDashboardScreen = () => {
         <h1 className="text-2xl font-semibold text-text-primary">Provider Dashboard</h1>
 
         <div className="mt-4 grid grid-cols-2 gap-3">
-          {providerStats.map(stat => (
+          {stats.map(stat => (
             <div
               key={stat.label}
               className="rounded-xl border border-border-primary bg-bg-secondary p-4"
@@ -53,6 +59,58 @@ const ProviderDashboardScreen = () => {
             </button>
           ))}
         </div>
+
+        <h2 className="mt-7 text-lg font-semibold text-text-primary">Awaiting your approval</h2>
+        <div className="mt-3 flex flex-col gap-2.5">
+          {awaiting.length === 0 && (
+            <p className="text-sm text-text-muted">Everything submitted has been approved.</p>
+          )}
+          {awaiting.slice(0, 3).map(item => (
+            <button
+              key={item.id}
+              onClick={() => openSubmission(item.id)}
+              className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-secondary p-3 text-left cursor-pointer hover:border-brand transition-colors"
+            >
+              <div className="w-9 h-9 shrink-0 rounded-full bg-brand/10 flex items-center justify-center">
+                <FileText size={17} className="text-brand" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-sm font-medium text-text-primary truncate">{item.formName}</div>
+                <div className="text-[11px] text-text-muted truncate">
+                  {item.ref} · {item.submittedBy}
+                </div>
+              </div>
+              <span className="shrink-0 text-[11px] text-text-muted">{item.status}</span>
+            </button>
+          ))}
+        </div>
+
+        {approved.length > 0 && (
+          <>
+            <h2 className="mt-7 text-lg font-semibold text-text-primary">
+              Ready for {FORWARD_DESTINATION}
+            </h2>
+            <div className="mt-3 flex flex-col gap-2.5">
+              {approved.map(item => (
+                <button
+                  key={item.id}
+                  onClick={() => openSubmission(item.id)}
+                  className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-secondary p-3 text-left cursor-pointer hover:border-brand transition-colors"
+                >
+                  <div className="w-9 h-9 shrink-0 rounded-full bg-brand/10 flex items-center justify-center">
+                    <Send size={16} className="text-brand" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-sm font-medium text-text-primary truncate">{item.formName}</div>
+                    <div className="text-[11px] text-text-muted truncate">
+                      {item.ref} · approved, not yet sent
+                    </div>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
 
         <h2 className="mt-7 text-lg font-semibold text-text-primary">Recent Activity</h2>
         <div className="mt-3 flex flex-col gap-2.5">

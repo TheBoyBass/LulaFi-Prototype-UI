@@ -1,6 +1,14 @@
 import React, { createContext, useContext, useState, useCallback, useEffect, useRef } from "react";
 import { AppMode, ProviderScreenId, ScreenId } from "@/types/screens";
 import { providerGroups } from "@/data/lulasem";
+import {
+  FORWARD_DESTINATION,
+  ProviderSubmission,
+  approveSubmissionRecord,
+  forwardSubmissionRecord,
+  providerAccount,
+  providerSubmissions,
+} from "@/data/provider";
 import { toast } from "sonner";
 
 const initialUnread = providerGroups.reduce<Record<string, number>>((acc, g) => {
@@ -20,6 +28,11 @@ interface AppContextType {
   providerFocusToken: number;
   activeSubmissionId: string | null;
   openSubmission: (id: string) => void;
+  /** Live provider inbox: submissions with their approval / forwarding state */
+  submissions: ProviderSubmission[];
+  getSubmissionById: (id: string | null) => ProviderSubmission;
+  approveSubmission: (id: string) => void;
+  forwardSubmission: (id: string) => void;
   /** LulaSEM thread (general chat, form conversation or internal group) currently open */
   activeSemThreadId: string | null;
   openSemThread: (id: string) => void;
@@ -141,6 +154,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     deepLink.providerItem
   );
   const [activeSubmissionId, setActiveSubmissionId] = useState<string | null>(null);
+  const [submissions, setSubmissions] = useState<ProviderSubmission[]>(providerSubmissions);
   const [activeSemThreadId, setActiveSemThreadId] = useState<string | null>(deepLink.providerItem);
   const [activeClientConvoId, setActiveClientConvoId] = useState<string | null>(null);
 
@@ -187,6 +201,33 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setActiveSubmissionId(id);
     setProviderScreen("psubmission");
   }, []);
+
+  const getSubmissionById = useCallback(
+    (id: string | null) => submissions.find(s => s.id === id) ?? submissions[0],
+    [submissions]
+  );
+
+  const approveSubmission = useCallback((id: string) => {
+    setSubmissions(prev =>
+      prev.map(s => (s.id === id ? approveSubmissionRecord(s, providerAccount.name) : s))
+    );
+    const submission = submissions.find(s => s.id === id);
+    toast("Submission approved", {
+      description: `${submission?.ref ?? "Submission"} is ready to forward to ${FORWARD_DESTINATION}.`,
+    });
+  }, [submissions]);
+
+  const forwardSubmission = useCallback((id: string) => {
+    setSubmissions(prev =>
+      prev.map(s =>
+        s.id === id ? forwardSubmissionRecord(s, FORWARD_DESTINATION, providerAccount.name) : s
+      )
+    );
+    const submission = submissions.find(s => s.id === id);
+    toast(`Sent to ${FORWARD_DESTINATION}`, {
+      description: `${submission?.ref ?? "Submission"} was forwarded for processing.`,
+    });
+  }, [submissions]);
 
   const openSemThread = useCallback((id: string) => {
     setActiveSemThreadId(id);
@@ -349,6 +390,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
         activeSubmissionId,
         openSubmission,
+        submissions,
+        getSubmissionById,
+        approveSubmission,
+        forwardSubmission,
         activeSemThreadId,
         openSemThread,
         activeClientConvoId,

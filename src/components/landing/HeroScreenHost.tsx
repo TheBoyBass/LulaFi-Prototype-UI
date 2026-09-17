@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { AppContext, type AppContextType } from "@/context/AppContext";
+import { providerSubmissions } from "@/data/provider";
 
 /** Logical size of a real app screen — scaled down to fit the hero device. */
 const SCREEN_W = 390;
@@ -22,6 +23,11 @@ const heroState = (overrides: Partial<AppContextType>): AppContextType => ({
   providerFocusToken: 0,
   activeSubmissionId: null,
   openSubmission: noop,
+  submissions: providerSubmissions,
+  getSubmissionById: (id: string | null) =>
+    providerSubmissions.find(s => s.id === id) ?? providerSubmissions[0],
+  approveSubmission: noop,
+  forwardSubmission: noop,
   activeSemThreadId: null,
   openSemThread: noop,
   activeClientConvoId: null,
