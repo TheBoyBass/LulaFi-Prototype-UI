@@ -1,24 +1,14 @@
-{
-  "compilerOptions": {
-    "allowJs": true,
-    "noImplicitAny": false,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
-    "skipLibCheck": true,
-    "strictNullChecks": false
-  },
-  "files": [],
-  "references": [
-    {
-      "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
-}
+export type ScreenId =
+  | "splash" | "ob1" | "ob2" | "ob3"
+  | "signup" | "otp" | "name"
+  | "home" | "activity"
+  | "svc" | "org" | "consent" | "pinauth"
+  | "form" | "mf" | "fdetail" | "qr"
+  | "convo" | "settings" | "profile"
+  | "psearch" | "cal" | "market";
+
+export type ProviderScreenId =
+  | "pdash" | "pactivity" | "psem" | "pconvo" | "pgroup"
+  | "pinbox" | "psubmission" | "pupdate" | "psettings";
+
+export type AppMode = "client" | "provider";
