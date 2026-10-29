@@ -1,51 +1,74 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  /* Accessible keyboard focus: a clear ring on anything focusable that
+     doesn't already manage its own focus-visible styling. */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+@layer base {
   :root {
     /* LulaFi Design System — Light Mode */
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    --background: 210.000 40.000% 96.078%;
+    --foreground: 222.222 47.368% 11.176%;
 
-    --card: 210 40% 98%;
-    --card-foreground: 222 47% 11%;
+    --card: 0.000 0.000% 100.000%;
+    --card-foreground: 222.222 47.368% 11.176%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 0.000 0.000% 100.000%;
+    --popover-foreground: 222.222 47.368% 11.176%;
 
-    --primary: 172 66% 50%;
-    --primary-foreground: 222 47% 11%;
+    --primary: 174.808 82.540% 24.706%;
+    --primary-foreground: 0.000 0.000% 100.000%;
 
-    --secondary: 210 40% 98%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 210.000 40.000% 98.039%;
+    --secondary-foreground: 222.222 47.368% 11.176%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210.000 40.000% 96.078%;
+    --muted-foreground: 215.385 16.318% 46.863%;
 
-    --accent: 172 66% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 180.000 54.839% 93.922%;
+    --accent-foreground: 174.808 82.540% 24.706%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 346.837 77.165% 49.804%;
+    --destructive-foreground: 0.000 0.000% 100.000%;
 
-    --success: 142 71% 45%;
-    --warning: 38 92% 50%;
-    --info: 239 84% 67%;
+    --success: 161.379 93.548% 30.392%;
+    --warning: 32.133 94.619% 43.725%;
+    --info: 228.000 78.378% 36.275%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --input-background: 210 40% 98%;
-    --ring: 172 66% 50%;
+    --border: 211.579 37.255% 90.000%;
+    --input: 212.727 26.829% 83.922%;
+    --input-background: 210.000 40.000% 98.039%;
+    --ring: 174.808 82.540% 24.706%;
 
     --radius: 10px;
 
     /* Brand */
-    --brand: 172 66% 50%;
-    --brand-hover: 173 80% 40%;
-    --brand-active: 175 84% 32%;
+    --brand: 174.808 82.540% 24.706%;
+    --brand-hover: 175.059 82.524% 20.196%;
+    --brand-active: 174.808 82.540% 24.706%;
+    /* Text roles retain the bright brand fills while meeting AA on light surfaces. */
+    --brand-foreground: 174.808 82.540% 24.706%;
+    --status-success-foreground: 162.931 93.548% 24.314%;
+    --status-warning-foreground: 25.965 90.476% 37.059%;
+    --status-info-foreground: 228.000 78.378% 36.275%;
+    --status-destructive-foreground: 346.837 77.165% 49.804%;
+    --portal-sidebar: 230.182 53.398% 20.196%;
+    --portal-sidebar-foreground: 217.500 57.143% 97.255%;
+    --portal-accent: 228.000 78.378% 36.275%;
 
     /* Partner brand: City of Tshwane */
     --tshwane-green: 104 61% 40%;
@@ -55,26 +78,26 @@
     --gradient-tshwane: linear-gradient(135deg, hsl(104 61% 40%) 0%, hsl(116 63% 25%) 100%);
 
     /* Backgrounds */
-    --bg-primary: 0 0% 100%;
-    --bg-secondary: 210 40% 98%;
-    --bg-tertiary: 210 40% 96%;
-    --bg-page: 210 40% 96%;
+    --bg-primary: 0.000 0.000% 100.000%;
+    --bg-secondary: 210.000 40.000% 96.078%;
+    --bg-tertiary: 210.000 40.000% 96.078%;
+    --bg-page: 210.000 40.000% 96.078%;
 
     /* Text */
-    --text-primary: 222 47% 11%;
-    --text-secondary: 215 19% 35%;
-    --text-muted: 215 16% 47%;
+    --text-primary: 222.222 47.368% 11.176%;
+    --text-secondary: 215.294 19.318% 34.510%;
+    --text-muted: 215.385 16.318% 46.863%;
 
     /* Border */
-    --border-primary: 214 32% 91%;
+    --border-primary: 211.579 37.255% 90.000%;
 
     /* Gradient */
-    --gradient-brand: linear-gradient(135deg, hsl(172 66% 50%) 0%, hsl(239 84% 67%) 100%);
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-main)), hsl(var(--foundation-navy)));
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.06);
-    --shadow-md: 0 8px 24px hsla(0, 0%, 0%, 0.08);
-    --shadow-glow: 0 20px 48px hsla(172, 66%, 50%, 0.15);
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.06);
+    --shadow-md: 0 8px 24px hsl(var(--shadow-color) / 0.12);
+    --shadow-glow: 0 20px 48px hsl(var(--brand-main) / 0.18);
 
     /* Spacing (8pt Grid) */
     --space-1: 4px;
@@ -93,52 +116,133 @@
     --radius-xl: 24px;
 
     /* Charts */
-    --chart-1: 172 66% 50%;
-    --chart-2: 239 84% 67%;
-    --chart-3: 142 71% 45%;
-    --chart-4: 38 92% 50%;
-    --chart-5: 0 84% 60%;
+    --chart-1: 174.808 82.540% 24.706%;
+    --chart-2: 228.000 78.378% 36.275%;
+    --chart-3: 161.379 93.548% 30.392%;
+    --chart-4: 32.133 94.619% 43.725%;
+    --chart-5: 346.837 77.165% 49.804%;
+
+    /* Attached semantic colour roles; legacy tokens above are aliases. */
+    --surface-screen: 210.000 40.000% 96.078%;
+    --surface-elevated: 0.000 0.000% 100.000%;
+    --surface-list: 0.000 0.000% 100.000%;
+    --surface-muted: 210.000 40.000% 98.039%;
+    --surface-strong: 210.000 40.000% 96.078%;
+    --surface-interactive: 180.000 54.839% 93.922%;
+    --surface-interactive-strong: 174.808 82.540% 24.706%;
+    --surface-selected: 180.000 54.839% 93.922%;
+    --surface-accent: 174.808 82.540% 24.706%;
+    --surface-icon: 180.000 54.839% 93.922%;
+    --surface-overlay: rgba(15, 23, 42, 0.45);
+    --surface-scrim: rgba(0, 0, 0, 0.6);
+    --content-primary: 222.222 47.368% 11.176%;
+    --content-secondary: 215.294 19.318% 34.510%;
+    --content-muted: 215.385 16.318% 46.863%;
+    --content-subtle: 215.000 20.225% 65.098%;
+    --content-inverse: 0.000 0.000% 100.000%;
+    --content-interactive: 174.808 82.540% 24.706%;
+    --content-on-interactive: 0.000 0.000% 100.000%;
+    --content-selected: 174.808 82.540% 24.706%;
+    --content-accent: 174.808 82.540% 24.706%;
+    --content-link: 174.808 82.540% 24.706%;
+    --stroke-default: 211.579 37.255% 90.000%;
+    --stroke-subtle: 214.286 31.818% 91.373%;
+    --stroke-control: 212.727 26.829% 83.922%;
+    --stroke-selected: 174.808 82.540% 24.706%;
+    --stroke-accent: 174.808 82.540% 24.706%;
+    --stroke-focus: 174.808 82.540% 24.706%;
+    --status-danger-surface: 355.714 100.000% 97.255%;
+    --status-danger-content: 346.837 77.165% 49.804%;
+    --status-danger-stroke: 352.653 96.078% 90.000%;
+    --status-danger-solid: 346.837 77.165% 49.804%;
+    --status-danger-on-solid: 0.000 0.000% 100.000%;
+    --status-success-surface: 151.765 80.952% 95.882%;
+    --status-success-content: 162.931 93.548% 24.314%;
+    --status-success-stroke: 152.368 76.000% 80.392%;
+    --status-success-solid: 161.379 93.548% 30.392%;
+    --status-success-on-solid: 0.000 0.000% 100.000%;
+    --status-warning-surface: 48.000 100.000% 96.078%;
+    --status-warning-content: 25.965 90.476% 37.059%;
+    --status-warning-stroke: 48.000 96.639% 76.667%;
+    --status-warning-solid: 32.133 94.619% 43.725%;
+    --status-warning-on-solid: 0.000 0.000% 100.000%;
+    --status-info-surface: 224.000 48.387% 93.922%;
+    --status-info-content: 228.000 78.378% 36.275%;
+    --status-info-stroke: 226.500 52.632% 85.098%;
+    --status-info-solid: 228.000 78.378% 36.275%;
+    --status-info-on-solid: 0.000 0.000% 100.000%;
+    --brand-main: 228.000 78.378% 36.275%;
+    --brand-pressed: 228.571 78.947% 26.078%;
+    --chat-sent: 169.655 50.877% 88.824%;
+    --chat-received: 0.000 0.000% 100.000%;
+    --chat-sent-text: 222.222 47.368% 11.176%;
+    --chat-received-text: 222.222 47.368% 11.176%;
+    --chat-shadow: 222.222 47.368% 11.176%;
+    --identity-1: 228.000 78.378% 36.275%;
+    --identity-2: 230.182 53.398% 20.196%;
+    --identity-3: 160.118 84.080% 39.412%;
+    --identity-4: 37.692 92.126% 50.196%;
+    --identity-5: 349.724 89.163% 60.196%;
+    --shadow-color: 222.222 47.368% 11.176%;
+    --foundation-blue: 228.000 78.378% 36.275%;
+    --foundation-teal: 178.922 78.404% 41.765%;
+    --foundation-navy: 230.182 53.398% 20.196%;
+    --media-background: 0.000 0.000% 0.000%;
+    --media-foreground: 0.000 0.000% 100.000%;
+    --gradient-hero: radial-gradient(ellipse at top right, hsl(var(--foundation-teal) / 0.15), transparent 65%);
+    --gradient-hero-business: radial-gradient(ellipse at top right, hsl(var(--brand-main) / 0.15), transparent 65%);
+    --gradient-phone-glow: radial-gradient(ellipse at center, hsl(var(--brand-main) / 0.16), transparent 70%);
+    --gradient-splash: radial-gradient(ellipse at top right, hsl(var(--brand-main) / 0.1), transparent 60%);
+    --gradient-logo-glow: radial-gradient(circle, hsl(var(--foundation-teal) / 0.18), transparent 65%);
   }
 
   .dark {
     /* LulaFi Design System — Dark Mode */
-    --background: 210 61% 11%;
-    --foreground: 210 40% 98%;
+    --background: 220.000 48.837% 8.431%;
+    --foreground: 217.500 57.143% 97.255%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 217.778 39.130% 13.529%;
+    --card-foreground: 217.500 57.143% 97.255%;
 
-    --popover: 221 39% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 217.778 39.130% 13.529%;
+    --popover-foreground: 217.500 57.143% 97.255%;
 
-    --primary: 172 66% 50%;
-    --primary-foreground: 210 61% 11%;
+    --primary: 170.897 70.048% 59.412%;
+    --primary-foreground: 174.286 63.636% 6.471%;
 
-    --secondary: 222 47% 11%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 216.923 43.333% 11.765%;
+    --secondary-foreground: 217.500 57.143% 97.255%;
 
-    --muted: 215 25% 27%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 216.000 32.609% 18.039%;
+    --muted-foreground: 213.529 25.000% 73.333%;
 
-    --accent: 172 66% 50%;
-    --accent-foreground: 210 61% 11%;
+    --accent: 178.537 53.247% 15.098%;
+    --accent-foreground: 170.897 70.048% 59.412%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 350.704 100.000% 72.157%;
+    --destructive-foreground: 345.000 61.538% 10.196%;
 
-    --success: 142 71% 45%;
-    --warning: 38 92% 50%;
-    --info: 239 84% 67%;
+    --success: 158.113 64.372% 51.569%;
+    --warning: 43.256 96.413% 56.275%;
+    --info: 229.189 100.000% 78.235%;
 
-    --border: 215 25% 27%;
-    --input: 215 25% 27%;
-    --input-background: 222 47% 11%;
-    --ring: 172 66% 50%;
+    --border: 215.385 28.467% 26.863%;
+    --input: 215.122 23.699% 33.922%;
+    --input-background: 216.923 43.333% 11.765%;
+    --ring: 170.897 70.048% 59.412%;
 
     /* Brand */
-    --brand: 172 66% 50%;
-    --brand-hover: 173 80% 40%;
-    --brand-active: 175 84% 32%;
+    --brand: 170.897 70.048% 59.412%;
+    --brand-hover: 170.847 70.238% 67.059%;
+    --brand-active: 170.897 70.048% 59.412%;
+    --brand-foreground: 170.897 70.048% 59.412%;
+    --status-success-foreground: 154.576 70.238% 67.059%;
+    --status-warning-foreground: 45.943 96.685% 64.510%;
+    --status-info-foreground: 228.791 100.000% 82.157%;
+    --status-destructive-foreground: 349.901 100.000% 80.196%;
+    --portal-sidebar: 230.182 53.398% 20.196%;
+    --portal-sidebar-foreground: 217.500 57.143% 97.255%;
+    --portal-accent: 229.189 100.000% 78.235%;
 
     /* Partner brand: City of Tshwane */
     --tshwane-green: 104 55% 46%;
@@ -148,26 +252,99 @@
     --gradient-tshwane: linear-gradient(135deg, hsl(104 55% 40%) 0%, hsl(116 50% 22%) 100%);
 
     /* Backgrounds */
-    --bg-primary: 210 61% 11%;
-    --bg-secondary: 222 47% 11%;
-    --bg-tertiary: 221 39% 11%;
-    --bg-page: 214 55% 6%;
+    --bg-primary: 217.778 39.130% 13.529%;
+    --bg-secondary: 220.000 48.837% 8.431%;
+    --bg-tertiary: 216.000 32.609% 18.039%;
+    --bg-page: 220.000 48.837% 8.431%;
 
     /* Text */
-    --text-primary: 210 40% 98%;
-    --text-secondary: 213 27% 84%;
-    --text-muted: 215 20% 65%;
+    --text-primary: 217.500 57.143% 97.255%;
+    --text-secondary: 212.727 26.829% 83.922%;
+    --text-muted: 213.529 25.000% 73.333%;
 
     /* Border */
-    --border-primary: 215 25% 27%;
+    --border-primary: 215.385 28.467% 26.863%;
 
     /* Gradient */
-    --gradient-brand: linear-gradient(135deg, hsl(172 66% 50%) 0%, hsl(239 84% 67%) 100%);
+    --gradient-brand: linear-gradient(135deg, hsl(var(--brand-main)), hsl(var(--foundation-navy)));
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px hsla(0, 0%, 0%, 0.2);
-    --shadow-md: 0 8px 24px hsla(0, 0%, 0%, 0.25);
-    --shadow-glow: 0 20px 48px hsla(172, 66%, 50%, 0.3);
+    --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.06);
+    --shadow-md: 0 8px 24px hsl(var(--shadow-color) / 0.12);
+    --shadow-glow: 0 20px 48px hsl(var(--brand-main) / 0.18);
+
+    /* Attached semantic colour roles; legacy tokens above are aliases. */
+    --surface-screen: 220.000 48.837% 8.431%;
+    --surface-elevated: 217.778 39.130% 13.529%;
+    --surface-list: 220.000 48.837% 8.431%;
+    --surface-muted: 216.923 43.333% 11.765%;
+    --surface-strong: 216.000 32.609% 18.039%;
+    --surface-interactive: 178.537 53.247% 15.098%;
+    --surface-interactive-strong: 170.897 70.048% 59.412%;
+    --surface-selected: 178.537 53.247% 15.098%;
+    --surface-accent: 170.897 70.048% 59.412%;
+    --surface-icon: 173.333 47.368% 14.902%;
+    --surface-overlay: rgba(0, 0, 0, 0.65);
+    --surface-scrim: rgba(0, 0, 0, 0.72);
+    --content-primary: 217.500 57.143% 97.255%;
+    --content-secondary: 212.727 26.829% 83.922%;
+    --content-muted: 213.529 25.000% 73.333%;
+    --content-subtle: 213.158 20.879% 64.314%;
+    --content-inverse: 174.286 63.636% 6.471%;
+    --content-interactive: 170.897 70.048% 59.412%;
+    --content-on-interactive: 174.286 63.636% 6.471%;
+    --content-selected: 170.897 70.048% 59.412%;
+    --content-accent: 170.897 70.048% 59.412%;
+    --content-link: 170.897 70.048% 59.412%;
+    --stroke-default: 215.385 28.467% 26.863%;
+    --stroke-subtle: 214.054 32.743% 22.157%;
+    --stroke-control: 215.122 23.699% 33.922%;
+    --stroke-selected: 170.897 70.048% 59.412%;
+    --stroke-accent: 170.897 70.048% 59.412%;
+    --stroke-focus: 170.897 70.048% 59.412%;
+    --status-danger-surface: 338.182 34.737% 18.627%;
+    --status-danger-content: 349.901 100.000% 80.196%;
+    --status-danger-stroke: 345.833 34.951% 40.392%;
+    --status-danger-solid: 350.704 100.000% 72.157%;
+    --status-danger-on-solid: 345.000 61.538% 10.196%;
+    --status-success-surface: 167.442 57.333% 14.706%;
+    --status-success-content: 154.576 70.238% 67.059%;
+    --status-success-stroke: 159.718 43.558% 31.961%;
+    --status-success-solid: 158.113 64.372% 51.569%;
+    --status-success-on-solid: 162.439 80.392% 10.000%;
+    --status-warning-surface: 39.130 65.714% 13.725%;
+    --status-warning-content: 45.943 96.685% 64.510%;
+    --status-warning-stroke: 41.176 71.831% 27.843%;
+    --status-warning-solid: 43.256 96.413% 56.275%;
+    --status-warning-on-solid: 36.000 90.909% 8.627%;
+    --status-info-surface: 228.235 52.577% 19.020%;
+    --status-info-content: 228.791 100.000% 82.157%;
+    --status-info-stroke: 228.000 40.816% 38.431%;
+    --status-info-solid: 229.189 100.000% 78.235%;
+    --status-info-on-solid: 230.526 65.517% 11.373%;
+    --brand-main: 229.189 100.000% 78.235%;
+    --brand-pressed: 229.014 100.000% 86.078%;
+    --chat-sent: 174.808 82.540% 24.706%;
+    --chat-received: 216.000 32.609% 18.039%;
+    --chat-sent-text: 0.000 0.000% 100.000%;
+    --chat-received-text: 217.500 57.143% 97.255%;
+    --chat-shadow: 0.000 0.000% 0.000%;
+    --identity-1: 229.048 54.783% 54.902%;
+    --identity-2: 231.304 30.942% 43.725%;
+    --identity-3: 161.379 93.548% 30.392%;
+    --identity-4: 32.133 94.619% 43.725%;
+    --identity-5: 346.837 77.165% 49.804%;
+    --shadow-color: 0.000 0.000% 0.000%;
+    --foundation-blue: 228.000 78.378% 36.275%;
+    --foundation-teal: 178.922 78.404% 41.765%;
+    --foundation-navy: 230.182 53.398% 20.196%;
+    --media-background: 0.000 0.000% 0.000%;
+    --media-foreground: 0.000 0.000% 100.000%;
+    --gradient-hero: radial-gradient(ellipse at top right, hsl(var(--foundation-teal) / 0.15), transparent 65%);
+    --gradient-hero-business: radial-gradient(ellipse at top right, hsl(var(--brand-main) / 0.15), transparent 65%);
+    --gradient-phone-glow: radial-gradient(ellipse at center, hsl(var(--brand-main) / 0.16), transparent 70%);
+    --gradient-splash: radial-gradient(ellipse at top right, hsl(var(--brand-main) / 0.1), transparent 60%);
+    --gradient-logo-glow: radial-gradient(circle, hsl(var(--foundation-teal) / 0.18), transparent 65%);
   }
 
   * {

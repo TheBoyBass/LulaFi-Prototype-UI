@@ -4,7 +4,7 @@ import lulafiIcon from "@/assets/lulafi-icon.png";
 import { motion } from "framer-motion";
 import StatusBar from "@/components/lulafi/StatusBar";
 
-const DOT_COLORS = ["hsl(var(--brand))", "hsl(239 84% 67%)", "hsl(172 66% 70%)", "hsl(239 60% 75%)"];
+const DOT_COLORS = ["hsl(var(--brand-main))", "hsl(var(--foundation-teal))", "hsl(var(--identity-1))", "hsl(var(--identity-2))"];
 
 const SplashScreen = () => {
   const { navigate } = useApp();
@@ -43,7 +43,7 @@ const SplashScreen = () => {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 70% 40% at 100% 0%, hsla(239,84%,67%,0.10) 0%, transparent 60%), radial-gradient(ellipse 70% 40% at 0% 100%, hsla(172,66%,50%,0.10) 0%, transparent 60%)",
+            "var(--gradient-splash)",
         }}
       />
 
@@ -77,7 +77,7 @@ const SplashScreen = () => {
                 height: size,
                 marginLeft: -size / 2,
                 marginTop: -size / 2,
-                borderColor: "hsla(172,66%,50%,0.22)",
+                borderColor: "hsl(var(--foundation-teal) / 0.22)",
               }}
               animate={{ scale: [1, 1.04, 1], opacity: [0.5, 0.9, 0.5] }}
               transition={{ duration: 4, delay: i * 0.4, repeat: Infinity, ease: "easeInOut" }}
@@ -101,7 +101,7 @@ const SplashScreen = () => {
               <div
                 className="absolute inset-0 rounded-full"
                 style={{
-                  background: "radial-gradient(circle at 50% 50%, hsla(172,66%,60%,0.22) 0%, transparent 65%)",
+                  background: "var(--gradient-logo-glow)",
                 }}
               />
               <motion.img

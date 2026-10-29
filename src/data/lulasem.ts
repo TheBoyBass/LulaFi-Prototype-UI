@@ -180,9 +180,9 @@ export const providerGroups: ProviderGroup[] = [
 ];
 
 export const statusStyles: Record<string, string> = {
-  PENDING: "text-warning",
-  APPROVED: "text-success",
-  "UNDER REVIEW": "text-info",
+  PENDING: "text-tone-warning-content",
+  APPROVED: "text-tone-success-content",
+  "UNDER REVIEW": "text-tone-info-content",
 };
 
 /** Encrypted-messaging contacts on the user's account */

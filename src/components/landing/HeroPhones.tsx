@@ -45,10 +45,7 @@ const HeroPhones = () => {
         className="pointer-events-none absolute inset-0"
         animate={{ opacity: [0.55, 0.9, 0.55], scale: [0.95, 1.05, 0.95] }}
         transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        style={{
-          background:
-            "radial-gradient(ellipse 55% 45% at 50% 45%, hsla(172,66%,50%,0.28) 0%, transparent 70%), radial-gradient(ellipse 45% 40% at 75% 80%, hsla(239,84%,67%,0.22) 0%, transparent 70%)",
-        }}
+        style={{ background: "var(--gradient-phone-glow)" }}
       />
 
       {/* Paired devices share one perspective so they read as a single hero scene */}
@@ -122,7 +119,7 @@ const HeroPhones = () => {
         >
           {phase === "received" ? (
             <>
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[hsl(var(--success))]/15 text-[hsl(var(--success))]">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-tone-success-surface text-tone-success-content">
                 <Check size={14} strokeWidth={3} />
               </div>
               <span className="text-xs font-medium text-text-secondary">Submission received</span>

@@ -370,10 +370,10 @@ export const providerSemGroups: ProviderSemGroup[] = [
 ];
 
 export const semStatusStyles: Record<string, string> = {
-  PENDING: "text-warning",
-  APPROVED: "text-success",
-  "UNDER REVIEW": "text-info",
-  "IN PROGRESS": "text-info",
+  PENDING: "text-tone-warning-content",
+  APPROVED: "text-tone-success-content",
+  "UNDER REVIEW": "text-tone-info-content",
+  "IN PROGRESS": "text-tone-info-content",
 };
 
 export const getSubmissionByRef = (ref?: string) =>

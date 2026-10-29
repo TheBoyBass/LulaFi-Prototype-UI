@@ -55,7 +55,7 @@ const ProviderNewGroupScreen = () => {
                 i > 0 ? "border-t border-border-primary" : ""
               }`}
             >
-              <span className="w-9 h-9 shrink-0 rounded-full bg-brand/10 flex items-center justify-center text-[11px] font-semibold text-brand">
+              <span className="w-9 h-9 shrink-0 rounded-full bg-surface-interactive flex items-center justify-center text-[11px] font-semibold text-brand">
                 {s.initials}
               </span>
               <span className="min-w-0 flex-1">
@@ -65,7 +65,7 @@ const ProviderNewGroupScreen = () => {
               <span
                 className={`w-5 h-5 shrink-0 rounded-md border flex items-center justify-center ${
                   selected.includes(s.id)
-                    ? "bg-brand border-brand text-bg-primary"
+                    ? "bg-brand border-brand text-primary-foreground"
                     : "border-border-primary"
                 }`}
               >

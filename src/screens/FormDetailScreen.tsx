@@ -43,7 +43,7 @@ const FormDetailScreen = () => {
 
         <div className="px-6">
           <div className="flex items-start gap-4">
-            <div className="w-12 h-12 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-lg bg-surface-interactive flex items-center justify-center shrink-0">
               <FileText size={20} className="text-brand" />
             </div>
             <div className="flex-1 min-w-0">
@@ -91,7 +91,7 @@ const FormDetailScreen = () => {
         <div className="px-6 flex gap-2.5">
           <button
             onClick={handleDownload}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-brand text-bg-primary text-sm font-medium"
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-full bg-brand text-primary-foreground text-sm font-medium"
           >
             <Download size={16} /> Download PDF
           </button>

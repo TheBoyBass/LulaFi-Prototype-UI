@@ -4,7 +4,8 @@ export type ProviderCategory =
   | "Government"
   | "Utilities"
   | "Insurance"
-  | "Telecoms";
+  | "Telecoms"
+  | "Community";
 
 export type ServiceType =
   | "Applications"
@@ -52,6 +53,7 @@ export const providerCategories: ProviderCategory[] = [
   "Utilities",
   "Insurance",
   "Telecoms",
+  "Community",
 ];
 
 export const serviceTypes: ServiceType[] = [
@@ -130,6 +132,9 @@ export const serviceProviders: ServiceProvider[] = [
   { id: "discovery", name: "Discovery", initials: "DIS", category: "Insurance", description: "Medical aid onboarding, claims submissions", forms: 7, verified: true, serviceTypes: ["Claims", "Applications"], province: "Gauteng", city: "Sandton", eligibility: ["SA ID required", "Proof of income"], primaryForm: { id: "dis-claim", name: "Medical claim submission", fields: 10, prefill: ["Full Name", "ID Number", "Policy Number", "Email Address"] } },
   { id: "oldmutual", name: "Old Mutual", initials: "OM", category: "Insurance", description: "Policy updates and beneficiary changes", forms: 4, serviceTypes: ["Support & queries", "Verification"], province: "Western Cape", city: "Pinelands", eligibility: ["SA ID required"], primaryForm: { id: "om-beneficiary", name: "Beneficiary change", fields: 8, prefill: ["Full Name", "ID Number", "Policy Number"] } },
 
+  // Community
+  { id: "healingnations", name: "Healing the Nations", initials: "HTN", category: "Community", description: "Free event registration, volunteer sign-up, prayer requests", forms: 3, verified: true, serviceTypes: ["Applications", "Support & queries"], province: "Gauteng", city: "Pretoria", eligibility: ["Open to everyone"], primaryForm: { id: "htn-register", name: "Healing the Nations registration", fields: 8, prefill: ["First Name", "Last Name", "Mobile Number", "Email Address", "Home Address"] } },
+
   // Telecoms
   { id: "vodacom", name: "Vodacom", initials: "VOD", category: "Telecoms", description: "RICA registration, contract upgrades", forms: 5, verified: true, serviceTypes: ["Verification", "Applications"], province: "Gauteng", city: "Midrand", eligibility: ["SA ID required", "Proof of address"], primaryForm: { id: "vod-rica", name: "RICA registration", fields: 7, prefill: ["Full Name", "ID Number", "Home Address", "Mobile Number"] } },
   { id: "mtn", name: "MTN", initials: "MTN", category: "Telecoms", description: "SIM swaps and number porting", forms: 4, serviceTypes: ["Verification", "Support & queries"], province: "Nationwide", city: "Roodepoort", eligibility: ["SA ID required"], primaryForm: { id: "mtn-sim", name: "SIM swap request", fields: 6, prefill: ["Full Name", "ID Number", "Mobile Number"] } },
@@ -166,6 +171,7 @@ export const providerCoords: Record<string, LatLng> = {
   oldmutual: { lat: -33.9384, lng: 18.5091 },
   vodacom: { lat: -25.9899, lng: 28.1265 },
   mtn: { lat: -26.1625, lng: 27.8725 },
+  healingnations: { lat: -25.7479, lng: 28.2293 },
 };
 
 /** Province reference points used when the user picks a location */
@@ -228,6 +234,7 @@ export const appointments: Appointment[] = [
   { id: "a3", provider: "City of Tshwane", initials: "COT", title: "Municipal account renewal", ref: "#LF-0812", date: iso(5), time: "14:15", location: "Centurion office", status: "Confirmed" },
   { id: "a4", provider: "Capitec Bank", initials: "CB", title: "FICA document verification", ref: "#LF-0790", date: iso(9), time: "10:00", location: "Menlyn branch", status: "Rescheduled" },
   { id: "a5", provider: "SASSA", initials: "SASSA", title: "Grant status interview", ref: "#LF-0755", date: iso(14), time: "08:45", location: "Soshanguve office", status: "Confirmed" },
+  { id: "a6", provider: "Healing the Nations", initials: "HTN", title: "Healing the Nations gathering", ref: "#LF-1061", date: iso(7), time: "18:00", location: "Pretoria venue", status: "Confirmed" },
 ];
 
 /* ---------------- Per-provider form catalogue ---------------- */

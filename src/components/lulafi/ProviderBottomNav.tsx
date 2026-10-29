@@ -22,7 +22,7 @@ const ProviderBottomNav = ({ active, onScrollToTop }: ProviderBottomNavProps) =>
     key === "inbox" ? providerAlerts.inbox : key === "sem" ? providerAlerts.sem : 0;
 
   return (
-    <div className="h-[72px] bg-bg-secondary border-t border-border-primary flex shrink-0 z-[200] relative">
+    <div className="h-[72px] bg-surface-list border-t border-border-primary flex shrink-0 z-[200] relative">
       {tabs.map(({ key, label, icon: Icon, screen }) => (
         <button
           key={key}

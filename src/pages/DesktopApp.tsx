@@ -105,7 +105,7 @@ export default function DesktopApp() {
         {/* Footer CTA */}
         <div className="flex flex-col items-center gap-4 pt-2">
           <Button asChild size="lg" className="rounded-full px-8 font-semibold shadow-[var(--shadow-md)] active:scale-95">
-            <Link to="/?screen=signup">Create your account</Link>
+            <Link to={audience === "business" ? "/provider-signup" : "/?screen=signup"}>Create your account</Link>
           </Button>
           <Link
             to="/get-app"

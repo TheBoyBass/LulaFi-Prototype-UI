@@ -125,7 +125,7 @@ const ProviderSearchScreen = ({
   const chip = (active: boolean) =>
     `shrink-0 px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
       active
-        ? "bg-brand text-bg-primary border-brand"
+        ? "bg-brand text-primary-foreground border-brand"
         : "bg-bg-secondary text-text-secondary border-border-primary hover:border-brand"
     }`;
 
@@ -168,13 +168,13 @@ const ProviderSearchScreen = ({
             aria-expanded={showFilters}
             className={`relative w-11 h-11 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
               showFilters || advancedCount
-                ? "bg-brand/10 border-brand text-brand"
+                ? "bg-surface-interactive border-brand text-brand"
                 : "bg-bg-secondary border-border-primary text-text-secondary"
             }`}
           >
             <SlidersHorizontal size={17} />
             {advancedCount > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-[17px] h-[17px] px-1 rounded-full bg-brand text-bg-primary text-[10px] font-semibold flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 min-w-[17px] h-[17px] px-1 rounded-full bg-brand text-primary-foreground text-[10px] font-semibold flex items-center justify-center">
                 {advancedCount}
               </span>
             )}
@@ -198,7 +198,7 @@ const ProviderSearchScreen = ({
                 key={mode}
                 onClick={() => setSort(mode)}
                 className={`flex-1 py-1.5 rounded-full text-[11px] font-medium transition-colors ${
-                  sort === mode ? "bg-brand text-bg-primary" : "text-text-secondary"
+                  sort === mode ? "bg-brand text-primary-foreground" : "text-text-secondary"
                 }`}
               >
                 {mode === "relevance" ? "Best match" : "Nearest first"}
@@ -211,7 +211,7 @@ const ProviderSearchScreen = ({
             aria-pressed={showMap}
             className={`w-10 h-10 rounded-full border flex items-center justify-center shrink-0 transition-colors ${
               showMap
-                ? "bg-brand/10 border-brand text-brand"
+                ? "bg-surface-interactive border-brand text-brand"
                 : "bg-bg-secondary border-border-primary text-text-secondary"
             }`}
           >
@@ -330,7 +330,7 @@ const ProviderSearchScreen = ({
                   onClick={() => openProviderDetail(p.id)}
                   className="flex items-center gap-3 text-left min-w-0 flex-1"
                 >
-                  <div className="w-11 h-11 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-lg bg-surface-interactive flex items-center justify-center shrink-0">
                     <span className="text-[11px] font-semibold text-brand">{p.initials}</span>
                   </div>
                   <div className="min-w-0 flex-1">
@@ -386,7 +386,7 @@ const ProviderSearchScreen = ({
 
               <button
                 onClick={() => openProviderForm(p.id)}
-                className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg bg-brand/10 border border-brand/30 hover:bg-brand/15 transition-colors text-left"
+                className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg bg-surface-interactive border border-brand/30 hover:bg-brand/15 transition-colors text-left"
               >
                 <span className="flex items-center gap-2 min-w-0">
                   <FileText size={14} className="text-brand shrink-0" />

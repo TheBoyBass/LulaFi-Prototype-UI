@@ -32,13 +32,13 @@ const OnboardingScreen = ({ step, title, description, nextScreen }: OnboardingSc
       {/* Radial teal glow with pulse */}
       <motion.div
         className="absolute inset-0"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsla(175,70%,40%,0.15) 0%, transparent 60%)' }}
+        style={{ background: 'var(--gradient-logo-glow)' }}
         animate={{ opacity: [1, 0.6, 1] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
         className="absolute inset-0 hidden dark:block"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, hsla(175,70%,40%,0.25) 0%, hsl(210,61%,11%) 50%, hsl(210,61%,11%) 100%)' }}
+        style={{ background: 'var(--gradient-logo-glow)' }}
         animate={{ opacity: [1, 0.7, 1] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -61,7 +61,7 @@ const OnboardingScreen = ({ step, title, description, nextScreen }: OnboardingSc
           </motion.div>
         </div>
         <div className="flex flex-col gap-4">
-          <LulaButton onClick={() => navigate(nextScreen)} className="w-full rounded-full gradient-brand text-white shadow-md">
+          <LulaButton onClick={() => navigate(nextScreen)} className="w-full rounded-full bg-primary text-primary-foreground shadow-md">
             {step === 3 ? "Get started" : "Next"}
           </LulaButton>
           <div className="flex gap-2 justify-center">

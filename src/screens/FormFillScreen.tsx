@@ -93,7 +93,7 @@ const FormFillScreen = () => {
                 </div>
               </div>
             )}
-            <div className="flex items-start gap-3 p-3.5 bg-brand/10 border border-brand/30 rounded-xl">
+            <div className="flex items-start gap-3 p-3.5 bg-surface-interactive border border-brand/30 rounded-xl">
               <ShieldCheck size={16} className="text-brand shrink-0 mt-0.5" />
               <div className="text-xs text-text-secondary">
                 Autofilled from your Data Vault after your PIN authorisation. Edit any field, then
@@ -152,7 +152,7 @@ const FormFillScreen = () => {
             });
             navigate("activity");
           }}
-          className="w-full rounded-full gradient-brand text-white shadow-md"
+          className="w-full rounded-full bg-primary text-primary-foreground shadow-md"
         >
           {provider ? `Send to ${provider.name}` : "Send to organization"}
         </LulaButton>

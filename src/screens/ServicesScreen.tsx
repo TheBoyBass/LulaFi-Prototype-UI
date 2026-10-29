@@ -127,7 +127,7 @@ const ServicesScreen = () => {
           </div>
           <button
             onClick={() => setNewOpen(true)}
-            className="flex items-center gap-1 px-4 py-2.5 rounded-full bg-brand text-bg-primary text-xs font-medium shrink-0"
+            className="flex items-center gap-1 px-4 py-2.5 rounded-full bg-brand text-primary-foreground text-xs font-medium shrink-0"
           >
             <Plus size={13} />
             New
@@ -143,7 +143,7 @@ const ServicesScreen = () => {
                 key={label}
                 onClick={() => setActiveFilter(label)}
                 className={`whitespace-nowrap px-4 py-1.5 rounded-full text-xs font-medium border transition-colors flex items-center gap-1.5 ${
-                  active ? "border-brand text-brand bg-brand/10" : "border-border-primary text-text-secondary bg-bg-secondary"
+                  active ? "border-brand text-brand bg-surface-interactive" : "border-border-primary text-text-secondary bg-bg-secondary"
                 }`}
               >
                 {label}
@@ -158,7 +158,7 @@ const ServicesScreen = () => {
           {visibleGroups.map(group => {
             const groupUnread = group.rows.reduce((sum, r) => sum + (unreadCounts[r.id] ?? 0), 0);
             return (
-              <div key={group.id} className="rounded-lg bg-bg-secondary border border-border-primary overflow-hidden">
+              <div key={group.id} className="rounded-lg bg-surface-list border border-border-primary overflow-hidden">
                 <button
                   onClick={() => navigate("org")}
                   className="w-full flex items-center gap-3 p-4 text-left border-b border-border-primary"
@@ -173,7 +173,7 @@ const ServicesScreen = () => {
                     </div>
                   </div>
                   {groupUnread > 0 && (
-                    <span className="w-5 h-5 rounded-full bg-brand text-bg-primary text-[10px] font-semibold flex items-center justify-center shrink-0">
+                    <span className="w-5 h-5 rounded-full bg-brand text-primary-foreground text-[10px] font-semibold flex items-center justify-center shrink-0">
                       {groupUnread}
                     </span>
                   )}
@@ -190,13 +190,13 @@ const ServicesScreen = () => {
                       >
                         <div
                           className={`w-8 h-8 rounded-md flex items-center justify-center shrink-0 ${
-                            row.kind === "provider" ? "bg-brand/10" : "bg-info/10"
+                            row.kind === "provider" ? "bg-surface-interactive" : "bg-tone-info-surface"
                           }`}
                         >
                           {row.kind === "provider" ? (
                             <MessageCircle size={15} className="text-brand" />
                           ) : (
-                            <FileText size={15} className="text-info" />
+                            <FileText size={15} className="text-tone-info-content" />
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
@@ -204,7 +204,7 @@ const ServicesScreen = () => {
                             <span className="text-xs font-medium text-text-primary truncate">{row.title}</span>
                             <span className="ml-auto text-[10px] text-text-muted shrink-0">{row.time}</span>
                             {unread > 0 && (
-                              <span className="w-4 h-4 rounded-full bg-brand text-bg-primary text-[9px] font-semibold flex items-center justify-center shrink-0">
+                              <span className="w-4 h-4 rounded-full bg-brand text-primary-foreground text-[9px] font-semibold flex items-center justify-center shrink-0">
                                 {unread}
                               </span>
                             )}
@@ -212,7 +212,7 @@ const ServicesScreen = () => {
                           </div>
                           {row.kind === "form" && (
                             <div className="flex items-center gap-1.5 mt-0.5 text-[9px] font-semibold tracking-wider">
-                              <span className="text-info">FORM CONVERSATION</span>
+                              <span className="text-tone-info-content">FORM CONVERSATION</span>
                               <span className="text-text-muted">
                                 {row.ref} · <span className={statusStyles[row.status ?? ""]}>{row.status}</span>
                               </span>
@@ -309,7 +309,7 @@ const ServicesScreen = () => {
                     onClick={() => startConversation()}
                     className="flex items-center gap-3 p-3 rounded-lg border border-border-primary bg-bg-tertiary text-left"
                   >
-                    <div className="relative w-9 h-9 rounded-full bg-brand/10 flex items-center justify-center shrink-0">
+                    <div className="relative w-9 h-9 rounded-full bg-surface-interactive flex items-center justify-center shrink-0">
                       <span className="text-[10px] font-semibold text-brand">{c.initials}</span>
                       {c.online && (
                         <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-success border border-bg-tertiary" />

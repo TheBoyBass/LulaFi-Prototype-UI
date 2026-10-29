@@ -1,0 +1,5 @@
+# Architecture rules
+- Use semantic foreground tokens for navigation and portal status text independently of decorative brand/status fills, preserving accessible contrast across themes.
+- Use the shared Radix Sheet for mobile landing and portal navigation; keep desktop navigation display-hidden below its breakpoint so closed links cannot receive keyboard focus.
+- Keep the shared light/dark colour-role definitions in src/lib/colorRoles.ts mirrored by HSL CSS roles; legacy brand utilities alias the interactive role, the wordmark's accent uses that teal interactive role, while brand-main stays reserved for the logo icon, gradients and art, preventing blue branding from changing action meaning.
+- Preserve AppContext identity in Vite hot data during live updates so existing consumers and refreshed providers share the same context; keep the missing-provider guard strict.

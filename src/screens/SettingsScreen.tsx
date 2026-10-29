@@ -130,8 +130,8 @@ const SettingsScreen = () => {
         {/* Profile card */}
         <div className="px-6 mt-6">
           <div className="bg-bg-secondary border border-border-primary rounded-xl p-4 flex items-center gap-4">
-            <div className="w-14 h-14 rounded-full bg-brand flex items-center justify-center shrink-0">
-              <span className="text-base font-semibold text-primary-foreground">{initials}</span>
+            <div className="w-14 h-14 rounded-full bg-identity-1 flex items-center justify-center shrink-0">
+              <span className="text-base font-semibold text-media-foreground">{initials}</span>
             </div>
             <div className="flex-1 min-w-0">
               <div className="text-base font-semibold text-text-primary truncate">

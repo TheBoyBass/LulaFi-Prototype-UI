@@ -75,7 +75,15 @@ interface AppContextType {
 
 export type { AppContextType };
 
-export const AppContext = createContext<AppContextType | null>(null);
+// Live updates may temporarily mix old consumers with a newly evaluated provider.
+// Keep the context identity stable across those evaluations, not the user state.
+export const AppContext =
+  (import.meta.hot?.data?.appContext as React.Context<AppContextType | null> | undefined) ??
+  createContext<AppContextType | null>(null);
+
+if (import.meta.hot?.data) {
+  import.meta.hot.data.appContext = AppContext;
+}
 
 export const useApp = () => {
   const ctx = useContext(AppContext);

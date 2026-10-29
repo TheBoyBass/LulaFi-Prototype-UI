@@ -11,10 +11,10 @@ export function LulaCard({ children, className, elevated = false }: LulaCardProp
   return (
     <div
       className={cn(
-        "bg-bg-secondary rounded-lg p-6",
+        "bg-surface-elevated rounded-lg p-6",
         elevated
-          ? "shadow-[0_8px_24px_rgba(0,0,0,0.25)]"
-          : "shadow-[0_1px_2px_rgba(0,0,0,0.2)]",
+          ? "shadow-[var(--shadow-md)]"
+          : "shadow-[var(--shadow-sm)]",
         className
       )}
     >

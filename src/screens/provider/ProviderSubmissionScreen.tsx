@@ -93,7 +93,7 @@ const ProviderSubmissionScreen = () => {
         <h2 className="mt-7 text-lg font-semibold text-text-primary">Approve and forward</h2>
         <div className="mt-3 rounded-xl border border-border-primary bg-bg-secondary p-4">
           <div className="flex items-start gap-3">
-            <div className="w-10 h-10 shrink-0 rounded-lg bg-brand/10 flex items-center justify-center">
+            <div className="w-10 h-10 shrink-0 rounded-lg bg-surface-interactive flex items-center justify-center">
               <Building2 size={18} className="text-brand" />
             </div>
             <div className="min-w-0">
@@ -110,13 +110,13 @@ const ProviderSubmissionScreen = () => {
               disabled={isApproved || isForwarded}
               className="flex items-center justify-center gap-2 py-3 rounded-full bg-bg-tertiary border border-border-primary text-sm font-medium text-text-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <CheckCircle2 size={16} className="text-success" />
+              <CheckCircle2 size={16} className="text-tone-success-content" />
               {isApproved || isForwarded ? "Approved" : "Approve submission"}
             </button>
             <button
               onClick={() => forwardSubmission(submission.id)}
               disabled={!isApproved}
-              className="flex items-center justify-center gap-2 py-3 rounded-full bg-brand text-sm font-semibold text-bg-primary cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 py-3 rounded-full bg-brand text-sm font-semibold text-primary-foreground cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Send size={16} />
               {isForwarded ? `Sent to ${FORWARD_DESTINATION}` : `Forward to ${FORWARD_DESTINATION}`}

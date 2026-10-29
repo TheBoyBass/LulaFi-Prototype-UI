@@ -8,10 +8,10 @@ interface LulaBadgeProps {
 }
 
 const variantStyles = {
-  success: 'bg-success/10 text-success border-success/20',
-  warning: 'bg-warning/10 text-warning border-warning/20',
-  error: 'bg-destructive/10 text-destructive border-destructive/20',
-  info: 'bg-info/10 text-info border-info/20',
+  success: 'bg-tone-success-surface text-tone-success-content border-tone-success-stroke',
+  warning: 'bg-tone-warning-surface text-tone-warning-content border-tone-warning-stroke',
+  error: 'bg-tone-danger-surface text-tone-danger-content border-tone-danger-stroke',
+  info: 'bg-tone-info-surface text-tone-info-content border-tone-info-stroke',
   neutral: 'bg-muted text-text-secondary border-muted-foreground/20',
 };
 

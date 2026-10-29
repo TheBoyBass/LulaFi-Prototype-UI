@@ -37,7 +37,7 @@ const ProviderLayout = ({ children, activeTab, hideBanner, title, focusToken, fo
 
   return (
     <ScrollContext.Provider value={{ scrollToTop, scrolled }}>
-      <div className="absolute inset-0 flex flex-col bg-bg-primary overflow-hidden">
+      <div className="absolute inset-0 flex flex-col bg-surface-screen overflow-hidden">
         <StatusBar />
         <div className="shrink-0 relative z-20 bg-bg-primary">
           <ProviderHeader title={title} />

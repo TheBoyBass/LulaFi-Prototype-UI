@@ -67,7 +67,7 @@ const MyFormsScreen = () => {
                 onClick={() => setFilter(label)}
                 className={`shrink-0 whitespace-nowrap px-3.5 py-1.5 rounded-full text-xs font-medium border transition-colors ${
                   active
-                    ? "bg-brand text-bg-primary border-brand"
+                    ? "bg-brand text-primary-foreground border-brand"
                     : "bg-bg-secondary text-text-secondary border-border-primary"
                 }`}
               >
@@ -87,7 +87,7 @@ const MyFormsScreen = () => {
                 onClick={() => openFormDetail(f.id)}
                 className="flex items-start gap-4 w-full text-left"
               >
-              <div className="w-11 h-11 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
+              <div className="w-11 h-11 rounded-lg bg-surface-interactive flex items-center justify-center shrink-0">
                 <FileText size={19} className="text-brand" />
               </div>
               <div className="flex-1 min-w-0">

@@ -24,7 +24,7 @@ const MessageBody = ({ text, members }: { text: string; members: SemMember[] }) 
       {text.split(/(@[a-z0-9_]+)/gi).map((part, i) => {
         const isMention = part.startsWith("@") && handles.has(part.slice(1).toLowerCase());
         return isMention ? (
-          <span key={i} className="font-semibold text-brand">
+          <span key={i} className="font-semibold underline underline-offset-2">
             {part}
           </span>
         ) : (
@@ -176,7 +176,7 @@ const ProviderConvoScreen = () => {
           <button
             type="submit"
             aria-label="Send message"
-            className="w-9 h-9 shrink-0 rounded-full bg-brand flex items-center justify-center text-bg-primary cursor-pointer"
+            className="w-9 h-9 shrink-0 rounded-full bg-brand flex items-center justify-center text-primary-foreground cursor-pointer"
           >
             <Send size={15} />
           </button>
@@ -195,10 +195,10 @@ const ProviderConvoScreen = () => {
           </button>
           <div
             className={`w-9 h-9 shrink-0 rounded-md flex items-center justify-center ${
-              isForm ? "bg-info/10" : "bg-brand/10"
+              isForm ? "bg-tone-info-surface" : "bg-surface-interactive"
             }`}
           >
-            <Icon size={16} className={isForm ? "text-info" : "text-brand"} />
+            <Icon size={16} className={isForm ? "text-tone-info-content" : "text-brand"} />
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-base font-semibold text-text-primary">
@@ -208,12 +208,12 @@ const ProviderConvoScreen = () => {
               {isGroup ? `${members.length - 1} members` : row.subtitle}
             </div>
           </div>
-          <span className="shrink-0 rounded-sm border border-brand/30 bg-brand/10 px-2 py-0.5 text-[9px] font-semibold text-brand">
+          <span className="shrink-0 rounded-sm border border-brand/30 bg-surface-interactive px-2 py-0.5 text-[9px] font-semibold text-brand">
             {kindLabel(row.kind)}
           </span>
         </div>
 
-        <div className="mt-2 flex items-center gap-1 text-[10px] text-success">
+        <div className="mt-2 flex items-center gap-1 text-[10px] text-tone-success-content">
           <Lock size={10} /> End-to-end encrypted
         </div>
 
@@ -280,8 +280,8 @@ const ProviderConvoScreen = () => {
                 <div
                   className={`max-w-[260px] rounded-xl px-3.5 py-2.5 text-sm ${
                     m.side === "out"
-                      ? "bg-brand/10 text-text-primary"
-                      : "bg-bg-tertiary text-text-primary"
+                      ? "bg-chat-sent text-chat-sent-text"
+                      : "bg-chat-received text-chat-received-text"
                   }`}
                 >
                   <MessageBody text={m.text} members={members} />

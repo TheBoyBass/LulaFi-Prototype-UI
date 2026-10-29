@@ -13,9 +13,9 @@ const MONTHS = [
 ];
 
 const statusStyle: Record<string, string> = {
-  Confirmed: "text-success bg-success/10",
-  Pending: "text-warning bg-warning/10",
-  Rescheduled: "text-info bg-info/10",
+  Confirmed: "text-tone-success-content bg-tone-success-surface",
+  Pending: "text-tone-warning-content bg-tone-warning-surface",
+  Rescheduled: "text-tone-info-content bg-tone-info-surface",
 };
 
 const toKey = (y: number, m: number, d: number) =>
@@ -113,9 +113,9 @@ const CalendarScreen = () => {
                     onClick={() => setSelected(isSelected ? null : key)}
                     className={`h-9 rounded-lg flex flex-col items-center justify-center gap-0.5 text-xs transition-colors ${
                       isSelected
-                        ? "bg-brand text-bg-primary font-semibold"
+                        ? "bg-brand text-primary-foreground font-semibold"
                         : isToday
-                          ? "bg-brand/10 text-brand font-semibold"
+                          ? "bg-surface-interactive text-brand font-semibold"
                           : "text-text-secondary hover:bg-bg-tertiary"
                     }`}
                   >
@@ -146,7 +146,7 @@ const CalendarScreen = () => {
                   className="text-left p-4 bg-bg-secondary border border-border-primary rounded-xl hover:border-brand transition-colors"
                 >
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
+                    <div className="w-10 h-10 rounded-lg bg-surface-interactive flex items-center justify-center shrink-0">
                       <span className="text-[10px] font-semibold text-brand">{a.initials}</span>
                     </div>
                     <div className="min-w-0 flex-1">

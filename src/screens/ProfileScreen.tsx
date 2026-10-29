@@ -54,8 +54,8 @@ const ProfileScreen = () => {
         </p>
 
         <div className="mt-4 bg-bg-secondary border border-border-primary rounded-xl p-4 flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-brand flex items-center justify-center shrink-0">
-            <span className="text-base font-semibold text-primary-foreground">{initials}</span>
+          <div className="w-14 h-14 rounded-full bg-identity-1 flex items-center justify-center shrink-0">
+            <span className="text-base font-semibold text-media-foreground">{initials}</span>
           </div>
           <div className="min-w-0">
             <div className="text-base font-semibold text-text-primary truncate">
@@ -97,7 +97,7 @@ const ProfileScreen = () => {
         <LulaButton
           onClick={save}
           disabled={!valid || !dirty}
-          className="w-full mt-6 rounded-full gradient-brand text-white shadow-md disabled:opacity-50"
+          className="w-full mt-6 rounded-full bg-primary text-primary-foreground shadow-md disabled:opacity-50"
         >
           Save changes
         </LulaButton>

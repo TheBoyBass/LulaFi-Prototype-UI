@@ -43,7 +43,7 @@ const ProviderActivityScreen = () => {
               onClick={() => setFilter(f)}
               className={`shrink-0 rounded-full px-4 py-2 text-xs font-medium border cursor-pointer transition-colors ${
                 filter === f
-                  ? "bg-brand text-bg-primary border-brand"
+                  ? "bg-brand text-primary-foreground border-brand"
                   : "bg-bg-secondary text-text-secondary border-border-primary"
               }`}
             >
@@ -60,7 +60,7 @@ const ProviderActivityScreen = () => {
                 key={item.id}
                 className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-secondary p-3"
               >
-                <div className="w-9 h-9 shrink-0 rounded-full bg-brand/10 flex items-center justify-center">
+                <div className="w-9 h-9 shrink-0 rounded-full bg-surface-interactive flex items-center justify-center">
                   <Icon size={17} className="text-brand" />
                 </div>
                 <div className="min-w-0 flex-1">

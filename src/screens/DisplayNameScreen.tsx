@@ -27,7 +27,7 @@ const DisplayNameScreen = () => {
             onChange={e => setDisplayName(e.target.value)}
           />
         </div>
-        <LulaButton onClick={() => navigate("home")} className="w-full rounded-full gradient-brand text-white shadow-md">
+        <LulaButton onClick={() => navigate("home")} className="w-full rounded-full bg-primary text-primary-foreground shadow-md">
           Continue
         </LulaButton>
       </LulaCard>

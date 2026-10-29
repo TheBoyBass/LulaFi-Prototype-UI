@@ -1,15 +1,7 @@
-import "@testing-library/jest-dom";
-
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: (query: string) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: () => {},
-    removeListener: () => {},
-    addEventListener: () => {},
-    removeEventListener: () => {},
-    dispatchEvent: () => {},
-  }),
-});
+- [x] Raise navigation and portal status text contrast to AA.
+- [x] Add accessible mobile navigation and exclude closed portal sidebar links from focus.
+- [x] Verify both demo portals and landing navigation with keyboard and contrast checks.
+- [x] Apply attached light/dark roles across shared styling and components.
+- [x] Align branding, chat, statuses and design-system examples with those roles.
+- [x] Verify prototype, landing pages and both demo portals.
+- [x] Document lulaFi wordmark colours (teal, royal blue, dark variant) in the design system guidelines.

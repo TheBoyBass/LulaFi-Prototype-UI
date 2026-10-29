@@ -28,7 +28,7 @@ const ScreenLayout = ({ children, activeTab, hideNav, header, footer }: ScreenLa
 
   return (
     <ScrollContext.Provider value={{ scrollToTop, scrolled }}>
-      <div className="absolute inset-0 flex flex-col bg-bg-primary overflow-hidden">
+      <div className="absolute inset-0 flex flex-col bg-surface-screen overflow-hidden">
         <StatusBar />
         {header && <div className="shrink-0 relative z-20 bg-bg-primary">{header}</div>}
         <div

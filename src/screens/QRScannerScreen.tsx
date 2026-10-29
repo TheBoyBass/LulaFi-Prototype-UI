@@ -25,15 +25,15 @@ const QRScannerScreen = () => {
     return (
       <ScreenLayout activeTab="home" header={<AppHeader title="Scan & Submit" />}>
         <div className="flex flex-col flex-1 min-h-0">
-          <div className="flex-1 relative bg-neutral-800 rounded-lg mx-4 mt-2 mb-4 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-neutral-700 via-neutral-800 to-neutral-900" />
-            <div className="absolute top-[15%] left-[18%] w-10 h-10 border-l-[3px] border-t-[3px] border-white rounded-tl-sm" />
-            <div className="absolute top-[15%] right-[18%] w-10 h-10 border-r-[3px] border-t-[3px] border-white rounded-tr-sm" />
-            <div className="absolute bottom-[25%] left-[18%] w-10 h-10 border-l-[3px] border-b-[3px] border-white rounded-bl-sm" />
-            <div className="absolute bottom-[25%] right-[18%] w-10 h-10 border-r-[3px] border-b-[3px] border-white rounded-br-sm" />
+          <div className="flex-1 relative bg-media-background rounded-lg mx-4 mt-2 mb-4 overflow-hidden">
+            <div className="absolute inset-0 bg-media-background" />
+            <div className="absolute top-[15%] left-[18%] w-10 h-10 border-l-[3px] border-t-[3px] border-media-foreground rounded-tl-sm" />
+            <div className="absolute top-[15%] right-[18%] w-10 h-10 border-r-[3px] border-t-[3px] border-media-foreground rounded-tr-sm" />
+            <div className="absolute bottom-[25%] left-[18%] w-10 h-10 border-l-[3px] border-b-[3px] border-media-foreground rounded-bl-sm" />
+            <div className="absolute bottom-[25%] right-[18%] w-10 h-10 border-r-[3px] border-b-[3px] border-media-foreground rounded-br-sm" />
             {!detected && <div className="scan-line" />}
             <div className="absolute bottom-[18%] left-1/2 -translate-x-1/2 w-[80%]">
-              <div className="bg-black/60 text-white text-sm px-4 py-2 rounded-md text-center">
+              <div className="bg-media-background/60 text-media-foreground text-sm px-4 py-2 rounded-md text-center">
                 {detected
                   ? "QR code detected — Municipal Account Renewal form"
                   : "Position QR code within the frame"}
@@ -44,7 +44,7 @@ const QRScannerScreen = () => {
             <LulaButton
               onClick={() => navigate("form")}
               disabled={!detected}
-              className="w-full rounded-full gradient-brand text-white shadow-md"
+              className="w-full rounded-full bg-primary text-primary-foreground shadow-md"
             >
               {detected ? "Fill in this form" : "Scanning…"}
             </LulaButton>
@@ -71,7 +71,7 @@ const QRScannerScreen = () => {
         </div>
         <LulaCard className="w-full flex flex-col gap-4">
           <div className="flex items-center gap-4 text-left">
-            <div className="w-12 h-12 rounded-md bg-brand/10 flex items-center justify-center shrink-0">
+            <div className="w-12 h-12 rounded-md bg-surface-interactive flex items-center justify-center shrink-0">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-brand">
                 <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2" />
                 <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2" />
@@ -87,7 +87,7 @@ const QRScannerScreen = () => {
               <div className="text-xs text-text-muted mt-0.5">Point your camera at a QR code to scan and continue</div>
             </div>
           </div>
-          <LulaButton onClick={() => setScanning(true)} className="w-full rounded-full gradient-brand text-white shadow-md">
+          <LulaButton onClick={() => setScanning(true)} className="w-full rounded-full bg-primary text-primary-foreground shadow-md">
             Open Scanner
           </LulaButton>
         </LulaCard>

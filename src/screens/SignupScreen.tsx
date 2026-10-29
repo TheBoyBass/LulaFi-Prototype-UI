@@ -31,7 +31,7 @@ const SignupScreen = () => {
             <input type="tel" placeholder="Phone Number" className="flex-1 w-full py-3 px-4 bg-bg-secondary border border-border-primary rounded-md text-text-primary text-[15px] outline-none placeholder:text-text-muted focus:border-brand transition-colors" />
           </div>
         </div>
-        <LulaButton onClick={() => navigate("otp")} className="w-full rounded-full gradient-brand text-white shadow-md">
+        <LulaButton onClick={() => navigate("otp")} className="w-full rounded-full bg-primary text-primary-foreground shadow-md">
           Send OTP
         </LulaButton>
         <LulaCard className="flex flex-col gap-3">

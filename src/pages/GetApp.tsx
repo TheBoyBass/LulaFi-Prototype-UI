@@ -1,26 +1,30 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Apple, Bot, Monitor } from "lucide-react";
+import { Monitor } from "lucide-react";
 
 import LandingFooter from "@/components/landing/LandingFooter";
 import LandingHeader, { LandingAudience } from "@/components/landing/LandingHeader";
 import lulafiIcon from "@/assets/lulafi-icon.png";
+import appStoreBadge from "@/assets/app-store-badge.svg";
+import googlePlayBadge from "@/assets/google-play-badge.png";
+import qrAppStore from "@/assets/qr-app-store.svg";
+import qrGooglePlay from "@/assets/qr-google-play.svg";
 import { Button } from "@/components/ui/button";
 
 const mobileOptions = [
   {
-    icon: Apple,
     title: "iPhone & iPad",
     description: "Available on the App Store",
     href: "https://apps.apple.com/app/lulafi/id6753874234",
-    action: "Download",
+    badge: appStoreBadge,
+    alt: "Download on the App Store",
   },
   {
-    icon: Bot,
     title: "Android",
     description: "Available on Google Play",
     href: "https://play.google.com/store/apps/details?id=com.luladefi.app",
-    action: "Download",
+    badge: googlePlayBadge,
+    alt: "Get it on Google Play",
   },
 ];
 
@@ -57,26 +61,65 @@ export default function GetApp() {
 
         {/* Device selection */}
         <div className="grid gap-4 sm:grid-cols-2">
-          {mobileOptions.map(({ icon: Icon, title, description, href, action }) => (
+          {mobileOptions.map(({ title, description, href, badge, alt }) => (
             <article
               key={title}
               className="group flex flex-col items-center gap-4 rounded-2xl border border-border-primary bg-bg-primary p-6 text-center shadow-[var(--shadow-sm)] transition-all hover:shadow-[var(--shadow-md)]"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-bg-tertiary text-text-secondary transition-colors group-hover:bg-brand/10 group-hover:text-brand">
-                <Icon className="h-6 w-6" aria-hidden="true" />
-              </div>
               <div>
                 <h2 className="font-semibold">{title}</h2>
                 <p className="mt-1 text-xs text-text-muted">{description}</p>
               </div>
-              <Button asChild className="mt-2 w-full rounded-xl font-medium">
-                <a href={href} target="_blank" rel="noopener noreferrer">
-                  {action}
-                </a>
-              </Button>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={alt}
+                className="mt-2 block w-full max-w-[210px] transition-transform group-hover:scale-[1.03] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-bg-secondary"
+              >
+                <img
+                  src={badge}
+                  alt={alt}
+                  className="h-auto w-full"
+                  loading="lazy"
+                />
+              </a>
             </article>
           ))}
         </div>
+
+        {/* Scan to download — desktop only */}
+        <section
+          aria-labelledby="scan-heading"
+          className="hidden flex-col items-center gap-3 rounded-2xl border border-border-primary bg-bg-primary p-8 text-center shadow-[var(--shadow-sm)] lg:flex"
+        >
+          <h2 id="scan-heading" className="text-lg font-semibold">
+            Scan to download
+          </h2>
+          <p className="max-w-md text-sm text-text-secondary">
+            Point your phone's camera at a code and the app store opens instantly on your device.
+          </p>
+          <div className="mt-3 flex flex-wrap items-start justify-center gap-10">
+            <figure className="flex flex-col items-center gap-3">
+              <img
+                src={qrAppStore}
+                alt="QR code linking to the LulaFi app on the App Store"
+                className="h-36 w-36 rounded-lg"
+                loading="lazy"
+              />
+              <figcaption className="text-xs font-medium text-text-muted">iPhone &amp; iPad</figcaption>
+            </figure>
+            <figure className="flex flex-col items-center gap-3">
+              <img
+                src={qrGooglePlay}
+                alt="QR code linking to the LulaFi app on Google Play"
+                className="h-36 w-36 rounded-lg"
+                loading="lazy"
+              />
+              <figcaption className="text-xs font-medium text-text-muted">Android</figcaption>
+            </figure>
+          </div>
+        </section>
 
         {/* Desktop secondary */}
         <Link
@@ -117,9 +160,9 @@ export default function GetApp() {
         {/* Footer CTA */}
         <div className="flex flex-col items-center gap-4 pt-2">
           <Button asChild size="lg" className="rounded-full px-8 font-semibold shadow-[var(--shadow-md)] active:scale-95">
-            <Link to="/?screen=signup">Create your account</Link>
+            <Link to={audience === "business" ? "/provider-signup" : "/?screen=signup"}>Create your account</Link>
           </Button>
-          <Link to="/?screen=signup" className="text-sm text-text-muted transition-colors hover:text-text-secondary">
+          <Link to={audience === "business" ? "/provider-signup?tab=login" : "/?screen=signup"} className="text-sm text-text-muted transition-colors hover:text-text-secondary">
             Back to log in
           </Link>
         </div>

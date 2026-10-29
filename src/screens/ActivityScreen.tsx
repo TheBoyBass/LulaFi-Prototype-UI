@@ -13,9 +13,9 @@ import {
 import { FileText, CalendarDays, LogIn, Smartphone, Inbox, ChevronRight } from "lucide-react";
 
 const kindMeta: Record<ActivityKind, { icon: typeof FileText; tint: string; bg: string; label: string }> = {
-  form: { icon: FileText, tint: "text-brand", bg: "bg-brand/10", label: "Form fill" },
-  appointment: { icon: CalendarDays, tint: "text-info", bg: "bg-info/10", label: "Appointment" },
-  login: { icon: LogIn, tint: "text-success", bg: "bg-success/10", label: "Sign-in" },
+  form: { icon: FileText, tint: "text-brand", bg: "bg-surface-interactive", label: "Form fill" },
+  appointment: { icon: CalendarDays, tint: "text-tone-info-content", bg: "bg-tone-info-surface", label: "Appointment" },
+  login: { icon: LogIn, tint: "text-tone-success-content", bg: "bg-tone-success-surface", label: "Sign-in" },
   device: { icon: Smartphone, tint: "text-text-secondary", bg: "bg-bg-tertiary", label: "Device" },
 };
 
@@ -63,7 +63,7 @@ const ActivityScreen = () => {
               onClick={() => setFilter(f)}
               className={`shrink-0 px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
                 filter === f
-                  ? "bg-brand text-bg-primary border-brand"
+                  ? "bg-brand text-primary-foreground border-brand"
                   : "bg-bg-secondary text-text-secondary border-border-primary hover:border-brand"
               }`}
             >

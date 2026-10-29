@@ -138,12 +138,12 @@ const ProviderSemScreen = () => {
                 onClick={() => setFilter(f)}
                 className={`shrink-0 flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium border cursor-pointer transition-colors ${
                   active
-                    ? "bg-brand text-bg-primary border-brand"
+                    ? "bg-brand text-primary-foreground border-brand"
                     : "bg-bg-secondary text-text-secondary border-border-primary"
                 }`}
               >
                 {f}
-                <span className={active ? "text-bg-primary/70" : "text-text-muted"}>{counts[f]}</span>
+                <span className={active ? "text-primary-foreground" : "text-text-muted"}>{counts[f]}</span>
               </button>
             );
           })}
@@ -155,7 +155,7 @@ const ProviderSemScreen = () => {
             return (
               <div
                 key={group.id}
-                className="overflow-hidden rounded-xl border border-border-primary bg-bg-secondary"
+                className="overflow-hidden rounded-xl border border-border-primary bg-surface-list"
               >
                 <div className="flex items-center gap-3 border-b border-border-primary p-4">
                   <div className="relative w-10 h-10 shrink-0 rounded-full bg-bg-tertiary border border-border-primary flex items-center justify-center">
@@ -168,7 +168,7 @@ const ProviderSemScreen = () => {
                     </div>
                   </div>
                   {groupUnread > 0 && (
-                    <span className="shrink-0 w-5 h-5 rounded-full bg-brand text-bg-primary text-[10px] font-semibold flex items-center justify-center">
+                    <span className="shrink-0 w-5 h-5 rounded-full bg-brand text-primary-foreground text-[10px] font-semibold flex items-center justify-center">
                       {groupUnread}
                     </span>
                   )}
@@ -189,17 +189,17 @@ const ProviderSemScreen = () => {
                         }}
                         onClick={() => openRow(row)}
                         className={`flex items-start gap-3 border-b border-border-primary px-4 py-3 text-left last:border-b-0 cursor-pointer transition-colors hover:bg-brand/[0.04] ${
-                          highlighted ? "bg-brand/10 ring-2 ring-inset ring-brand/40" : ""
+                          highlighted ? "bg-surface-interactive ring-2 ring-inset ring-brand/40" : ""
                         }`}
                       >
                         <div
                           className={`w-8 h-8 shrink-0 rounded-md flex items-center justify-center ${
-                            row.kind === "FORM" ? "bg-info/10" : "bg-brand/10"
+                            row.kind === "FORM" ? "bg-tone-info-surface" : "bg-surface-interactive"
                           }`}
                         >
                           <Icon
                             size={15}
-                            className={row.kind === "FORM" ? "text-info" : "text-brand"}
+                            className={row.kind === "FORM" ? "text-tone-info-content" : "text-brand"}
                           />
                         </div>
 
@@ -228,7 +228,7 @@ const ProviderSemScreen = () => {
                               </span>
                             )}
                             {unread > 0 && (
-                              <span className="shrink-0 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold text-bg-primary">
+                              <span className="shrink-0 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold text-primary-foreground">
                                 {unread}
                               </span>
                             )}

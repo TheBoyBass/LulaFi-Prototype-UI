@@ -10,6 +10,7 @@ const columns = [
       { label: "About", to: "/about" },
       { label: "Get the app", to: "/get-app" },
       { label: "Desktop app", to: "/desktop-app" },
+      { label: "Contact", to: "/contact" },
     ],
   },
   {
@@ -25,6 +26,7 @@ const columns = [
     links: [
       { label: "Log in", to: "/?screen=signup" },
       { label: "Create an account", to: "/?screen=signup" },
+      { label: "Provider sign up", to: "/provider-signup" },
     ],
   },
 ];
@@ -52,7 +54,7 @@ export default function LandingFooter() {
               <ul className="mt-4 space-y-3 text-sm text-text-muted">
                 {column.links.map((link) => (
                   <li key={`${column.title}-${link.label}`}>
-                    <Link to={link.to} className="transition-colors hover:text-brand">
+                    <Link to={link.to} className="transition-colors hover:text-brand-foreground">
                       {link.label}
                     </Link>
                   </li>

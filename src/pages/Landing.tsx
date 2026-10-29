@@ -5,7 +5,6 @@ import {
   ArrowRight,
   Building2,
   CalendarDays,
-  Check,
   CircleUserRound,
   FileText,
   Fingerprint,
@@ -122,11 +121,7 @@ const Landing = () => {
         <section className="relative overflow-hidden">
           <div
             className="absolute inset-0"
-            style={{
-              background: isPersonal
-                ? "radial-gradient(ellipse 60% 60% at 85% 0%, hsla(172,66%,50%,0.18) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 0% 100%, hsla(239,84%,67%,0.12) 0%, transparent 60%)"
-                : "radial-gradient(ellipse 60% 60% at 85% 0%, hsla(239,84%,67%,0.18) 0%, transparent 65%), radial-gradient(ellipse 50% 50% at 0% 100%, hsla(172,66%,50%,0.12) 0%, transparent 60%)",
-            }}
+            style={{ background: isPersonal ? "var(--gradient-hero)" : "var(--gradient-hero-business)" }}
           />
           <div className="relative mx-auto grid max-w-6xl items-center gap-12 px-6 py-20 lg:grid-cols-2 lg:py-28">
             <motion.div key={audience} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
@@ -146,9 +141,15 @@ const Landing = () => {
                     {c.primaryCta} <ArrowRight size={18} />
                   </Link>
                  </Button>
-                 <Button asChild variant="outline" size="lg">
-                  <a href={isPersonal ? "#how-it-works" : "#contact"}>{c.secondaryCta}</a>
-                 </Button>
+                 {isPersonal ? (
+                   <Button asChild variant="outline" size="lg">
+                     <Link to="/how-it-works">{c.secondaryCta}</Link>
+                   </Button>
+                 ) : (
+                   <Button asChild variant="outline" size="lg">
+                     <a href="#contact">{c.secondaryCta}</a>
+                   </Button>
+                 )}
               </div>
                <ul className="mt-8 grid gap-3 sm:grid-cols-3" aria-label="LulaFi benefits">
                  {BENEFITS.map(({ icon: Icon, label }) => (
@@ -215,49 +216,6 @@ const Landing = () => {
                 <p className="text-sm leading-relaxed text-text-muted">{body}</p>
               </motion.article>
             ))}
-          </div>
-        </section>
-
-        {/* Steps */}
-        <section id="how-it-works" className="border-y border-border-primary bg-bg-secondary">
-          <div className="mx-auto max-w-6xl px-6 py-20 lg:py-24">
-            <SectionHeading
-              eyebrow="How it works"
-              title="Three steps, start to finish"
-              body={
-                isPersonal
-                  ? "From setting up your vault to sending a completed form, it takes minutes."
-                  : "From publishing your forms to replying to a client, everything stays in one flow."
-              }
-            />
-            <div className="mt-12 grid gap-5 md:grid-cols-3">
-              {c.steps.map((s, i) => (
-                <motion.div
-                  key={s.title}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-80px" }}
-                  transition={{ duration: 0.4, delay: i * 0.06 }}
-                  className="rounded-2xl border border-border-primary bg-bg-primary p-8 shadow-[var(--shadow-sm)]"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-sm font-bold text-primary-foreground">
-                    {i + 1}
-                  </div>
-                  <h3 className="mb-2 mt-6 text-lg font-bold">{s.title}</h3>
-                  <p className="text-sm leading-relaxed text-text-muted">{s.body}</p>
-                </motion.div>
-              ))}
-            </div>
-            <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3" aria-label="Included with lulaFi">
-              {c.proof.map((item) => (
-                <li key={item} className="flex items-center gap-2 text-sm text-text-secondary">
-                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand/15 text-brand">
-                    <Check className="h-3 w-3" aria-hidden="true" />
-                  </span>
-                  {item}
-                </li>
-              ))}
-            </ul>
           </div>
         </section>
 
