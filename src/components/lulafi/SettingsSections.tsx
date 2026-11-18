@@ -133,7 +133,7 @@ export function SettingsSections({
                   }}
                   className={`rounded-full px-3 py-1.5 text-xs font-medium border cursor-pointer transition-colors ${
                     selects[item.id] === opt
-                      ? "bg-brand text-primary-foreground border-brand"
+                      ? "bg-brand text-primary-foreground border-stroke-interactive"
                       : "bg-bg-primary text-text-secondary border-border-primary"
                   }`}
                 >
@@ -193,7 +193,7 @@ export function SettingsSections({
               />
               <button
                 type="submit"
-                className="shrink-0 rounded-lg bg-brand px-4 text-xs font-semibold text-primary-foreground cursor-pointer"
+                className="shrink-0 rounded-lg border border-stroke-interactive bg-brand px-4 text-xs font-semibold text-primary-foreground cursor-pointer"
               >
                 Save
               </button>
@@ -239,7 +239,7 @@ export function SettingsSections({
               className="w-full flex items-center gap-3 px-4 py-4 text-left cursor-pointer"
             >
               <div className="w-9 h-9 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
-                <Icon size={17} className="text-brand" />
+                <Icon size={17} className="text-icon-interactive" />
               </div>
               <span className="flex-1 text-sm font-medium text-text-primary">{label}</span>
               <ChevronDown

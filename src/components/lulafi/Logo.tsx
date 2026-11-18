@@ -16,7 +16,7 @@ const Logo = ({ size = "md" }: LogoProps) => {
       <div
         className={`${sm ? "text-xl" : "text-[1.875rem]"} font-semibold text-text-primary tracking-tight`}
       >
-        lula<span className="text-brand">Fi</span>
+        lula<span className="text-wordmark">Fi</span>
       </div>
     </div>
   );

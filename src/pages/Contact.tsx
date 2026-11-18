@@ -82,7 +82,7 @@ export default function Contact() {
           <div className="mx-auto max-w-3xl px-6 py-14 text-center lg:py-20">
             <p className="text-sm font-semibold uppercase tracking-wider text-brand">Contact us</p>
             <h1 className="mt-4 text-4xl font-bold leading-tight tracking-tight sm:text-5xl">
-              Contact lulaFi
+              Contact lula<span className="text-wordmark">Fi</span>
             </h1>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-text-secondary">
               Need help with your account, forms, messages, or provider access? Contact the lulaFi
@@ -100,7 +100,7 @@ export default function Contact() {
                 className="rounded-lg border border-border-primary bg-bg-primary p-8 shadow-[var(--shadow-sm)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-md)]"
               >
                 <div className="flex items-center gap-4 border-b border-border-primary pb-5">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand/10 text-brand">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand/10 text-icon-interactive">
                     <card.icon className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <h2 id={`${card.title.replace(/\s+/g, "-").toLowerCase()}-heading`} className="text-lg font-bold">
@@ -112,7 +112,7 @@ export default function Contact() {
                     const content = (
                       <span className="flex items-center gap-3">
                         {line.icon && (
-                          <line.icon className="h-4 w-4 shrink-0 text-brand" aria-hidden="true" />
+                          <line.icon className="h-4 w-4 shrink-0 text-icon-interactive" aria-hidden="true" />
                         )}
                         {line.label}
                       </span>
@@ -153,7 +153,7 @@ export default function Contact() {
                 referrerPolicy="no-referrer-when-downgrade"
               />
               <div className="flex flex-col justify-center border-t border-border-primary p-8 lg:border-l lg:border-t-0">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand/10 text-brand">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand/10 text-icon-interactive">
                   <MapPin className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <h2 className="mt-5 text-xl font-bold">lulaFi Office</h2>
@@ -182,7 +182,7 @@ export default function Contact() {
             <Accordion type="single" collapsible className="mt-8 rounded-lg border border-border-primary bg-bg-primary px-6 shadow-[var(--shadow-sm)]">
               {faqs.map((faq, index) => (
                 <AccordionItem key={faq.question} value={`faq-${index}`}>
-                  <AccordionTrigger className="min-h-14 text-left text-base font-semibold hover:text-brand">
+                  <AccordionTrigger className="min-h-14 text-left text-base font-semibold hover:text-brand [&>svg]:text-icon-interactive">
                     {faq.question}
                   </AccordionTrigger>
                   <AccordionContent className="pb-5 pr-8 text-base leading-relaxed text-text-secondary">

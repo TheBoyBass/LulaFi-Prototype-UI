@@ -19,10 +19,11 @@ export default {
       colors: {
         surface: Object.fromEntries(["screen", "elevated", "list", "muted", "strong", "interactive", "interactive-strong", "selected", "accent", "icon"].map(role => [role, `hsl(var(--surface-${role}))`])),
         content: Object.fromEntries(["primary", "secondary", "muted", "subtle", "inverse", "interactive", "on-interactive", "selected", "accent", "link"].map(role => [role, `hsl(var(--content-${role}))`])),
-        stroke: Object.fromEntries(["default", "subtle", "control", "selected", "accent", "focus"].map(role => [role, `hsl(var(--stroke-${role}))`])),
+        stroke: Object.fromEntries(["default", "subtle", "control", "interactive", "selected", "accent", "focus"].map(role => [role, `hsl(var(--stroke-${role}))`])),
         tone: Object.fromEntries(["danger", "success", "warning", "info"].map(tone => [tone, Object.fromEntries(["surface", "content", "stroke", "solid", "on-solid"].map(role => [role, `hsl(var(--status-${tone}-${role}))`]))])),
         chat: Object.fromEntries(["sent", "received", "sent-text", "received-text"].map(role => [role, `hsl(var(--chat-${role}))`])),
         identity: Object.fromEntries([1, 2, 3, 4, 5].map(role => [role, `hsl(var(--identity-${role}))`])),
+        icon: { interactive: "hsl(var(--icon-interactive))" },
         "brand-main": "hsl(var(--brand-main))",
         "brand-pressed": "hsl(var(--brand-pressed))",
         "foundation-teal": "hsl(var(--foundation-teal))",

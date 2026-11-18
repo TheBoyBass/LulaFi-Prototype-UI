@@ -8,7 +8,7 @@
 // server rendering, and build-time configuration.
 
 const screenSurface = {
-  light: '#f1f5f9',
+  light: '#eef1fb',
   dark: '#0b1220',
 } as const;
 
@@ -60,10 +60,20 @@ export interface ColorRoles {
     accent: string;
     link: string;
   };
+  /**
+   * Icon fills. Icons keep the bright action teal in BOTH appearances — only text
+   * swaps to teal-black on light surfaces (see `content.interactive`). Never put a
+   * teal-role text class on an icon; use this role so the two stay independent.
+   */
+  icon: {
+    interactive: string;
+  };
   stroke: {
     default: string;
     subtle: string;
     control: string;
+    /** Deeper edge that makes a filled action shape identifiable against surfaces. */
+    interactive: string;
     selected: string;
     accent: string;
     focus: string;
@@ -92,17 +102,24 @@ export interface ColorRoles {
   shadow: string;
 }
 
-// One action teal for buttons, send, links, selection and accents. It passes WCAG
-// AA both as text on white and under white text (5.7:1); brand blue is reserved for
-// the logo and the info tone.
-const lightAction = '#0b736a';
+// One action teal for buttons, send, links, selection and accents, held constant in
+// both modes. It is a FILL colour: on the light surfaces it reads at ~1.45:1, too low
+// to work as text or as a control edge on its own, so filled actions carry a deeper
+// teal edge (stroke.interactive) and teal is never used as text on light surfaces.
+// Brand blue is reserved for the logo and the info tone.
+const lightAction = '#4fe0ca';
 const lightActionTint = '#e7f8f8';
+const lightActionEdge = '#0b736a';
+// Teal-black for teal-role TEXT on light surfaces (rule: never teal text on light).
+const lightActionText = '#061b19';
+const lightMuted = '#5b6a7d';
+const lightDanger = '#be123c';
 
 const lightRoles: ColorRoles = {
   surface: {
     screen: screenSurface.light,
-    elevated: '#ffffff',
-    list: '#ffffff',
+    elevated: '#f5f7fd',
+    list: '#f5f7fd',
     muted: '#f8fafc',
     strong: '#f1f5f9',
     interactive: lightActionTint,
@@ -116,19 +133,23 @@ const lightRoles: ColorRoles = {
   content: {
     primary: '#0f172a',
     secondary: '#475569',
-    muted: '#64748b',
+    muted: lightMuted,
     subtle: '#94a3b8',
     inverse: '#ffffff',
+    interactive: lightActionText,
+    onInteractive: '#061b19',
+    selected: lightActionText,
+    accent: lightActionText,
+    link: lightActionText,
+  },
+  icon: {
     interactive: lightAction,
-    onInteractive: '#ffffff',
-    selected: lightAction,
-    accent: lightAction,
-    link: lightAction,
   },
   stroke: {
     default: '#dce5ef',
     subtle: '#e2e8f0',
     control: '#cbd5e1',
+    interactive: lightActionEdge,
     selected: lightAction,
     accent: lightAction,
     focus: lightAction,
@@ -136,9 +157,9 @@ const lightRoles: ColorRoles = {
   status: {
     danger: {
       surface: '#fff1f2',
-      content: '#e11d48',
+      content: lightDanger,
       stroke: '#fecdd3',
-      solid: '#e11d48',
+      solid: lightDanger,
       onSolid: '#ffffff',
     },
     success: {
@@ -170,9 +191,9 @@ const lightRoles: ColorRoles = {
   // Sent bubbles are a soft action tint with dark text (WhatsApp-style); deeper than
   // the UI tint so they stay distinct from white received bubbles on the canvas.
   chat: {
-    sent: '#d4f1ec',
-    received: '#ffffff',
-    sentText: '#0f172a',
+    sent: '#4fe0ca',
+    received: '#f5f7fd',
+    sentText: '#061b19',
     receivedText: '#0f172a',
   },
   identity: ['#1431a5', '#18214f', '#10b981', '#f59e0b', '#f43f5e'],
@@ -200,7 +221,7 @@ const darkRoles: ColorRoles = {
     scrim: 'rgba(0, 0, 0, 0.72)',
   },
   content: {
-    primary: '#f4f7fc',
+    primary: '#f8f3e8',
     secondary: '#cbd5e1',
     muted: '#aab9cc',
     subtle: '#91a2b7',
@@ -211,10 +232,15 @@ const darkRoles: ColorRoles = {
     accent: darkTeal.interactive,
     link: darkTeal.interactive,
   },
+  icon: {
+    interactive: darkTeal.interactive,
+  },
   stroke: {
     default: '#314158',
     subtle: '#26364b',
     control: '#42536b',
+    /* Matches the fill, so dark-mode actions keep the edge they already have. */
+    interactive: darkTeal.interactive,
     selected: darkTeal.interactive,
     accent: darkTeal.interactive,
     focus: darkTeal.interactive,
@@ -254,10 +280,10 @@ const darkRoles: ColorRoles = {
     pressed: '#b8c5ff',
   },
   chat: {
-    // The same deep action teal as light mode: white text stays at 5.7:1.
-    sent: lightAction,
+    // Same bright action teal as light mode; text on it uses content.onInteractive (#061b19).
+    sent: '#4fe0ca',
     received: '#1f2b3d',
-    sentText: '#ffffff',
+    sentText: '#061b19',
     receivedText: '#f4f7fc',
   },
   identity: ['#4d64cb', '#4d5792', '#059669', '#d97706', '#e11d48'],

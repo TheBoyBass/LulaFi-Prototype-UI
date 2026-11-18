@@ -69,7 +69,7 @@ const ProviderMap = ({ providers, origin, selectedId, onSelect }: Props) => {
       })}
 
       <div className="absolute bottom-2 left-2 flex items-center gap-1.5 px-2 py-1 rounded-full bg-bg-primary/85 border border-border-primary">
-        <Navigation size={11} className="text-brand" />
+        <Navigation size={11} className="text-icon-interactive" />
         <span className="text-[10px] text-text-secondary">
           {points.length} pin{points.length === 1 ? "" : "s"} near you
         </span>

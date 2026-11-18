@@ -127,7 +127,7 @@ const ServicesScreen = () => {
           </div>
           <button
             onClick={() => setNewOpen(true)}
-            className="flex items-center gap-1 px-4 py-2.5 rounded-full bg-brand text-primary-foreground text-xs font-medium shrink-0"
+            className="flex items-center gap-1 px-4 py-2.5 rounded-full border border-stroke-interactive bg-brand text-primary-foreground text-xs font-medium shrink-0"
           >
             <Plus size={13} />
             New
@@ -194,7 +194,7 @@ const ServicesScreen = () => {
                           }`}
                         >
                           {row.kind === "provider" ? (
-                            <MessageCircle size={15} className="text-brand" />
+                            <MessageCircle size={15} className="text-icon-interactive" />
                           ) : (
                             <FileText size={15} className="text-tone-info-content" />
                           )}
@@ -343,7 +343,7 @@ const ServicesScreen = () => {
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1.5">
                         <span className="text-sm font-medium text-text-primary truncate">{p.name}</span>
-                        <ShieldCheck size={12} className="text-brand shrink-0" />
+                        <ShieldCheck size={12} className="text-icon-interactive shrink-0" />
                       </div>
                       <div className="text-[11px] text-text-secondary truncate">{p.category} · {p.city}</div>
                     </div>

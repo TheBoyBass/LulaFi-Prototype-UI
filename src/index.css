@@ -21,28 +21,28 @@
 @layer base {
   :root {
     /* LulaFi Design System — Light Mode */
-    --background: 210.000 40.000% 96.078%;
+    --background: 226.154 61.905% 95.882%;
     --foreground: 222.222 47.368% 11.176%;
 
-    --card: 0.000 0.000% 100.000%;
+    --card: 225.000 66.667% 97.647%;
     --card-foreground: 222.222 47.368% 11.176%;
 
-    --popover: 0.000 0.000% 100.000%;
+    --popover: 225.000 66.667% 97.647%;
     --popover-foreground: 222.222 47.368% 11.176%;
 
-    --primary: 174.808 82.540% 24.706%;
-    --primary-foreground: 0.000 0.000% 100.000%;
+    --primary: 170.897 70.048% 59.412%;
+    --primary-foreground: 174.286 63.636% 6.471%;
 
-    --secondary: 210.000 40.000% 98.039%;
+    --secondary: 225.000 66.667% 97.647%;
     --secondary-foreground: 222.222 47.368% 11.176%;
 
-    --muted: 210.000 40.000% 96.078%;
-    --muted-foreground: 215.385 16.318% 46.863%;
+    --muted: 226.154 61.905% 95.882%;
+    --muted-foreground: 213.529 15.741% 42.353%;
 
     --accent: 180.000 54.839% 93.922%;
     --accent-foreground: 174.808 82.540% 24.706%;
 
-    --destructive: 346.837 77.165% 49.804%;
+    --destructive: 345.349 82.692% 40.784%;
     --destructive-foreground: 0.000 0.000% 100.000%;
 
     --success: 161.379 93.548% 30.392%;
@@ -51,23 +51,26 @@
 
     --border: 211.579 37.255% 90.000%;
     --input: 212.727 26.829% 83.922%;
-    --input-background: 210.000 40.000% 98.039%;
-    --ring: 174.808 82.540% 24.706%;
+    --input-background: 225.000 66.667% 97.647%;
+    --ring: 170.897 70.048% 59.412%;
 
     --radius: 10px;
 
     /* Brand */
-    --brand: 174.808 82.540% 24.706%;
-    --brand-hover: 175.059 82.524% 20.196%;
-    --brand-active: 174.808 82.540% 24.706%;
+    --brand: 170.897 70.048% 59.412%;
+    --brand-hover: 171.064 56.627% 51.176%;
+    --brand-active: 170.897 70.048% 59.412%;
     /* Text roles retain the bright brand fills while meeting AA on light surfaces. */
-    --brand-foreground: 174.808 82.540% 24.706%;
+    --brand-text: 174.286 63.636% 6.471%;
+    --brand-foreground: 174.286 63.636% 6.471%;
+    /* Icons keep the bright action teal in both appearances; only text uses --brand-text. */
+    --icon-interactive: 170.897 70.048% 59.412%;
     --status-success-foreground: 162.931 93.548% 24.314%;
     --status-warning-foreground: 25.965 90.476% 37.059%;
     --status-info-foreground: 228.000 78.378% 36.275%;
-    --status-destructive-foreground: 346.837 77.165% 49.804%;
+    --status-destructive-foreground: 345.349 82.692% 40.784%;
     --portal-sidebar: 230.182 53.398% 20.196%;
-    --portal-sidebar-foreground: 217.500 57.143% 97.255%;
+    --portal-sidebar-foreground: 41.250 53.333% 94.118%;
     --portal-accent: 228.000 78.378% 36.275%;
 
     /* Partner brand: City of Tshwane */
@@ -78,15 +81,15 @@
     --gradient-tshwane: linear-gradient(135deg, hsl(104 61% 40%) 0%, hsl(116 63% 25%) 100%);
 
     /* Backgrounds */
-    --bg-primary: 0.000 0.000% 100.000%;
-    --bg-secondary: 210.000 40.000% 96.078%;
-    --bg-tertiary: 210.000 40.000% 96.078%;
-    --bg-page: 210.000 40.000% 96.078%;
+    --bg-primary: 225.000 66.667% 97.647%;
+    --bg-secondary: 226.154 61.905% 95.882%;
+    --bg-tertiary: 226.154 61.905% 95.882%;
+    --bg-page: 226.154 61.905% 95.882%;
 
     /* Text */
     --text-primary: 222.222 47.368% 11.176%;
     --text-secondary: 215.294 19.318% 34.510%;
-    --text-muted: 215.385 16.318% 46.863%;
+    --text-muted: 213.529 15.741% 42.353%;
 
     /* Border */
     --border-primary: 211.579 37.255% 90.000%;
@@ -116,45 +119,47 @@
     --radius-xl: 24px;
 
     /* Charts */
-    --chart-1: 174.808 82.540% 24.706%;
+    --chart-1: 170.897 70.048% 59.412%;
     --chart-2: 228.000 78.378% 36.275%;
     --chart-3: 161.379 93.548% 30.392%;
     --chart-4: 32.133 94.619% 43.725%;
     --chart-5: 346.837 77.165% 49.804%;
 
     /* Attached semantic colour roles; legacy tokens above are aliases. */
-    --surface-screen: 210.000 40.000% 96.078%;
-    --surface-elevated: 0.000 0.000% 100.000%;
-    --surface-list: 0.000 0.000% 100.000%;
-    --surface-muted: 210.000 40.000% 98.039%;
-    --surface-strong: 210.000 40.000% 96.078%;
+    --surface-screen: 226.154 61.905% 95.882%;
+    --surface-elevated: 225.000 66.667% 97.647%;
+    --surface-list: 225.000 66.667% 97.647%;
+    --surface-muted: 225.000 66.667% 97.647%;
+    --surface-strong: 226.154 61.905% 95.882%;
     --surface-interactive: 180.000 54.839% 93.922%;
-    --surface-interactive-strong: 174.808 82.540% 24.706%;
+    --surface-interactive-strong: 170.897 70.048% 59.412%;
     --surface-selected: 180.000 54.839% 93.922%;
-    --surface-accent: 174.808 82.540% 24.706%;
+    --surface-accent: 170.897 70.048% 59.412%;
     --surface-icon: 180.000 54.839% 93.922%;
     --surface-overlay: rgba(15, 23, 42, 0.45);
     --surface-scrim: rgba(0, 0, 0, 0.6);
     --content-primary: 222.222 47.368% 11.176%;
     --content-secondary: 215.294 19.318% 34.510%;
-    --content-muted: 215.385 16.318% 46.863%;
+    --content-muted: 213.529 15.741% 42.353%;
     --content-subtle: 215.000 20.225% 65.098%;
     --content-inverse: 0.000 0.000% 100.000%;
-    --content-interactive: 174.808 82.540% 24.706%;
-    --content-on-interactive: 0.000 0.000% 100.000%;
-    --content-selected: 174.808 82.540% 24.706%;
-    --content-accent: 174.808 82.540% 24.706%;
-    --content-link: 174.808 82.540% 24.706%;
+    --content-interactive: 174.286 63.636% 6.471%;
+    --content-on-interactive: 174.286 63.636% 6.471%;
+    --content-selected: 174.286 63.636% 6.471%;
+    --content-accent: 174.286 63.636% 6.471%;
+    --content-link: 174.286 63.636% 6.471%;
     --stroke-default: 211.579 37.255% 90.000%;
     --stroke-subtle: 214.286 31.818% 91.373%;
     --stroke-control: 212.727 26.829% 83.922%;
-    --stroke-selected: 174.808 82.540% 24.706%;
-    --stroke-accent: 174.808 82.540% 24.706%;
-    --stroke-focus: 174.808 82.540% 24.706%;
+    /* Deeper teal edge that makes a filled teal action identifiable on light surfaces. */
+    --stroke-interactive: 174.808 82.540% 24.706%;
+    --stroke-selected: 170.897 70.048% 59.412%;
+    --stroke-accent: 170.897 70.048% 59.412%;
+    --stroke-focus: 170.897 70.048% 59.412%;
     --status-danger-surface: 355.714 100.000% 97.255%;
-    --status-danger-content: 346.837 77.165% 49.804%;
+    --status-danger-content: 345.349 82.692% 40.784%;
     --status-danger-stroke: 352.653 96.078% 90.000%;
-    --status-danger-solid: 346.837 77.165% 49.804%;
+    --status-danger-solid: 345.349 82.692% 40.784%;
     --status-danger-on-solid: 0.000 0.000% 100.000%;
     --status-success-surface: 151.765 80.952% 95.882%;
     --status-success-content: 162.931 93.548% 24.314%;
@@ -173,9 +178,9 @@
     --status-info-on-solid: 0.000 0.000% 100.000%;
     --brand-main: 228.000 78.378% 36.275%;
     --brand-pressed: 228.571 78.947% 26.078%;
-    --chat-sent: 169.655 50.877% 88.824%;
-    --chat-received: 0.000 0.000% 100.000%;
-    --chat-sent-text: 222.222 47.368% 11.176%;
+    --chat-sent: 170.897 70.048% 59.412%;
+    --chat-received: 225.000 66.667% 97.647%;
+    --chat-sent-text: 174.286 63.636% 6.471%;
     --chat-received-text: 222.222 47.368% 11.176%;
     --chat-shadow: 222.222 47.368% 11.176%;
     --identity-1: 228.000 78.378% 36.275%;
@@ -199,19 +204,19 @@
   .dark {
     /* LulaFi Design System — Dark Mode */
     --background: 220.000 48.837% 8.431%;
-    --foreground: 217.500 57.143% 97.255%;
+    --foreground: 41.250 53.333% 94.118%;
 
     --card: 217.778 39.130% 13.529%;
-    --card-foreground: 217.500 57.143% 97.255%;
+    --card-foreground: 41.250 53.333% 94.118%;
 
     --popover: 217.778 39.130% 13.529%;
-    --popover-foreground: 217.500 57.143% 97.255%;
+    --popover-foreground: 41.250 53.333% 94.118%;
 
     --primary: 170.897 70.048% 59.412%;
     --primary-foreground: 174.286 63.636% 6.471%;
 
     --secondary: 216.923 43.333% 11.765%;
-    --secondary-foreground: 217.500 57.143% 97.255%;
+    --secondary-foreground: 41.250 53.333% 94.118%;
 
     --muted: 216.000 32.609% 18.039%;
     --muted-foreground: 213.529 25.000% 73.333%;
@@ -235,13 +240,16 @@
     --brand: 170.897 70.048% 59.412%;
     --brand-hover: 170.847 70.238% 67.059%;
     --brand-active: 170.897 70.048% 59.412%;
+    --brand-text: 170.897 70.048% 59.412%;
     --brand-foreground: 170.897 70.048% 59.412%;
+    /* Same bright teal as light mode: icons never change with the appearance. */
+    --icon-interactive: 170.897 70.048% 59.412%;
     --status-success-foreground: 154.576 70.238% 67.059%;
     --status-warning-foreground: 45.943 96.685% 64.510%;
     --status-info-foreground: 228.791 100.000% 82.157%;
     --status-destructive-foreground: 349.901 100.000% 80.196%;
     --portal-sidebar: 230.182 53.398% 20.196%;
-    --portal-sidebar-foreground: 217.500 57.143% 97.255%;
+    --portal-sidebar-foreground: 41.250 53.333% 94.118%;
     --portal-accent: 229.189 100.000% 78.235%;
 
     /* Partner brand: City of Tshwane */
@@ -258,7 +266,7 @@
     --bg-page: 220.000 48.837% 8.431%;
 
     /* Text */
-    --text-primary: 217.500 57.143% 97.255%;
+    --text-primary: 41.250 53.333% 94.118%;
     --text-secondary: 212.727 26.829% 83.922%;
     --text-muted: 213.529 25.000% 73.333%;
 
@@ -286,7 +294,7 @@
     --surface-icon: 173.333 47.368% 14.902%;
     --surface-overlay: rgba(0, 0, 0, 0.65);
     --surface-scrim: rgba(0, 0, 0, 0.72);
-    --content-primary: 217.500 57.143% 97.255%;
+    --content-primary: 41.250 53.333% 94.118%;
     --content-secondary: 212.727 26.829% 83.922%;
     --content-muted: 213.529 25.000% 73.333%;
     --content-subtle: 213.158 20.879% 64.314%;
@@ -299,6 +307,8 @@
     --stroke-default: 215.385 28.467% 26.863%;
     --stroke-subtle: 214.054 32.743% 22.157%;
     --stroke-control: 215.122 23.699% 33.922%;
+    /* Equals the action fill, so dark-mode actions keep the edge they already have. */
+    --stroke-interactive: 170.897 70.048% 59.412%;
     --stroke-selected: 170.897 70.048% 59.412%;
     --stroke-accent: 170.897 70.048% 59.412%;
     --stroke-focus: 170.897 70.048% 59.412%;
@@ -324,10 +334,10 @@
     --status-info-on-solid: 230.526 65.517% 11.373%;
     --brand-main: 229.189 100.000% 78.235%;
     --brand-pressed: 229.014 100.000% 86.078%;
-    --chat-sent: 174.808 82.540% 24.706%;
+    --chat-sent: 170.897 70.048% 59.412%;
     --chat-received: 216.000 32.609% 18.039%;
-    --chat-sent-text: 0.000 0.000% 100.000%;
-    --chat-received-text: 217.500 57.143% 97.255%;
+    --chat-sent-text: 174.286 63.636% 6.471%;
+    --chat-received-text: 41.250 53.333% 94.118%;
     --chat-shadow: 0.000 0.000% 0.000%;
     --identity-1: 229.048 54.783% 54.902%;
     --identity-2: 231.304 30.942% 43.725%;
@@ -503,3 +513,8 @@
   --width: 340px;
   z-index: 300;
 }
+
+/* Rule: teal is never used as text in light mode. Teal-role text uses --brand-text
+   (#061b19 in light, teal in dark). The lulaFi wordmark keeps teal via .text-wordmark. */
+.text-brand, .hover\:text-brand:hover, .group:hover .group-hover\:text-brand { color: hsl(var(--brand-text)); }
+.text-wordmark { color: hsl(var(--brand)); }

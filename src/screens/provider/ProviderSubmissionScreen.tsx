@@ -94,7 +94,7 @@ const ProviderSubmissionScreen = () => {
         <div className="mt-3 rounded-xl border border-border-primary bg-bg-secondary p-4">
           <div className="flex items-start gap-3">
             <div className="w-10 h-10 shrink-0 rounded-lg bg-surface-interactive flex items-center justify-center">
-              <Building2 size={18} className="text-brand" />
+              <Building2 size={18} className="text-icon-interactive" />
             </div>
             <div className="min-w-0">
               <div className="text-sm font-medium text-text-primary">{FORWARD_DESTINATION}</div>
@@ -116,7 +116,7 @@ const ProviderSubmissionScreen = () => {
             <button
               onClick={() => forwardSubmission(submission.id)}
               disabled={!isApproved}
-              className="flex items-center justify-center gap-2 py-3 rounded-full bg-brand text-sm font-semibold text-primary-foreground cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex items-center justify-center gap-2 py-3 rounded-full border border-stroke-interactive bg-brand text-sm font-semibold text-primary-foreground cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Send size={16} />
               {isForwarded ? `Sent to ${FORWARD_DESTINATION}` : `Forward to ${FORWARD_DESTINATION}`}
@@ -173,7 +173,7 @@ const ProviderSubmissionScreen = () => {
               onClick={() => navigateProvider(screen)}
               className="rounded-xl border border-border-primary bg-bg-secondary p-3 flex flex-col items-center gap-2 cursor-pointer hover:border-brand transition-colors"
             >
-              <Icon size={19} className="text-brand" />
+              <Icon size={19} className="text-icon-interactive" />
               <span className="text-[11px] font-medium text-text-primary text-center">{label}</span>
             </button>
           ))}

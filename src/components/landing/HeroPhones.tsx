@@ -97,7 +97,7 @@ const HeroPhones = () => {
             exit={{ opacity: 0, scale: 0.7 }}
             transition={{ duration: 2.4, ease: "easeInOut" }}
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand/15 text-brand">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand/15 text-icon-interactive">
               <FileText size={16} />
             </div>
             <div>
@@ -126,14 +126,14 @@ const HeroPhones = () => {
             </>
           ) : phase === "sending" ? (
             <>
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand/15 text-brand">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand/15 text-icon-interactive">
                 <FileText size={14} />
               </div>
               <span className="text-xs font-medium text-text-secondary">Sending securely</span>
             </>
           ) : (
             <>
-              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand/15 text-brand">
+              <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand/15 text-icon-interactive">
                 <Fingerprint size={14} />
               </div>
               <span className="text-xs font-medium text-text-secondary">
@@ -149,7 +149,7 @@ const HeroPhones = () => {
         animate={{ y: [0, 12, 0], opacity: [0.85, 1, 0.85] }}
         transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
       >
-        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand/15 text-brand">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md bg-brand/15 text-icon-interactive">
           <ShieldCheck size={14} />
         </div>
         <span className="text-xs font-medium text-text-secondary">Consent approved</span>

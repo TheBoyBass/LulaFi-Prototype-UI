@@ -3,7 +3,15 @@ import { LulaCard } from '@/components/lulafi/LulaCard';
 import { LulaButton } from '@/components/lulafi/LulaButton';
 import { LulaBadge } from '@/components/lulafi/LulaBadge';
 import lulaLogo from '@/assets/lulafi-icon.png';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Checkbox } from '@/components/ui/checkbox';
+import { buildAiDesignBrief } from '@/lib/aiDesignBrief';
 import { semanticColors, type ColorRoles } from '@/lib/colorRoles';
+import {
+  DESIGN_SYSTEM_CHANGELOG,
+  DESIGN_SYSTEM_RELEASE_NOTES,
+  DESIGN_SYSTEM_VERSION,
+} from '@/lib/designSystemVersion';
 import { Button } from '@/components/ui/button';
 import {
   Palette,
@@ -17,18 +25,21 @@ import {
   Check,
   Moon,
   Sun,
+  Sparkles,
+  Download,
 } from 'lucide-react';
 
 /** Wordmark parts and the colour role each one takes, read straight from the spec
  *  so the guidelines show real values in both appearances at once. */
 const WORDMARK_ROWS: { part: string; role: string; pick: (roles: ColorRoles) => string }[] = [
   { part: 'lula', role: 'content.primary', pick: (r) => r.content.primary },
-  { part: 'Fi', role: 'content.interactive (text-brand)', pick: (r) => r.content.interactive },
+  { part: 'Fi', role: 'brand (text-wordmark), logo only', pick: (r) => r.surface.interactiveStrong },
   { part: 'Logo icon', role: 'brand.main', pick: (r) => r.brand.main },
+  { part: 'Any icon glyph', role: 'icon.interactive (text-icon-interactive)', pick: (r) => r.icon.interactive },
   { part: 'Brand pressed', role: 'brand.pressed', pick: (r) => r.brand.pressed },
 ];
 
-type TabId = 'colors' | 'typography' | 'spacing' | 'components' | 'guidelines';
+type TabId = 'colors' | 'typography' | 'spacing' | 'components' | 'guidelines' | 'ai';
 
 export default function DesignSystem() {
   const [copiedToken, setCopiedToken] = useState<string | null>(null);
@@ -43,6 +54,50 @@ export default function DesignSystem() {
 
   const toggleTheme = () => {
     setIsDark(!isDark);
+  };
+
+  const aiBrief = buildAiDesignBrief();
+  const [reviewAction, setReviewAction] = useState<'copy' | 'download' | null>(null);
+  const [reviewed, setReviewed] = useState(false);
+  const openReview = (a: 'copy' | 'download') => { setReviewed(false); setReviewMode('light'); setReviewAction(a); };
+  const confirmReview = () => {
+    if (reviewAction === 'copy') copyToClipboard(aiBrief, 'ai-brief');
+    if (reviewAction === 'download') downloadBrief();
+    setReviewAction(null);
+  };
+  const [reviewMode, setReviewMode] = useState<'light' | 'dark'>('light');
+  const lightRoles = semanticColors[reviewMode];
+  const lum = (hex: string) => {
+    const h = hex.replace('#', '').slice(0, 6);
+    const [r, g, b] = [0, 2, 4].map((i) => { const c = parseInt(h.slice(i, i + 2), 16) / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  };
+  const ratio = (a: string, b: string) => { const [x, y] = [lum(a), lum(b)].sort((m, n) => n - m); return (x + 0.05) / (y + 0.05); };
+  const previewBg = lightRoles.surface.elevated;
+  const contrastChecks = [
+    { label: 'Body text', fg: lightRoles.content.primary, min: 4.5 },
+    { label: 'Secondary text', fg: lightRoles.content.secondary, min: 4.5 },
+    { label: 'Muted text', fg: lightRoles.content.muted, min: 4.5 },
+    { label: 'Teal-role text', fg: lightRoles.content.interactive, min: 4.5 },
+    { label: 'Icons', fg: lightRoles.icon.interactive, min: 3, exempt: true },
+    { label: 'Button text on teal', fg: lightRoles.content.onInteractive, bg: lightRoles.surface.interactiveStrong, min: 4.5 },
+  ];
+  const reviewItems: { label: string; value: string; swatch?: string }[] = [
+    { label: 'Font', value: 'Inter only, weights 400 / 500 / 600' },
+    { label: 'Spacing', value: '8pt grid' },
+    { label: 'Icons', value: 'Lucide only, no emojis, always bright teal', swatch: lightRoles.icon.interactive },
+    { label: 'Teal-role text', value: reviewMode === 'light' ? 'Teal-black' : 'Bright teal', swatch: lightRoles.content.interactive },
+    { label: 'Primary button fill', value: 'Bright teal with darker edge', swatch: lightRoles.surface.interactiveStrong },
+    { label: 'Logo icon / art', value: 'Royal blue, never on actions', swatch: lightRoles.brand.main },
+    { label: 'Focus ring', value: 'Visible on every control', swatch: lightRoles.stroke.focus },
+    { label: 'Accessibility', value: 'WCAG 2.2 AA, 44px touch targets' },
+    { label: 'Themes', value: 'Light default, dark mode tokens included' },
+  ];
+  const downloadBrief = () => {
+    const url = URL.createObjectURL(new Blob([aiBrief], { type: 'text/markdown' }));
+    const a = document.createElement('a');
+    a.href = url; a.download = 'lulafi-ai-design-brief.md'; a.click();
+    URL.revokeObjectURL(url);
   };
 
   const copyToClipboard = (text: string, label: string) => {
@@ -132,6 +187,7 @@ export default function DesignSystem() {
     { id: 'spacing', label: 'Spacing', icon: Box },
     { id: 'components', label: 'Components', icon: Layers },
     { id: 'guidelines', label: 'Guidelines', icon: FileText },
+    { id: 'ai', label: 'AI Brief', icon: Sparkles },
   ];
 
   return (
@@ -144,7 +200,9 @@ export default function DesignSystem() {
               <img src={lulaLogo} alt="LulaFi" className="w-10 h-10 object-contain" />
               <div>
                 <h1 className="text-xl font-semibold text-text-primary">LulaFi Design System</h1>
-                <p className="text-xs text-text-muted">v1.0.0 • Foundation Tokens & Components</p>
+                <p className="text-xs text-text-muted">
+                  v{DESIGN_SYSTEM_VERSION} • {DESIGN_SYSTEM_RELEASE_NOTES}
+                </p>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -164,7 +222,7 @@ export default function DesignSystem() {
                   </>
                 )}
               </Button>
-              <LulaButton variant="primary">Download Assets</LulaButton>
+              <LulaButton variant="primary" onClick={() => setActiveTab('ai')}>Copy for AI</LulaButton>
             </div>
           </div>
         </div>
@@ -211,6 +269,7 @@ export default function DesignSystem() {
               { title: "Content", entries: roles.content },
               { title: "Strokes", entries: roles.stroke },
               { title: "Brand", entries: roles.brand },
+              { title: "Icons", entries: roles.icon },
               { title: "Chat", entries: roles.chat },
               ...Object.entries(roles.status).map(([name, entries]) => ({ title: `Status / ${name}`, entries })),
               { title: "Identity", entries: Object.fromEntries(roles.identity.map((color, i) => [`Person ${i + 1}`, color])) },
@@ -236,7 +295,7 @@ export default function DesignSystem() {
                 Headings never exceed Semibold (600).
               </p>
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-bg-secondary rounded-[var(--radius-md)] border border-border-primary">
-                <Type className="w-4 h-4 text-brand" />
+                <Type className="w-4 h-4 text-icon-interactive" />
                 <span className="text-text-primary font-medium">Primary Typeface: Inter</span>
               </div>
             </div>
@@ -481,11 +540,11 @@ export default function DesignSystem() {
                         className="text-3xl font-semibold tracking-tight"
                         style={{ color: variant.roles.content.primary }}
                       >
-                        lula<span style={{ color: variant.roles.content.interactive }}>Fi</span>
+                        lula<span style={{ color: variant.roles.surface.interactiveStrong }}>Fi</span>
                       </span>
                     </div>
                     <div className="mt-4 text-xs text-text-muted font-mono">
-                      lula {variant.roles.content.primary} · Fi {variant.roles.content.interactive} ({variant.note})
+                      lula {variant.roles.content.primary} · Fi {variant.roles.surface.interactiveStrong} ({variant.note})
                     </div>
                   </LulaCard>
                 ))}
@@ -539,11 +598,13 @@ export default function DesignSystem() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                 <LulaCard>
-                  <div className="text-brand font-semibold mb-3">Teal green — use always</div>
+                  <div className="text-brand font-semibold mb-3">Teal green — fills and icons always</div>
                   <p className="text-text-secondary text-sm">
                     The <span className="font-medium text-text-primary">Fi</span> in every wordmark: app headers, splash,
-                    landing header and footer, portal log-in and sidebar, Get the app and Desktop app pages. Also the
-                    role for buttons, links, focus rings and selection.
+                    landing header and footer, portal log-in and sidebar, and the Get the app page (class
+                    text-wordmark). Also the fill for buttons, chips, focus rings and sent chats, and the colour of
+                    every icon in both appearances (class text-icon-interactive). Never use teal as text in light
+                    mode: links and active menu items use teal-black #061b19 there.
                   </p>
                 </LulaCard>
                 <LulaCard>
@@ -559,7 +620,7 @@ export default function DesignSystem() {
                   <p className="text-text-secondary text-sm">
                     On the dark canvas the wordmark flips to
                     <span className="font-mono text-xs"> {semanticColors.dark.content.primary}</span> and
-                    <span className="font-mono text-xs"> {semanticColors.dark.content.interactive}</span>; the icon's
+                    <span className="font-mono text-xs"> {semanticColors.dark.surface.interactiveStrong}</span>; the icon's
                     royal blue lifts to <span className="font-mono text-xs"> {semanticColors.dark.brand.main}</span> so
                     it stays readable. Both are automatic — use the roles, not the hex values.
                   </p>
@@ -576,6 +637,7 @@ export default function DesignSystem() {
                         <li>• Colour the wordmark with the text roles so it adapts to the appearance</li>
                         <li>• Keep "lula" and "Fi" on one baseline at one size and weight</li>
                         <li>• Place it on flat surface colours from the palette</li>
+                        <li>• Colour icons with the icon role so they stay teal in both appearances</li>
                       </ul>
                     </div>
                   </div>
@@ -589,6 +651,8 @@ export default function DesignSystem() {
                         <li>• Never colour "Fi" royal blue or the foundation teal #17bebb</li>
                         <li>• Never recolour "lula" to a status or accent colour</li>
                         <li>• Never hand-pick a hex — the roles switch modes for you</li>
+                        <li>• Never use teal as text on light surfaces (only the logo's "Fi" keeps it)</li>
+                        <li>• Never colour an icon with a text role — icons keep #4fe0ca, text uses teal-black</li>
                       </ul>
                     </div>
                   </div>
@@ -628,6 +692,35 @@ export default function DesignSystem() {
               </div>
             </div>
 
+            <div>
+              <h3 className="text-text-primary mb-2">Version history</h3>
+              <p className="text-text-secondary text-sm mb-6 max-w-3xl">
+                Current release is v{DESIGN_SYSTEM_VERSION}. Paste the AI Brief with your request so
+                every mockup is generated against this version of the standards.
+              </p>
+              <div className="space-y-4">
+                {DESIGN_SYSTEM_CHANGELOG.map((release) => (
+                  <LulaCard key={release.version}>
+                    <div className="flex flex-wrap items-center gap-3 mb-3">
+                      <span className="text-text-primary">v{release.version}</span>
+                      <LulaBadge variant="neutral">{release.date}</LulaBadge>
+                      {release.version === DESIGN_SYSTEM_VERSION && (
+                        <LulaBadge variant="info">Current</LulaBadge>
+                      )}
+                    </div>
+                    <ul className="space-y-2">
+                      {release.notes.map((note) => (
+                        <li key={note} className="flex items-start gap-2 text-sm text-text-secondary">
+                          <CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0 text-icon-interactive" />
+                          <span>{note}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </LulaCard>
+                ))}
+              </div>
+            </div>
+
             <div className="p-8 bg-gradient-to-br from-brand/5 to-state-info/5 border border-brand/20 rounded-[var(--radius-lg)] text-center">
               <h3 className="text-text-primary mb-3">Philosophy</h3>
               <p className="text-text-secondary max-w-2xl mx-auto">
@@ -637,7 +730,104 @@ export default function DesignSystem() {
             </div>
           </div>
         )}
+        {activeTab === 'ai' && (
+          <div className="space-y-6">
+            <div>
+              <h2 className="text-text-primary mb-2">AI Brief</h2>
+              <p className="text-text-secondary max-w-3xl">
+                Copy this brief and paste it at the start of any prompt to a generative AI model
+                (ChatGPT, Claude, Gemini, Figma AI, Lovable). It contains every rule and exact colour
+                value, so mockups from anyone on the team follow the same standards. It updates automatically when tokens change.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <LulaButton variant="primary" onClick={() => openReview('copy')}>
+                <span className="inline-flex items-center gap-2">
+                  {copiedToken === 'ai-brief' ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                  {copiedToken === 'ai-brief' ? 'Copied' : 'Copy brief'}
+                </span>
+              </LulaButton>
+              <LulaButton variant="secondary" onClick={() => openReview('download')}>
+                <span className="inline-flex items-center gap-2">
+                  <Download className="w-4 h-4 text-icon-interactive" /> Download .md
+                </span>
+              </LulaButton>
+            </div>
+            <div className="rounded-[var(--radius-md)] border border-border-primary bg-bg-secondary p-4">
+              <p className="text-text-secondary text-sm mb-2 font-medium">How to use</p>
+              <ol className="list-decimal pl-5 text-text-secondary text-sm space-y-1">
+                <li>Click Copy brief.</li>
+                <li>Paste it into the model first, then add your request, e.g. "Design the provider inbox screen".</li>
+                <li>Check the result against the checklist at the end of the brief.</li>
+              </ol>
+            </div>
+            <pre aria-label="AI design brief" className="max-h-[600px] overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] border border-border-primary bg-bg-secondary p-6 text-sm text-text-primary">{aiBrief}</pre>
+          </div>
+        )}
       </main>
+
+      <Dialog open={reviewAction !== null} onOpenChange={(o) => !o && setReviewAction(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-bg-primary border-border-primary">
+          <DialogHeader>
+            <DialogTitle>Review the brief before you {reviewAction === 'copy' ? 'copy' : 'download'} it</DialogTitle>
+            <DialogDescription>These are the standards the AI model will be told to follow. Check they are correct.</DialogDescription>
+          </DialogHeader>
+          <div role="group" aria-label="Preview theme" className="inline-flex rounded-[var(--radius-md)] border border-border-primary p-1 self-start">
+            {(['light', 'dark'] as const).map((m) => (
+              <button key={m} type="button" aria-pressed={reviewMode === m} onClick={() => setReviewMode(m)}
+                className={`flex items-center gap-2 px-3 py-1.5 text-sm rounded-[var(--radius-sm)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${reviewMode === m ? 'bg-bg-secondary text-text-primary font-medium' : 'text-text-muted'}`}>
+                {m === 'light' ? <Sun className="w-4 h-4 text-icon-interactive" /> : <Moon className="w-4 h-4 text-icon-interactive" />}
+                {m === 'light' ? 'Light mode' : 'Dark mode'}
+              </button>
+            ))}
+          </div>
+          <div data-testid="review-preview" className="rounded-[var(--radius-md)] p-4 space-y-3" style={{ backgroundColor: lightRoles.surface.screen, border: `1px solid ${lightRoles.stroke.default}` }}>
+            <p className="text-sm font-medium" style={{ color: lightRoles.content.primary }}>Contrast check ({reviewMode} mode)</p>
+            <ul className="grid grid-cols-2 gap-2">
+              {contrastChecks.map((c) => {
+                const bg = c.bg ?? previewBg; const r = ratio(c.fg, bg); const ok = r >= c.min; const exempt = !ok && 'exempt' in c;
+                return (
+                  <li key={c.label} className="flex items-center justify-between gap-2 rounded-[var(--radius-sm)] px-3 py-2 text-sm" style={{ backgroundColor: bg, color: c.fg }}>
+                    <span>{c.label === 'Icons' ? <Sparkles className="w-4 h-4 inline mr-1" style={{ color: c.fg }} /> : null}{c.label}</span>
+                    <span className="text-xs font-medium rounded-full px-2 py-0.5" style={{ backgroundColor: ok ? lightRoles.status.success.surface : lightRoles.status.danger.surface, color: ok ? lightRoles.status.success.content : lightRoles.status.danger.content }}>
+                      {r.toFixed(1)}:1 {ok ? 'Pass' : exempt ? 'Below 3:1 (brand rule)' : 'Fail'}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+            <div className="flex items-center gap-3">
+              <span className="text-lg font-semibold" style={{ color: lightRoles.content.primary }}>lula<span style={{ color: lightRoles.surface.interactiveStrong }}>Fi</span></span>
+              <span className="px-4 py-2 rounded-[var(--radius-md)] text-sm font-medium" style={{ backgroundColor: lightRoles.surface.interactiveStrong, color: lightRoles.content.onInteractive, border: `1px solid ${lightRoles.stroke.interactive}` }}>Primary button</span>
+            </div>
+          </div>
+          <ul className="divide-y divide-border-primary rounded-[var(--radius-md)] border border-border-primary">
+            {reviewItems.map((it) => (
+              <li key={it.label} className="flex items-center justify-between gap-4 px-4 py-2 text-sm">
+                <span className="font-medium text-text-primary">{it.label}</span>
+                <span className="flex items-center gap-2 text-text-secondary text-right">
+                  {it.swatch && <span aria-hidden className="h-4 w-4 rounded-full border border-border-primary" style={{ backgroundColor: it.swatch }} />}
+                  {it.value}{it.swatch && <code className="text-xs">{it.swatch}</code>}
+                </span>
+              </li>
+            ))}
+          </ul>
+          <details className="text-sm">
+            <summary className="cursor-pointer text-text-primary font-medium">Show full brief text</summary>
+            <pre aria-label="Full brief preview" className="mt-2 max-h-64 overflow-auto whitespace-pre-wrap rounded-[var(--radius-md)] border border-border-primary bg-bg-secondary p-4 text-xs text-text-primary">{aiBrief}</pre>
+          </details>
+          <label className="flex items-start gap-3 text-sm text-text-primary cursor-pointer">
+            <Checkbox checked={reviewed} onCheckedChange={(v) => setReviewed(v === true)} aria-label="I have reviewed these standards" className="mt-0.5" />
+            I have reviewed these standards and they are correct.
+          </label>
+          <DialogFooter className="gap-2">
+            <LulaButton variant="secondary" onClick={() => setReviewAction(null)}>Cancel</LulaButton>
+            <LulaButton variant="primary" disabled={!reviewed} onClick={confirmReview}>
+              {reviewAction === 'copy' ? 'Confirm and copy' : 'Confirm and download'}
+            </LulaButton>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <footer className="border-t border-border-primary mt-16">
         <div className="max-w-7xl mx-auto px-6 py-8">
@@ -648,7 +838,7 @@ export default function DesignSystem() {
                 LulaFi Design System • Turning data into documents — instantly, intelligently, securely.
               </span>
             </div>
-            <div className="text-text-muted text-sm">v1.0.0</div>
+            <div className="text-text-muted text-sm">v{DESIGN_SYSTEM_VERSION}</div>
           </div>
         </div>
       </footer>

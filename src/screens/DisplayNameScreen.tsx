@@ -14,7 +14,7 @@ const DisplayNameScreen = () => {
       <div className="flex flex-col items-center gap-2 mt-8 mb-4">
         <img src={lulafiIcon} alt="LulaFi" className="w-[120px] h-[96px] object-contain" />
         <div className="text-4xl font-semibold text-text-primary tracking-tight">
-          lula<span className="text-brand">Fi</span>
+          lula<span className="text-wordmark">Fi</span>
         </div>
       </div>
       <LulaCard className="mt-auto mb-auto">

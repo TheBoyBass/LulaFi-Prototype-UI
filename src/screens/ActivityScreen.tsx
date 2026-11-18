@@ -63,7 +63,7 @@ const ActivityScreen = () => {
               onClick={() => setFilter(f)}
               className={`shrink-0 px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
                 filter === f
-                  ? "bg-brand text-primary-foreground border-brand"
+                  ? "bg-brand text-primary-foreground border-stroke-interactive"
                   : "bg-bg-secondary text-text-secondary border-border-primary hover:border-brand"
               }`}
             >

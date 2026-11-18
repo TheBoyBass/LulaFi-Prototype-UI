@@ -33,7 +33,7 @@ const BottomNav = ({ active, onScrollToTop }: BottomNavProps) => {
             active === key ? "text-brand" : "text-text-muted"
           }`}
         >
-          <Icon size={20} />
+          <Icon size={20} className="text-icon-interactive" />
           <span>{label}</span>
         </button>
       ))}

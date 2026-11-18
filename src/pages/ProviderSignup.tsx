@@ -239,8 +239,8 @@ export default function ProviderSignup() {
         </section>
 
         <div className="flex flex-col gap-3 text-sm text-text-secondary">
-          <p className="flex items-center gap-2"><Building2 className="h-4 w-4 text-brand" aria-hidden="true" /> New submissions land straight in your inbox.</p>
-          <p className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-brand" aria-hidden="true" /> Every submission comes with the client's consent record.</p>
+          <p className="flex items-center gap-2"><Building2 className="h-4 w-4 text-icon-interactive" aria-hidden="true" /> New submissions land straight in your inbox.</p>
+          <p className="flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-icon-interactive" aria-hidden="true" /> Every submission comes with the client's consent record.</p>
         </div>
       </main>
 

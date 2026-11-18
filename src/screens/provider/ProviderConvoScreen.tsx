@@ -176,7 +176,7 @@ const ProviderConvoScreen = () => {
           <button
             type="submit"
             aria-label="Send message"
-            className="w-9 h-9 shrink-0 rounded-full bg-brand flex items-center justify-center text-primary-foreground cursor-pointer"
+            className="w-9 h-9 shrink-0 rounded-full border border-stroke-interactive bg-brand flex items-center justify-center text-primary-foreground cursor-pointer"
           >
             <Send size={15} />
           </button>
@@ -198,7 +198,7 @@ const ProviderConvoScreen = () => {
               isForm ? "bg-tone-info-surface" : "bg-surface-interactive"
             }`}
           >
-            <Icon size={16} className={isForm ? "text-tone-info-content" : "text-brand"} />
+            <Icon size={16} className={isForm ? "text-tone-info-content" : "text-icon-interactive"} />
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="truncate text-base font-semibold text-text-primary">
@@ -293,7 +293,7 @@ const ProviderConvoScreen = () => {
                 >
                   {m.delivered && <span>Delivered ·</span>}
                   {m.time}
-                  {m.delivered && <CheckCheck size={12} className="text-brand" />}
+                  {m.delivered && <CheckCheck size={12} className="text-icon-interactive" />}
                 </div>
               </div>
             )

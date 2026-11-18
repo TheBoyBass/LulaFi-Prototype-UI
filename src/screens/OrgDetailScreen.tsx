@@ -67,7 +67,7 @@ const OrgDetailScreen = () => {
           <div className="px-6 pb-3 flex items-center gap-3 min-w-0">
             <BackButton to="psearch" />
             <p className="text-[11px] text-text-muted truncate">{provider.category}</p>
-            {provider.verified && <BadgeCheck size={14} className="text-brand shrink-0" />}
+            {provider.verified && <BadgeCheck size={14} className="text-icon-interactive shrink-0" />}
           </div>
         </>
       }
@@ -78,7 +78,7 @@ const OrgDetailScreen = () => {
             <h1 className="text-xl font-bold text-text-primary leading-tight min-w-0">
               {provider.name}
             </h1>
-            {provider.verified && <BadgeCheck size={18} className="text-brand shrink-0 mt-1" />}
+            {provider.verified && <BadgeCheck size={18} className="text-icon-interactive shrink-0 mt-1" />}
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <LulaBadge variant="success">Active</LulaBadge>
@@ -100,7 +100,7 @@ const OrgDetailScreen = () => {
             </div>
             {distance !== null && (
               <div className="flex items-center gap-1.5 text-sm text-brand">
-                <Navigation size={13} className="shrink-0" />
+                <Navigation size={13} className="text-icon-interactive shrink-0" />
                 {distance < 10 ? `${distance.toFixed(1)} km` : `${Math.round(distance)} km`} from your address
               </div>
             )}
@@ -121,7 +121,7 @@ const OrgDetailScreen = () => {
 
         <button
           onClick={() => openClientConvo(null)}
-          className="w-full flex items-center justify-center gap-2 rounded-xl bg-brand text-primary-foreground py-3.5 text-sm font-medium cursor-pointer hover:bg-brand-hover transition-colors"
+          className="w-full flex items-center justify-center gap-2 rounded-xl border border-stroke-interactive bg-brand text-primary-foreground py-3.5 text-sm font-medium cursor-pointer hover:bg-brand-hover transition-colors"
         >
           <MessageSquareLock size={16} /> Contact now
         </button>
@@ -159,7 +159,7 @@ const OrgDetailScreen = () => {
                   <FileText size={11} /> {f.fields} questions
                 </span>
                 <span className="flex items-center gap-1 text-[11px] text-brand">
-                  <Sparkles size={11} /> {f.prefill.length} prefilled
+                  <Sparkles size={11} className="text-icon-interactive" /> {f.prefill.length} prefilled
                 </span>
                 <span className="flex items-center gap-1 text-[11px] text-text-muted">
                   <Clock size={11} /> Updated {f.updated}

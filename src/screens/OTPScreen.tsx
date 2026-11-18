@@ -26,7 +26,7 @@ const OTPScreen = () => {
     <ScreenLayout hideNav header={<AppHeader title="Verify" />}>
       <div className="pb-4">
         <div className="px-6 mt-2 flex flex-col items-center text-center">
-          <ShieldCheck size={30} className="text-brand" />
+          <ShieldCheck size={30} className="text-icon-interactive" />
           <h1 className="text-2xl font-bold text-text-primary mt-2">Verify Your Number</h1>
           <p className="text-sm text-text-secondary mt-1">
             Enter the 6-digit code sent to<br />
@@ -37,7 +37,7 @@ const OTPScreen = () => {
         <div className="px-6 mt-2">
           <div className="bg-bg-secondary border border-border-primary rounded-xl px-4 py-3 flex items-center gap-3">
             <span className="w-10 h-10 rounded-full bg-brand/15 flex items-center justify-center shrink-0">
-              <ShieldCheck size={18} className="text-brand" />
+              <ShieldCheck size={18} className="text-icon-interactive" />
             </span>
             <span className="text-sm text-text-primary font-semibold truncate">
               +27784588458 <span className="text-text-muted font-normal">· SMS code</span>

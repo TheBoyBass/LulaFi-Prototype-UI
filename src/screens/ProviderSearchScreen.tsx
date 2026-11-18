@@ -125,7 +125,7 @@ const ProviderSearchScreen = ({
   const chip = (active: boolean) =>
     `shrink-0 px-3.5 py-2 rounded-full text-xs font-medium border transition-colors ${
       active
-        ? "bg-brand text-primary-foreground border-brand"
+        ? "bg-brand text-primary-foreground border-stroke-interactive"
         : "bg-bg-secondary text-text-secondary border-border-primary hover:border-brand"
     }`;
 
@@ -228,7 +228,7 @@ const ProviderSearchScreen = ({
               onSelect={setFocusedId}
             />
             <div className="flex items-center gap-1.5 mt-2 text-[11px] text-text-muted">
-              <Navigation size={11} className="text-brand shrink-0" />
+              <Navigation size={11} className="text-icon-interactive shrink-0" />
               <span className="truncate">Distances measured from {originLabel}</span>
             </div>
           </div>
@@ -336,7 +336,7 @@ const ProviderSearchScreen = ({
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-1.5">
                       <span className="text-sm font-medium text-text-primary truncate">{p.name}</span>
-                      {p.verified && <BadgeCheck size={14} className="text-brand shrink-0" />}
+                      {p.verified && <BadgeCheck size={14} className="text-icon-interactive shrink-0" />}
                     </div>
                     <div className="text-[11px] text-text-muted truncate mt-0.5">{p.description}</div>
                     <div className="flex items-center gap-1 text-[11px] text-text-secondary mt-1">
@@ -359,7 +359,7 @@ const ProviderSearchScreen = ({
 
               {fmtKm(providerDistanceKm(p.id, origin)) && (
                 <div className="flex items-center gap-1.5 text-[11px] text-brand">
-                  <Navigation size={11} className="shrink-0" />
+                  <Navigation size={11} className="text-icon-interactive shrink-0" />
                   <span>{fmtKm(providerDistanceKm(p.id, origin))} away</span>
                 </div>
               )}
@@ -389,7 +389,7 @@ const ProviderSearchScreen = ({
                 className="flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg bg-surface-interactive border border-brand/30 hover:bg-brand/15 transition-colors text-left"
               >
                 <span className="flex items-center gap-2 min-w-0">
-                  <FileText size={14} className="text-brand shrink-0" />
+                  <FileText size={14} className="text-icon-interactive shrink-0" />
                   <span className="text-xs font-medium text-brand truncate">
                     Start {p.primaryForm.name}
                   </span>

@@ -154,17 +154,17 @@ export default function About() {
             <div className="absolute inset-16 rounded-full border border-border-primary opacity-70" />
 
             <div className="relative z-10 flex h-32 w-32 items-center justify-center rounded-3xl border border-border-primary bg-bg-primary shadow-[var(--shadow-md)]">
-              <ShieldCheck className="h-16 w-16 text-brand" strokeWidth={1.5} />
+              <ShieldCheck className="h-16 w-16 text-icon-interactive" strokeWidth={1.5} />
             </div>
 
             <div className="absolute left-10 top-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border-primary bg-bg-primary shadow-[var(--shadow-md)]">
-              <LockKeyhole className="h-6 w-6 text-brand/80" />
+              <LockKeyhole className="h-6 w-6 text-icon-interactive/80" />
             </div>
             <div className="absolute bottom-10 right-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border-primary bg-bg-primary shadow-[var(--shadow-md)]">
-              <CheckCircle2 className="h-6 w-6 text-brand/80" />
+              <CheckCircle2 className="h-6 w-6 text-icon-interactive/80" />
             </div>
             <div className="absolute right-0 top-1/2 flex h-14 w-14 -translate-y-1/2 items-center justify-center rounded-2xl border border-border-primary bg-bg-primary shadow-[var(--shadow-md)]">
-              <Zap className="h-6 w-6 text-brand/80" />
+              <Zap className="h-6 w-6 text-icon-interactive/80" />
             </div>
           </motion.div>
         </section>
@@ -183,7 +183,7 @@ export default function About() {
               transition={{ duration: 0.4, delay: index * 0.06 }}
               className="rounded-2xl border border-border-primary bg-bg-primary p-8 shadow-[var(--shadow-sm)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-md)]"
             >
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand/10 text-brand">
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand/10 text-icon-interactive">
                 <Icon className="h-6 w-6" aria-hidden="true" />
               </div>
               <h3 className="mb-2 mt-6 text-lg font-bold">{title}</h3>
@@ -206,7 +206,7 @@ export default function About() {
               <ul className="space-y-5">
                  {content.controls.map(({ title, detail }) => (
                   <li key={title} className="flex items-start gap-4">
-                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
+                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand/15 text-icon-interactive">
                       <Check className="h-4 w-4" aria-hidden="true" />
                     </span>
                     <div>
@@ -228,7 +228,7 @@ export default function About() {
                 <div className="space-y-4">
                   {requestedFields.map((field) => (
                     <div key={field} className="flex items-center gap-3 text-sm text-text-secondary">
-                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand/15 text-brand">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand/15 text-icon-interactive">
                         <Check className="h-3 w-3" aria-hidden="true" />
                       </span>
                       {field}
@@ -264,7 +264,7 @@ export default function About() {
                 to={to}
                 className="group rounded-2xl border border-border-primary bg-bg-primary p-8 shadow-[var(--shadow-sm)] transition-all hover:-translate-y-1 hover:border-brand hover:shadow-[var(--shadow-md)]"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand/10 text-icon-interactive">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <h3 className="mb-2 mt-6 text-lg font-bold group-hover:text-brand">{title}</h3>

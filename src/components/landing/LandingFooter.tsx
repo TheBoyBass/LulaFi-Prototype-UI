@@ -9,7 +9,6 @@ const columns = [
       { label: "Home", to: "/landing" },
       { label: "About", to: "/about" },
       { label: "Get the app", to: "/get-app" },
-      { label: "Desktop app", to: "/desktop-app" },
       { label: "Contact", to: "/contact" },
     ],
   },
@@ -40,7 +39,7 @@ export default function LandingFooter() {
             <Link to="/landing" className="flex items-center gap-2" aria-label="LulaFi home">
               <img src={lulafiIcon} alt="" className="h-8 w-10 object-contain" />
               <span className="text-xl font-bold tracking-tight">
-                lula<span className="text-brand">Fi</span>
+                lula<span className="text-wordmark">Fi</span>
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-muted">

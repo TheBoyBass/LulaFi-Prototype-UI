@@ -62,7 +62,7 @@ const HomeScreen = () => {
               className="bg-bg-secondary border border-border-primary rounded-xl p-4 flex flex-col items-start gap-3 text-left cursor-pointer hover:border-brand transition-colors"
             >
               <div className="w-10 h-10 rounded-lg bg-brand/10 flex items-center justify-center">
-                <Icon size={19} className="text-brand" />
+                <Icon size={19} className="text-icon-interactive" />
               </div>
               <div>
                 <div className="text-sm font-medium text-text-primary leading-tight">{label}</div>

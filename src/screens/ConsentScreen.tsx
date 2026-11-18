@@ -36,7 +36,7 @@ const ConsentScreen = () => {
             className="w-full bg-bg-secondary border border-border-primary rounded-xl p-3 flex items-center gap-4 text-left cursor-pointer"
           >
             <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center shrink-0">
-              <FileText size={20} className="text-brand" />
+              <FileText size={20} className="text-icon-interactive" />
             </div>
             <span className="flex-1 min-w-0">
               <span className="block text-base font-semibold text-text-primary truncate">
@@ -109,7 +109,7 @@ const ConsentScreen = () => {
           >
             <span
               className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 mt-0.5 border ${
-                agreed ? "bg-brand border-brand" : "bg-bg-primary border-border-primary"
+                agreed ? "bg-brand border-stroke-interactive" : "bg-bg-primary border-border-primary"
               }`}
             >
               {agreed && <Check size={15} className="text-primary-foreground" />}

@@ -17,7 +17,7 @@ export function LulaButton({
     <button
       className={cn(
         "px-5 py-3 rounded-md transition-all duration-150 ease-out font-medium",
-        variant === 'primary' && "bg-primary text-primary-foreground hover:bg-brand-hover active:bg-brand-active disabled:opacity-40 disabled:cursor-not-allowed",
+        variant === 'primary' && "border border-stroke-interactive bg-primary text-primary-foreground hover:bg-brand-hover active:bg-brand-active disabled:opacity-40 disabled:cursor-not-allowed",
         variant === 'secondary' && "bg-transparent text-text-primary border border-border-primary hover:border-text-secondary active:border-brand disabled:opacity-40 disabled:cursor-not-allowed",
         className
       )}

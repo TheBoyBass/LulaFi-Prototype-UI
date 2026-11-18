@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import ThemeToggle from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 import { toast } from "@/hooks/use-toast";
 import { PortalUser, readSession, writeSession } from "./session";
@@ -130,10 +131,10 @@ function ChooseExperience({ user }: { user: PortalUser }) {
     <>
       <PageTitle title={`Welcome back, ${user.firstName}`} sub="Choose how you want to use lulaFi today." />
       <div className="grid gap-5 md:grid-cols-2">
-        <Link to="/desktop-app" className="group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+        <Link to="/get-app" className="group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           <Card className="flex h-full flex-col transition-all duration-200 group-hover:border-brand/50 group-hover:shadow-[var(--shadow-md)]">
           <div className="flex h-12 w-12 items-center justify-center rounded-md bg-surface-selected text-content-selected transition-colors group-hover:bg-brand group-hover:text-primary-foreground">
-            <Monitor className="h-6 w-6" strokeWidth={1.75} />
+            <Monitor className="h-6 w-6 text-icon-interactive" strokeWidth={1.75} />
           </div>
           <h2 className="mt-5 text-lg font-semibold text-text-primary">LulaFi Desktop App</h2>
           <p className="mt-2 flex-1 text-sm text-text-secondary">
@@ -141,13 +142,13 @@ function ChooseExperience({ user }: { user: PortalUser }) {
               ? "A powerful, full-screen experience to fill forms, manage your data vault and review every submission."
               : "A powerful, data-rich workspace to receive, approve and forward client submissions."}
           </p>
-          <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-foreground">Open desktop app <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+          <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-foreground">Open desktop app <ArrowRight className="text-icon-interactive h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
           </Card>
         </Link>
         <Link to="/portal/overview" className="group rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
           <Card className="flex h-full flex-col transition-all duration-200 group-hover:border-brand/50 group-hover:shadow-[var(--shadow-md)]">
           <div className="flex h-12 w-12 items-center justify-center rounded-md bg-tone-info-surface text-status-info transition-colors group-hover:bg-info group-hover:text-tone-info-on-solid">
-            <FileText className="h-6 w-6" strokeWidth={1.75} />
+            <FileText className="h-6 w-6 text-icon-interactive" strokeWidth={1.75} />
           </div>
           <h2 className="mt-5 text-lg font-semibold text-text-primary">LulaFi Portal</h2>
           <p className="mt-2 flex-1 text-sm text-text-secondary">
@@ -155,7 +156,7 @@ function ChooseExperience({ user }: { user: PortalUser }) {
               ? "A streamlined way to manage consents, connections and account settings from any browser."
               : "A streamlined way to track submissions, clients and your organisation's account."}
           </p>
-          <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-foreground">Go to portal <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
+          <span className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-foreground">Go to portal <ArrowRight className="text-icon-interactive h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
           </Card>
         </Link>
       </div>
@@ -198,9 +199,9 @@ function QuickActions({ items }: { items: NavItem[] }) {
         {items.map(q => (
           <li key={q.label}>
             <Link to={q.to} className="flex items-center gap-3 rounded-lg py-2.5 text-sm text-text-primary hover:text-brand-foreground">
-              <q.icon className="h-4 w-4 text-text-secondary" />
+              <q.icon className="h-4 w-4 text-icon-interactive" />
               <span className="flex-1">{q.label}</span>
-              <ChevronRight className="h-4 w-4 text-text-muted" />
+              <ChevronRight className="h-4 w-4 text-icon-interactive" />
             </Link>
           </li>
         ))}
@@ -214,7 +215,7 @@ function HelpCard() {
     <div className="rounded-lg border border-border-primary bg-bg-primary p-6 shadow-[var(--shadow-sm)]">
       <p className="font-semibold text-text-primary">Need help?</p>
       <Link to="/contact" className="mt-2 flex items-center justify-between text-sm font-medium text-status-info">
-        Visit our Help Centre <ExternalLink className="h-4 w-4" />
+        Visit our Help Centre <ExternalLink className="h-4 w-4 text-icon-interactive" />
       </Link>
     </div>
   );
@@ -269,7 +270,7 @@ function ProviderOverview({ subs }: { subs: typeof INITIAL_SUBMISSIONS }) {
           <ul className="divide-y divide-border-primary">
             {subs.map(s => (
               <li key={s.id} className="flex items-center gap-3 py-3">
-                <FileText className="h-5 w-5 text-text-secondary" />
+                <FileText className="h-5 w-5 text-icon-interactive" />
                 <div className="flex-1">
                   <p className="text-sm font-medium text-text-primary">{s.form}</p>
                   <p className="text-sm text-text-secondary">{s.client} · {s.id}</p>
@@ -281,7 +282,7 @@ function ProviderOverview({ subs }: { subs: typeof INITIAL_SUBMISSIONS }) {
         </Card>
         <div className="flex flex-col gap-6">
           <Card>
-            <h2 className="flex items-center gap-2 text-base font-semibold text-text-primary"><CalendarDays className="h-4 w-4 text-brand-foreground" /> Today's schedule</h2>
+            <h2 className="flex items-center gap-2 text-base font-semibold text-text-primary"><CalendarDays className="h-4 w-4 text-icon-interactive" /> Today's schedule</h2>
             <ul className="mt-3 space-y-3 text-sm">
               <li><span className="font-medium text-text-primary">10:00</span> <span className="text-text-secondary">· Account review, Lindo Sibeko</span></li>
               <li><span className="font-medium text-text-primary">13:30</span> <span className="text-text-secondary">· Rates team stand-up</span></li>
@@ -346,7 +347,25 @@ function Submissions({ subs, onAdvance }: { subs: typeof INITIAL_SUBMISSIONS; on
   return (
     <>
       <PageTitle title="Submissions" sub="Approve client submissions, then forward them to the right department." />
-      <Card className="overflow-x-auto p-0">
+      <ul className="flex flex-col gap-3 md:hidden" aria-label="Submissions">
+        {subs.map(s => (
+          <li key={s.id}>
+            <Card className="flex flex-col gap-3">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-semibold text-text-primary">{s.client}</p>
+                  <p className="text-sm text-text-secondary">{s.form}</p>
+                </div>
+                <StatusPill status={s.status} />
+              </div>
+              <p className="text-xs text-text-muted"><span className="font-mono">{s.id}</span> · Received {s.received}</p>
+              {s.status === "New" && <Button className="min-h-11 w-full" onClick={() => onAdvance(s.id)}><CheckCircle2 /> Approve</Button>}
+              {s.status === "Approved" && <Button className="min-h-11 w-full" variant="outline" onClick={() => onAdvance(s.id)}><Forward className="text-icon-interactive" /> Forward</Button>}
+            </Card>
+          </li>
+        ))}
+      </ul>
+      <Card className="hidden overflow-x-auto p-0 md:block">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-border-primary text-text-secondary">
             <tr>{["Reference", "Client", "Form", "Received", "Status", ""].map(h => <th key={h} className="px-6 py-3 font-medium">{h}</th>)}</tr>
@@ -361,7 +380,7 @@ function Submissions({ subs, onAdvance }: { subs: typeof INITIAL_SUBMISSIONS; on
                 <td className="px-6 py-4"><StatusPill status={s.status} /></td>
                 <td className="px-6 py-4 text-right">
                   {s.status === "New" && <Button size="sm" onClick={() => onAdvance(s.id)}><CheckCircle2 /> Approve</Button>}
-                  {s.status === "Approved" && <Button size="sm" variant="outline" onClick={() => onAdvance(s.id)}><Forward /> Forward</Button>}
+                  {s.status === "Approved" && <Button size="sm" variant="outline" onClick={() => onAdvance(s.id)}><Forward className="text-icon-interactive" /> Forward</Button>}
                 </td>
               </tr>
             ))}
@@ -471,7 +490,7 @@ export default function Portal() {
       <div className="flex h-16 items-center justify-between border-b border-border-primary px-6">
         <Link to="/landing" onClick={() => setOpen(false)} className="flex items-center gap-2">
           <img src={lulafiIcon} alt="" className="h-8 w-8" />
-          <span className="text-xl font-bold text-text-primary">lula<span className="text-brand">Fi</span></span>
+          <span className="text-xl font-bold text-text-primary">lula<span className="text-wordmark">Fi</span></span>
         </Link>
 
       </div>
@@ -491,11 +510,11 @@ export default function Portal() {
               isActive ? "bg-surface-selected text-content-selected" : "text-text-secondary hover:bg-bg-secondary hover:text-text-primary",
             )}
           >
-            <item.icon className="h-4 w-4" /> {item.label}
+            <item.icon className="h-4 w-4 text-icon-interactive" /> {item.label}
           </NavLink>
         ))}
         <Link to="/contact" onClick={() => setOpen(false)} className="mt-4 flex min-h-11 items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-text-primary">
-          <CircleHelp className="h-4 w-4" /> Help
+          <CircleHelp className="h-4 w-4 text-icon-interactive" /> Help
         </Link>
       </nav>
       <div className="border-t border-border-primary p-4">
@@ -504,7 +523,7 @@ export default function Portal() {
           <div className="min-w-0 flex-1"><p className="truncate text-sm font-medium text-text-primary">{user.displayName}</p><p className="truncate text-xs text-text-muted">{user.email}</p></div>
         </Link>
         <Button variant="ghost" onClick={logout} className="h-11 w-full justify-start px-2 text-text-secondary hover:text-status-destructive">
-          <LogOut className="h-4 w-4" /> Log out
+          <LogOut className="h-4 w-4 text-icon-interactive" /> Log out
         </Button>
       </div>
     </div>
@@ -517,23 +536,24 @@ export default function Portal() {
         <header className="flex h-16 items-center justify-between border-b border-border-primary bg-bg-primary px-4 sm:px-8">
           <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="min-h-11 min-w-11 lg:hidden" aria-label="Open menu"><Menu aria-hidden="true" className="h-5 w-5" /></Button>
+              <Button variant="ghost" size="icon" className="min-h-11 min-w-11 lg:hidden" aria-label="Open menu"><Menu aria-hidden="true" className="h-5 w-5 text-icon-interactive" /></Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-64 overflow-y-auto p-0" aria-describedby={undefined}>
               <SheetTitle className="sr-only">Portal navigation menu</SheetTitle>
               {sidebar}
             </SheetContent>
           </Sheet>
-          <p className="hidden text-base font-semibold text-text-primary lg:block">
+          <p className="min-w-0 flex-1 truncate px-2 text-base font-semibold text-text-primary lg:flex-none lg:px-0">
             {user.role === "provider" ? "Provider portal" : "Personal portal"}
           </p>
-          <div className="flex items-center gap-4 text-text-secondary">
+          <div className="flex shrink-0 items-center gap-2 text-text-secondary sm:gap-4">
+            <ThemeToggle />
             <Button variant="ghost" size="icon" aria-label="Notifications" className="relative">
-              <Bell className="h-5 w-5" />
+              <Bell className="h-5 w-5 text-icon-interactive" />
               <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-destructive" />
             </Button>
             <Link to="/portal/profile" className="flex items-center gap-2 text-sm font-medium text-text-primary">
-              <CircleUserRound className="h-6 w-6 text-text-secondary" />
+              <CircleUserRound className="h-6 w-6 text-icon-interactive" />
               <span className="hidden sm:inline">{user.displayName}</span>
             </Link>
           </div>

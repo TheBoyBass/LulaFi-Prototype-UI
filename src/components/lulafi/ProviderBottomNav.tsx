@@ -32,7 +32,7 @@ const ProviderBottomNav = ({ active, onScrollToTop }: ProviderBottomNavProps) =>
           }`}
         >
           <span className="relative">
-            <Icon size={20} />
+            <Icon size={20} className="text-icon-interactive" />
             {badgeFor(key) > 0 && (
               <span className="absolute -top-1.5 -right-2 min-w-[16px] h-4 px-1 rounded-full bg-destructive text-destructive-foreground text-[9px] font-semibold flex items-center justify-center">
                 {badgeFor(key) > 9 ? "9+" : badgeFor(key)}

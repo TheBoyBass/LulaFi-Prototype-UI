@@ -16,7 +16,7 @@ const PhoneNotifications = () => (
           "rounded-2xl border border-border-primary bg-bg-secondary/95 backdrop-blur-md shadow-[0_12px_32px_rgba(0,0,0,0.35)] px-4 py-3",
         title: "text-sm font-semibold text-text-primary",
         description: "text-xs text-text-secondary",
-        actionButton: "rounded-full bg-brand text-bg-primary text-[11px] font-medium px-3 py-1.5",
+        actionButton: "rounded-full border border-stroke-interactive bg-brand text-bg-primary text-[11px] font-medium px-3 py-1.5",
         cancelButton: "rounded-full bg-bg-tertiary text-text-secondary text-[11px] px-3 py-1.5",
       },
     }}

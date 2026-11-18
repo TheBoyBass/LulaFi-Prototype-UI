@@ -72,7 +72,7 @@ const QRScannerScreen = () => {
         <LulaCard className="w-full flex flex-col gap-4">
           <div className="flex items-center gap-4 text-left">
             <div className="w-12 h-12 rounded-md bg-surface-interactive flex items-center justify-center shrink-0">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-brand">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" className="text-icon-interactive">
                 <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2" />
                 <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2" />
                 <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2" />

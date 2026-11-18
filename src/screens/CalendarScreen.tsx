@@ -113,7 +113,7 @@ const CalendarScreen = () => {
                     onClick={() => setSelected(isSelected ? null : key)}
                     className={`h-9 rounded-lg flex flex-col items-center justify-center gap-0.5 text-xs transition-colors ${
                       isSelected
-                        ? "bg-brand text-primary-foreground font-semibold"
+                        ? "border border-stroke-interactive bg-brand text-primary-foreground font-semibold"
                         : isToday
                           ? "bg-surface-interactive text-brand font-semibold"
                           : "text-text-secondary hover:bg-bg-tertiary"

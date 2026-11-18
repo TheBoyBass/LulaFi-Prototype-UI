@@ -119,7 +119,7 @@ const SplashScreen = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35, ease: "easeOut" }}
             >
-              lula<span className="text-brand">Fi</span>
+              lula<span className="text-wordmark">Fi</span>
             </motion.div>
 
             <motion.p

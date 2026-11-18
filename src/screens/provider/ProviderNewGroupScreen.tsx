@@ -65,7 +65,7 @@ const ProviderNewGroupScreen = () => {
               <span
                 className={`w-5 h-5 shrink-0 rounded-md border flex items-center justify-center ${
                   selected.includes(s.id)
-                    ? "bg-brand border-brand text-primary-foreground"
+                    ? "bg-brand border-stroke-interactive text-primary-foreground"
                     : "border-border-primary"
                 }`}
               >

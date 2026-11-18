@@ -9,7 +9,6 @@ import Landing from "./pages/Landing.tsx";
 import About from "./pages/About.tsx";
 import HowItWorks from "./pages/HowItWorks.tsx";
 import GetApp from "./pages/GetApp.tsx";
-import DesktopApp from "./pages/DesktopApp.tsx";
 import Privacy from "./pages/Privacy.tsx";
 import Terms from "./pages/Terms.tsx";
 import DataOwnership from "./pages/DataOwnership.tsx";
@@ -34,7 +33,6 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/get-app" element={<GetApp />} />
-          <Route path="/desktop-app" element={<DesktopApp />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/data-ownership" element={<DataOwnership />} />

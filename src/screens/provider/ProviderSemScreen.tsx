@@ -138,7 +138,7 @@ const ProviderSemScreen = () => {
                 onClick={() => setFilter(f)}
                 className={`shrink-0 flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium border cursor-pointer transition-colors ${
                   active
-                    ? "bg-brand text-primary-foreground border-brand"
+                    ? "bg-brand text-primary-foreground border-stroke-interactive"
                     : "bg-bg-secondary text-text-secondary border-border-primary"
                 }`}
               >
@@ -199,7 +199,7 @@ const ProviderSemScreen = () => {
                         >
                           <Icon
                             size={15}
-                            className={row.kind === "FORM" ? "text-tone-info-content" : "text-brand"}
+                            className={row.kind === "FORM" ? "text-tone-info-content" : "text-icon-interactive"}
                           />
                         </div>
 

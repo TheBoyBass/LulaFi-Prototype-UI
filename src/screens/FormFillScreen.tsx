@@ -87,14 +87,14 @@ const FormFillScreen = () => {
           <div className="flex flex-col gap-2">
             {arrivedViaDeepLink && (
               <div className="flex items-start gap-3 p-3.5 bg-bg-secondary border border-border-primary rounded-xl">
-                <LinkIcon size={16} className="text-brand shrink-0 mt-0.5" />
+                <LinkIcon size={16} className="text-icon-interactive shrink-0 mt-0.5" />
                 <div className="text-xs text-text-secondary">
                   Opened from a shared lulaFi link — you're on the right {provider.name} form.
                 </div>
               </div>
             )}
             <div className="flex items-start gap-3 p-3.5 bg-surface-interactive border border-brand/30 rounded-xl">
-              <ShieldCheck size={16} className="text-brand shrink-0 mt-0.5" />
+              <ShieldCheck size={16} className="text-icon-interactive shrink-0 mt-0.5" />
               <div className="text-xs text-text-secondary">
                 Autofilled from your Data Vault after your PIN authorisation. Edit any field, then
                 complete the remaining {plan.manual.length} below before sending.

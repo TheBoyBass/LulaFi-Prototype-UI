@@ -108,7 +108,7 @@ const MarketplaceScreen = () => {
         {/* Hero */}
         <div className="flex flex-col items-center text-center gap-4 pt-4">
           <div className="w-20 h-20 rounded-2xl bg-brand/10 flex items-center justify-center">
-            <Store size={34} className="text-brand" />
+            <Store size={34} className="text-icon-interactive" />
           </div>
           <LulaBadge variant="neutral">Coming soon</LulaBadge>
           <div>
@@ -127,7 +127,7 @@ const MarketplaceScreen = () => {
               className="flex items-center gap-3 p-3.5 bg-bg-secondary border border-border-primary rounded-xl"
             >
               <div className="w-9 h-9 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
-                <Icon size={16} className="text-brand" />
+                <Icon size={16} className="text-icon-interactive" />
               </div>
               <span className="text-sm text-text-primary">{label}</span>
             </div>
@@ -174,7 +174,7 @@ const MarketplaceScreen = () => {
           {stage === "done" && (
             <div className="flex items-start gap-3">
               <div className="w-9 h-9 rounded-lg bg-brand/10 flex items-center justify-center shrink-0">
-                <Check size={17} className="text-brand" />
+                <Check size={17} className="text-icon-interactive" />
               </div>
               <div>
                 <div className="text-sm font-medium text-text-primary">Email verified — you're on the list</div>
@@ -197,7 +197,7 @@ const MarketplaceScreen = () => {
           {stage === "verify" && (
             <>
               <div className="flex items-center gap-2">
-                <MailCheck size={15} className="text-brand" />
+                <MailCheck size={15} className="text-icon-interactive" />
                 <span className="text-sm font-medium text-text-primary">Verify your email</span>
               </div>
               <p className="text-xs text-text-muted">
@@ -226,7 +226,7 @@ const MarketplaceScreen = () => {
               </LulaButton>
               <div className="flex items-center justify-between">
                 <button onClick={resend} className="flex items-center gap-1.5 text-xs text-brand">
-                  <RefreshCw size={12} /> Resend code
+                  <RefreshCw size={12} className="text-icon-interactive" /> Resend code
                 </button>
                 <button onClick={() => setStage("form")} className="text-xs text-text-muted underline">
                   Change email
@@ -238,7 +238,7 @@ const MarketplaceScreen = () => {
           {stage === "form" && (
             <>
               <div className="flex items-center gap-2">
-                <Bell size={15} className="text-brand" />
+                <Bell size={15} className="text-icon-interactive" />
                 <span className="text-sm font-medium text-text-primary">Get launch updates</span>
               </div>
               <p className="text-xs text-text-muted">

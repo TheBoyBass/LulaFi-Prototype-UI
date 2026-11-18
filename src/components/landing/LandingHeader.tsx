@@ -5,6 +5,7 @@ import { Menu, Search } from "lucide-react";
 import lulafiIcon from "@/assets/lulafi-icon.png";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import ThemeToggle from "@/components/ThemeToggle";
 import { cn } from "@/lib/utils";
 
 export type LandingAudience = "personal" | "business";
@@ -55,11 +56,14 @@ export default function LandingHeader({ audience, onAudienceChange, activePage }
               </Button>
             ))}
           </div>
-          <div className="hidden items-center gap-4 text-sm text-text-muted sm:flex">
-            <Link to="/landing#help" className="transition-colors hover:text-brand-foreground">Help</Link>
-            <Link to="/landing#search" className="inline-flex items-center gap-1.5 transition-colors hover:text-brand-foreground">
-              <Search aria-hidden="true" className="h-4 w-4" /> Search
-            </Link>
+          <div className="flex items-center gap-1 sm:gap-4">
+            <div className="hidden items-center gap-4 text-sm text-text-muted sm:flex">
+              <Link to="/landing#help" className="transition-colors hover:text-brand-foreground">Help</Link>
+              <Link to="/landing#search" className="inline-flex items-center gap-1.5 transition-colors hover:text-brand-foreground">
+                <Search aria-hidden="true" className="h-4 w-4 text-icon-interactive" /> Search
+              </Link>
+            </div>
+            <ThemeToggle />
           </div>
         </div>
       </div>
@@ -68,7 +72,7 @@ export default function LandingHeader({ audience, onAudienceChange, activePage }
         <Link to="/landing" className="flex shrink-0 items-center gap-2" aria-label="LulaFi home">
           <img src={lulafiIcon} alt="" className="h-8 w-10 object-contain" />
           <span className="text-2xl font-semibold">
-            lula<span className="text-brand">Fi</span>
+            lula<span className="text-wordmark">Fi</span>
           </span>
         </Link>
 
@@ -84,7 +88,7 @@ export default function LandingHeader({ audience, onAudienceChange, activePage }
                 className={cn(
                   "relative rounded-sm text-sm font-medium transition-colors hover:text-brand-foreground",
                   isActive
-                    ? "text-brand-foreground after:absolute after:inset-x-0 after:-bottom-1.5 after:h-0.5 after:rounded-full after:bg-brand-foreground"
+                    ? "text-brand-foreground after:absolute after:inset-x-0 after:-bottom-1.5 after:h-0.5 after:rounded-full after:bg-brand"
                     : "text-text-secondary",
                 )}
               >
@@ -104,7 +108,7 @@ export default function LandingHeader({ audience, onAudienceChange, activePage }
           <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="min-h-11 min-w-11 lg:hidden" aria-label="Open navigation menu">
-                <Menu aria-hidden="true" />
+                <Menu aria-hidden="true" className="text-icon-interactive" />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="max-h-dvh overflow-y-auto" aria-describedby={undefined}>
@@ -114,7 +118,7 @@ export default function LandingHeader({ audience, onAudienceChange, activePage }
                   const isActive = item.key !== undefined && activePage === item.key;
                   return (
                     <Link key={item.label} to={item.to} onClick={() => setMenuOpen(false)} aria-current={isActive ? "page" : undefined}
-                      className={cn("flex min-h-11 items-center rounded-sm px-3 text-sm font-medium hover:text-brand-foreground", isActive ? "text-brand-foreground underline decoration-2 underline-offset-8" : "text-text-secondary")}>
+                      className={cn("flex min-h-11 items-center rounded-sm px-3 text-sm font-medium hover:text-brand-foreground", isActive ? "text-brand-foreground underline decoration-brand decoration-2 underline-offset-8" : "text-text-secondary")}>
                       {item.label}
                     </Link>
                   );

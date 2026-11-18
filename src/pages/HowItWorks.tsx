@@ -164,7 +164,7 @@ export default function HowItWorks() {
                 <ul className="mt-5 space-y-2.5 border-t border-border-primary pt-5">
                   {step.details.map((detail) => (
                     <li key={detail} className="flex items-start gap-2.5 text-sm text-text-muted">
-                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-brand">
+                      <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand/15 text-icon-interactive">
                         <Check className="h-3 w-3" aria-hidden="true" />
                       </span>
                       {detail}
@@ -178,7 +178,7 @@ export default function HowItWorks() {
           <ul className="mt-12 flex flex-wrap justify-center gap-x-8 gap-y-3" aria-label="Included with lulaFi">
             {content.proof.map((item) => (
               <li key={item} className="flex items-center gap-2 text-sm font-medium text-text-secondary">
-                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand/15 text-brand">
+                <span className="flex h-5 w-5 items-center justify-center rounded-full bg-brand/15 text-icon-interactive">
                   <Check className="h-3 w-3" aria-hidden="true" />
                 </span>
                 {item}

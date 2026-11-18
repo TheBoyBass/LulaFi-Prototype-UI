@@ -41,7 +41,7 @@ const PinAuthScreen = () => {
     <ScreenLayout hideNav header={<AppHeader title="PIN authorisation" />}>
       <div className="pb-4">
         <div className="px-6 mt-2 flex flex-col items-center text-center">
-          <Lock size={30} className="text-brand" />
+          <Lock size={30} className="text-icon-interactive" />
           <h1 className="text-2xl font-bold text-text-primary mt-2">Authorise data sharing</h1>
           <p className="text-sm text-text-muted mt-1">Step 2 of 2</p>
           <p className="text-sm text-text-secondary mt-3">

@@ -52,7 +52,7 @@ const ProviderDashboardScreen = () => {
               onClick={() => navigateProvider(screen)}
               className="rounded-xl border border-border-primary bg-bg-secondary p-2.5 flex flex-col items-center gap-2 cursor-pointer hover:border-brand transition-colors"
             >
-              <Icon size={20} className="text-brand" />
+              <Icon size={20} className="text-icon-interactive" />
               <span className="text-[10px] font-medium leading-tight text-text-primary text-center">
                 {label}
               </span>
@@ -72,7 +72,7 @@ const ProviderDashboardScreen = () => {
               className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-secondary p-3 text-left cursor-pointer hover:border-brand transition-colors"
             >
               <div className="w-9 h-9 shrink-0 rounded-full bg-brand/10 flex items-center justify-center">
-                <FileText size={17} className="text-brand" />
+                <FileText size={17} className="text-icon-interactive" />
               </div>
               <div className="min-w-0 flex-1">
                 <div className="text-sm font-medium text-text-primary truncate">{item.formName}</div>
@@ -98,7 +98,7 @@ const ProviderDashboardScreen = () => {
                   className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-secondary p-3 text-left cursor-pointer hover:border-brand transition-colors"
                 >
                   <div className="w-9 h-9 shrink-0 rounded-full bg-brand/10 flex items-center justify-center">
-                    <Send size={16} className="text-brand" />
+                    <Send size={16} className="text-icon-interactive" />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="text-sm font-medium text-text-primary truncate">{item.formName}</div>
@@ -123,7 +123,7 @@ const ProviderDashboardScreen = () => {
                 className="flex items-center gap-3 rounded-xl border border-border-primary bg-bg-secondary p-3 text-left cursor-pointer hover:border-brand transition-colors"
               >
                 <div className="w-9 h-9 shrink-0 rounded-full bg-brand/10 flex items-center justify-center">
-                  <Icon size={17} className="text-brand" />
+                  <Icon size={17} className="text-icon-interactive" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <div className="text-sm font-medium text-text-primary truncate">{item.title}</div>

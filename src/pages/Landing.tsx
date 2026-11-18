@@ -154,7 +154,7 @@ const Landing = () => {
                <ul className="mt-8 grid gap-3 sm:grid-cols-3" aria-label="LulaFi benefits">
                  {BENEFITS.map(({ icon: Icon, label }) => (
                    <li key={label} className="flex items-center gap-2.5 text-sm font-medium text-text-secondary">
-                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/10 text-brand">
+                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand/10 text-icon-interactive">
                        <Icon size={16} aria-hidden="true" />
                      </span>
                      {label}
@@ -209,7 +209,7 @@ const Landing = () => {
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 className="rounded-2xl border border-border-primary bg-bg-primary p-8 shadow-[var(--shadow-sm)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-md)]"
               >
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand/10 text-brand">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand/10 text-icon-interactive">
                   <Icon className="h-6 w-6" aria-hidden="true" />
                 </div>
                 <h3 className="mb-2 mt-6 text-lg font-bold">{title}</h3>

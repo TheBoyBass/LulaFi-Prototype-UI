@@ -82,7 +82,7 @@ const ProviderUpdateStatusScreen = () => {
                 onClick={() => toggle(name)}
                 className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-medium cursor-pointer transition-colors ${
                   on
-                    ? "bg-brand text-primary-foreground border-brand"
+                    ? "bg-brand text-primary-foreground border-stroke-interactive"
                     : "bg-bg-secondary text-text-secondary border-border-primary"
                 }`}
               >
@@ -107,7 +107,7 @@ const ProviderUpdateStatusScreen = () => {
         >
           <span
             className={`w-5 h-5 rounded-md border flex items-center justify-center ${
-              notify ? "bg-brand border-brand text-primary-foreground" : "border-border-primary"
+              notify ? "bg-brand border-stroke-interactive text-primary-foreground" : "border-border-primary"
             }`}
           >
             {notify && <Check size={14} />}

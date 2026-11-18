@@ -36,9 +36,9 @@ const SignupScreen = () => {
         </LulaButton>
         <LulaCard className="flex flex-col gap-3">
           {[
-            { icon: <Lock size={16} className="text-brand" />, text: "Your phone number is used for verification only" },
-            { icon: <Shield size={16} className="text-brand" />, text: "All your data is encrypted and stored locally" },
-            { icon: <Ban size={16} className="text-brand" />, text: "We never share your information with third parties" },
+            { icon: <Lock size={16} className="text-icon-interactive" />, text: "Your phone number is used for verification only" },
+            { icon: <Shield size={16} className="text-icon-interactive" />, text: "All your data is encrypted and stored locally" },
+            { icon: <Ban size={16} className="text-icon-interactive" />, text: "We never share your information with third parties" },
           ].map((item, i) => (
             <div key={i} className="flex items-start gap-3 text-[13px] text-text-muted leading-relaxed">
               <span className="shrink-0 mt-0.5">{item.icon}</span>

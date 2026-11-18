@@ -10,6 +10,12 @@ import {
   providerSubmissions,
 } from "@/data/provider";
 import { toast } from "sonner";
+import {
+  readThemePreference,
+  resolveIsDark,
+  setThemePreference,
+  subscribeTheme,
+} from "@/lib/theme";
 
 const initialUnread = providerGroups.reduce<Record<string, number>>((acc, g) => {
   g.rows.forEach(r => { acc[r.id] = r.unread; });
@@ -146,7 +152,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [displayName, setDisplayName] = useState("TheBoyBass");
   const [phone, setPhone] = useState("+27 82 445 9012");
   const [email, setEmail] = useState("theboybass@lulafi.co.za");
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(() => resolveIsDark(readThemePreference()));
   const [unreadCounts, setUnreadCounts] = useState<Record<string, number>>(initialUnread);
   const [activeProviderId, setActiveProviderId] = useState<string | null>(deepLink.provider);
   const [arrivedViaDeepLink, setArrivedViaDeepLink] = useState(Boolean(deepLink.provider));
@@ -318,7 +324,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
 
-  const toggleTheme = useCallback(() => setIsDark(prev => !prev), []);
+  // Keep the prototype's appearance in step with the shared light/dark/system choice.
+  useEffect(() => subscribeTheme((preference) => setIsDark(resolveIsDark(preference))), []);
+
+  const toggleTheme = useCallback(
+    () => setThemePreference(resolveIsDark(readThemePreference()) ? "light" : "dark"),
+    [],
+  );
 
   const markConversationRead = useCallback((id: string) => {
     setUnreadCounts(prev => (prev[id] ? { ...prev, [id]: 0 } : prev));

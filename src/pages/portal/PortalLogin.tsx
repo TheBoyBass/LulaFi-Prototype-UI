@@ -39,7 +39,7 @@ export default function PortalLogin() {
       <div className="w-full max-w-md">
         <Link to="/landing" className="mb-10 flex items-center gap-2" aria-label="LulaFi home">
           <img src={lulafiIcon} alt="" className="h-9 w-9" />
-          <span className="text-2xl font-bold text-text-primary">lula<span className="text-brand">Fi</span></span>
+          <span className="text-2xl font-bold text-text-primary">lula<span className="text-wordmark">Fi</span></span>
         </Link>
         <div>
           <p className="mb-2 text-xs font-semibold uppercase text-brand">Secure web portal</p>
@@ -59,7 +59,7 @@ export default function PortalLogin() {
                   role === r ? "bg-bg-primary text-text-primary shadow-[var(--shadow-sm)] hover:bg-bg-primary" : "text-text-secondary hover:bg-bg-tertiary",
                 )}
               >
-                {r === "client" ? <UserRound className="h-4 w-4" /> : <Building2 className="h-4 w-4" />}
+                {r === "client" ? <UserRound className="h-4 w-4 text-icon-interactive" /> : <Building2 className="h-4 w-4 text-icon-interactive" />}
                 {r === "client" ? "Personal" : "Business"}
               </Button>
             ))}
@@ -74,7 +74,7 @@ export default function PortalLogin() {
               <Label htmlFor="password">Password</Label>
               <div className="relative">
                 <Input id="password" type={showPassword ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} autoComplete="current-password" className="h-11 bg-bg-primary pr-12" />
-                <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-11 w-11 text-text-muted" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? "Hide password" : "Show password"}>
+                <Button type="button" variant="ghost" size="icon" className="absolute right-0 top-0 h-11 w-11 text-icon-interactive" onClick={() => setShowPassword(value => !value)} aria-label={showPassword ? "Hide password" : "Show password"}>
                   {showPassword ? <EyeOff /> : <Eye />}
                 </Button>
               </div>
@@ -85,7 +85,7 @@ export default function PortalLogin() {
 
           <div className="mt-6 rounded-lg border border-border-primary bg-bg-secondary p-4">
             <p className="flex items-center gap-2 text-sm font-semibold text-text-primary">
-              <KeyRound className="h-4 w-4 text-brand" /> Demo accounts
+              <KeyRound className="h-4 w-4 text-icon-interactive" /> Demo accounts
             </p>
             <div className="mt-3 flex flex-col gap-2">
               {(["client", "provider"] as PortalRole[]).map(r => (
@@ -115,13 +115,13 @@ export default function PortalLogin() {
       </main>
       <aside className="relative hidden overflow-hidden bg-portal-sidebar p-12 text-portal-sidebar-foreground lg:flex lg:flex-col lg:justify-between">
         <div className="relative z-10">
-          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-foundation-teal/15 text-foundation-teal"><ShieldCheck className="h-6 w-6" /></div>
+          <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-foundation-teal/15 text-icon-interactive"><ShieldCheck className="h-6 w-6 text-icon-interactive" /></div>
           <h2 className="mt-8 max-w-md text-3xl font-bold">Your forms, permissions and submissions in one secure place.</h2>
           <p className="mt-4 max-w-md text-base text-portal-sidebar-foreground/70">The LulaFi portal gives people and providers a clear record of every connection and action.</p>
         </div>
         <ul className="relative z-10 space-y-4 text-sm">
           {["Review data-sharing consent", "Track form activity", "Manage personal or provider details"].map(item => (
-            <li key={item} className="flex items-center gap-3"><CheckCircle2 className="h-5 w-5 text-foundation-teal" />{item}</li>
+            <li key={item} className="flex items-center gap-3"><CheckCircle2 className="h-5 w-5 text-icon-interactive" />{item}</li>
           ))}
         </ul>
       </aside>

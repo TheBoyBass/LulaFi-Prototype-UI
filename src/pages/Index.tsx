@@ -201,7 +201,7 @@ const ModeSwitch = () => {
             key={key}
             onClick={() => setMode(key)}
             className={`w-full flex items-center gap-2 rounded-md px-3 py-2.5 text-xs font-medium cursor-pointer transition-all duration-150 ${
-              mode === key ? "bg-brand text-white" : "text-white/50 hover:bg-white/[0.06] hover:text-white/80"
+              mode === key ? "bg-brand text-primary-foreground" : "text-white/50 hover:bg-white/[0.06] hover:text-white/80"
             }`}
           >
             <Icon size={14} className="shrink-0" />
@@ -243,7 +243,7 @@ const Sidebar = () => {
                 }
                 className={`w-full px-2.5 py-2 rounded-lg border-none text-xs text-left cursor-pointer transition-all duration-150 flex items-center gap-1.5 ${
                   active
-                    ? "bg-brand/[0.12] text-brand font-medium"
+                    ? "bg-brand/[0.12] text-wordmark font-medium"
                     : "bg-transparent text-white/[0.48] font-normal hover:bg-white/[0.06] hover:text-white/80"
                 }`}
               >
